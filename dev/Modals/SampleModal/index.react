@@ -1,0 +1,4 @@
+import React from 'react';
+import makeModal from 'HOC/makeModal';
+import { view as Sample } from 'Connected/Sample';
+export default makeModal( Sample );

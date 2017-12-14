@@ -1,0 +1,12 @@
+import React from 'react';
+export default ( Comp ) => class extends React.Component {
+  constructor( props ){
+    super( props );
+  }
+  render(){
+    return (<Comp {...this.props}/>);
+  }
+  shouldComponentUpdate(){
+    return false;
+  }
+}

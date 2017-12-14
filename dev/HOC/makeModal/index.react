@@ -1,0 +1,55 @@
+import style from 'style';
+import { actions as modalActions } from 'App/ModalManager';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import Button from 'UI/Button';
+import React from 'react';
+
+export default ( Comp , shouldComponentUpdate ) => {  return connect(
+  () => ({}),
+  ( dispatch ) => bindActionCreators( modalActions , dispatch )
+)( class extends React.Component {
+  constructor( props ){
+    super( props );
+    this.onDragStart = this.onDragStart.bind( this );
+    this.key = 0;
+  }
+  render(){
+    const { position , closeModal , modalId } = this.props;
+    return (
+      <div style={{
+          position: 'absolute',
+          left: position.x,
+          top: position.y
+        }}
+        draggable={true}
+        onDragStart={this.onDragStart}
+        id={'modal__' + modalId }
+      >
+        <div className={style.window}>
+          <div className={style.header}>
+            <Button
+              className={style.cancel}
+              onClick={() => closeModal( modalId )}
+              text="X"
+            />
+          </div>
+          <Comp {...this.props} />
+        </div>
+      </div>
+    );
+  }
+  shouldComponentUpdate( nextProps  , nextState ){
+    return shouldComponentUpdate ?
+    shouldComponentUpdate( nextProps , nextState )
+    : true;
+  }
+  onDragStart( ev ){
+    var style = window.getComputedStyle( ev.target , null );
+    ev.dataTransfer.setData("text/plain",
+    ( parseInt( style.getPropertyValue( "left" ) , 10) - ev.clientX ) + ',' +
+    ( parseInt( style.getPropertyValue( "top" ) , 10) - ev.clientY ) + ',' +
+    this.props.modalId
+    );
+  }
+})};

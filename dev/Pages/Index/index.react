@@ -1,0 +1,146 @@
+import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Link , Route } from 'react-router-dom';
+import Info from 'Modals/Info';
+import SampleModal from 'Modals/SampleModal';
+import { actions as modalActions } from 'App/ModalManager';
+import { alert } from 'App/alert';
+import Button from 'UI/Button';
+import history from 'App/history';
+
+class IndexPage extends React.Component {
+  constructor( props ){
+    super( props );
+    this.keepId = this.keepId.bind( this );
+    console.log( props );
+  }
+
+  render(){
+    const { alert , openModal } = this.props;
+    return (
+      <div>
+        <h1>Antinux快速开发框架能力展示</h1>
+        <h2>----页面能力展示</h2>
+        <h3>
+          --------窗口系统演示(窗口独立于页面)
+        </h3>
+        <Button onClick={() => alert("这是一个警告,警告无法被移动")} text="打开警告" />
+        <Button onClick={() => openModal( Info , { info: '告知内容::' + window.info + '(修改window.info即可修改下一个框体)(这个窗口是自定义的)' } , this.keepId )} text="告知" />
+        <h3>
+          --------快速页间切换(前端路由)演示
+        </h3>
+          <Link to="/test">超链接到一个较大的页面(注意刷新速度)
+          由于代码分片,会首先加载整个页面的chunk(一行js)(这个行为可以在network里面观察到),然后虚拟渲染(执行js,交给ReactDOM),然后挂载到DOM上去.
+          这样就保证了按需下载,且不会影响其他页面的下载速度.
+          而且有缓存之后,也不需要下载,页面可以直接加载.
+          而且如果两个页面之间有相同的组件,还有可能被复用,达到更快的渲染速度.(而不是像后端路由一样,每次都会重刷整个页面)<strong><em>切换页面不会导致窗口消失!!!!</em></strong>
+          </Link>
+          <Button onClick={() => history.push('/buttonClick')} text="自定义按钮,实现页面路由"/>
+          <h3>
+            --------页面嵌套演示
+          </h3>
+          <Link to="/nest">
+            打开嵌套页面
+          </Link>
+          <Route exact path={`/nest`}
+          component={() => (<div>A nested Page<Button onClick={() => history.goBack()} text="返回"/></div>)}
+          />
+          <h2>
+          ----开发简易教程
+          </h2>
+          <div>
+            <h3>--------UI组件的开发</h3>
+            <div>
+            这一类组件十分纯粹,只需要数据插口(props),html结构和组件内布局以及样式就可以完成.<br/>
+            需要定制化的组件可以暴露自己的style,className或者style选择器.<br/>
+            语法:
+            <pre>
+              import React from 'react';<br/>
+              import style from 'style';//组件内布局,样式<br/>
+
+              class UIName extends React.Component {"{"}<br/>
+                &nbsp;&nbsp;constructor( props ){"{"}<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;super( props );<br/>
+                &nbsp;&nbsp;{"}"}<br/>
+                &nbsp;&nbsp;render(){"{"}<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;const {"{"} props1 , props2 , props3 {"}"} = this.props;<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;return (<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"<div"} className="container"{">"} //container uses all the space given to it , and becomes a BFC<br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"<span"} className={"{"}style.className{"}"}{">"}{"{"}props1 + props2 + props3 {"}"}{"</span>"}<br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"</div>"}<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;);<br/>
+                &nbsp;&nbsp;{"}"}<br/>
+              {"}"}<br/>
+              export default UIName;
+            </pre>
+            </div>
+            <h3>--------Connected组件的开发</h3>
+              <h4>利用Redux 管理应用数据,处理用户动作</h4>
+              <p>获取数据直接利用react-redux提供的connect</p>
+              <div>
+              对外派发动作,先引入对应的动作组(一般在某个Connected组件内部定义)<br/>
+              Connected组件的语法:
+              <pre>
+              import React from 'react';<br/>
+              import style from 'style';//组件内布局,样式<br/>
+              import {"{"} actions as [name]ActionCreators from 'Connected/[name]'{"}"};<br/>
+              或者 import * as thisActionCreators from 'actions';<br/>
+              import {"{"} bindActionCreators {"}"} from 'redux';<br/>
+              import {"{"} connect {"}"} from 'react-redux';<br/>
+              import UI from 'UI/[UIName]';<br/>
+              class ConnectedName extends React.Component {"{"}<br/>
+                &nbsp;&nbsp;constructor( props ){"{"}<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;super( props );<br/>
+                &nbsp;&nbsp;{"}"}<br/>
+                &nbsp;&nbsp;render(){"{"}<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;const {"{"} action1 , action2 , gotState {"}"} = this.props;<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;return (<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"<div"} className="container"{">"} //container uses all the space given to it , and becomes a BFC<br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"<UI"} onEvent1={"{"}action1{"}"} onEvent2={"{"}() => action2( args ){"}"}{">"}{"{"}gotState {"}"}{"</UI>"}<br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"</div>"}<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;);<br/>
+                &nbsp;&nbsp;{"}"}<br/>
+              {"}"}<br/>
+              export default connect(<br/>
+                &nbsp;&nbsp;state => ({"{"} <br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;wantedData: state.someData <br/>
+                &nbsp;&nbsp;{"}"}),<br/>
+                &nbsp;&nbsp;//单个动作组dispatch => bindActionCreators( [name]ActionCreators , dispatch )<br/>
+                &nbsp;&nbsp;//多个动作组dispatch => ({"{"}<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;...bindActionCreators( [name1]ActionCreators , dispatch ),<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;...bindActionCreators( [name2]ActionCreators , dispatch )<br/>
+                &nbsp;&nbsp;{"}"})<br/>
+              );<br/>
+              </pre>
+              </div>
+            <h3>--------页面当做组件开发</h3>
+              <p>
+                一个页面由很多"Connected"组件构成,这些组件的特点就是可以不用提供任何props,而可以自己获取外部数据,对外派发动作.
+              </p>
+              <p>
+              同时,页面可能需要根据某些APP的状态(比如用户是否登录),来确定页面上组件的显示与否,布局等等,所以页面也可以connect到store上.不同的Connected组件之间可能没有操作逻辑,所以可能需要利用UI里面的Button,加上dispatch动作来触发一些动作.
+              </p>
+              <h4>所以一个Page可以是一个纯UI(纯粹的Connected组合),也可以是一个组合了其他Connected组件的Connected组件</h4>
+              <em><strong>具体实例可以查看本页代码</strong></em>
+          </div>
+          <h1>----Connected组件和窗口系统结合展示(打开多个试试)</h1>
+          <Button
+          onClick={() => openModal( SampleModal )}
+          text="打开展示"
+          />
+      </div>
+    );
+  }
+
+  keepId( id ){
+    this.id = id;
+  }
+};
+
+export default connect(
+  () => ({}),
+  ( dispatch ) => bindActionCreators( modalActions , dispatch )
+)(IndexPage);

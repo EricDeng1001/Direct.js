@@ -1,0 +1,110 @@
+import React from 'react';
+import Routes from 'routes';
+import Alert from 'Modals/Alert';
+import { connect } from 'react-redux';
+import history from 'history';
+import { Router } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { actions as modalActions } from 'ModalManager';
+import style from 'style';
+
+class MaskedRoutes extends React.Component {
+  constructor( props ){
+    super( props );
+    this.positioned = [];
+    this.drop = this.drop.bind( this );
+  }
+
+  render(){
+    const { Modals , masked , alertText , closeAlert } = this.props;
+    return (
+      <div className="container"
+      onDragOver={this.allowDrop}
+      onDrop={this.drop}
+      >
+      <div
+        className={alertText ? style.alertMask : ''}
+      >
+      {
+        alertText
+          ?<Alert
+              position={{
+                x: '45%',
+                y: '45%'
+              }}
+              text={alertText}
+              closeAlert={closeAlert}
+            />
+          :null
+      }
+      </div>
+      {
+        <div
+          className={masked ? style.masked : style.positionSystem}
+        >
+        {
+          Modals.map( ( Modal ) => {
+            return (
+              <Modal.Component
+                {...Modal.props}
+                modalId={Modal.modalId}
+                position={this.position( Modal.modalId )}
+                key={Modal.modalId}
+              />
+            );
+          })
+        }
+        </div>
+    }
+    <Router history={history}>
+      <Routes />
+    </Router>
+    </div>
+    );
+  }
+
+  position( id ){
+    if( !this.positioned[id] ){
+      this.positioned[id] = {
+        x: 40 + ( id / 20 ) + ( id % 20 ) * 20 + 'px',
+        y: 40 + ( id % 20 ) * 20 +'px',
+      };
+    }
+    return this.positioned[id];
+  }
+
+  allowDrop( ev ){
+    return ev.preventDefault();
+  }
+
+  drop( ev ){
+    var [ x , y , id ] = ev.dataTransfer.getData("text/plain").split(',');
+    var dm = document.getElementById( 'modal__' + id );
+    var newLeft = ( ev.clientX + parseInt( x , 10 ) ) + 'px';
+    var newTop = ( ev.clientY + parseInt( y , 10 ) ) + 'px';
+    dm.style.left = newLeft;
+    dm.style.top = newTop;
+    this.positioned[id] = {
+      x: newLeft,
+      y: newTop
+    };
+    return ev.preventDefault();
+  }
+
+  componentWillUnmount(){
+    if( confirm("store your state?") ){
+      localStorage['lastState'] = this.props.state;
+    }
+  }
+
+};
+
+export default connect(
+  ( state ) => ({
+    Modals: state.ModalManager.Modals,
+    masked: state.ModalManager.masked,
+    alertText: state.ModalManager.alert,
+    state: state
+  }),
+  ( dispatch ) => bindActionCreators( modalActions , dispatch )
+)( MaskedRoutes );

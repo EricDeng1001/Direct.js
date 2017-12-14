@@ -1,0 +1,26 @@
+import React from 'react';
+import history from 'App/history';
+import Button from 'UI/Button';
+import style from 'style';
+console.log( history );
+class NotFoundPage extends React.Component {
+  constructor( props ){
+    super( props );
+  }
+
+  render(){
+    return (
+      <div className="container">
+        <Button
+        onClick={() => history.goBack()}
+        text="<-返回"
+        />
+        <span className={style.text}>
+        404 Not Found
+        </span>
+      </div>
+    );
+  }
+};
+
+export default NotFoundPage;
