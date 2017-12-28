@@ -1,16 +1,16 @@
 const webpack = require( 'webpack' )
-const htmlWebpackPlugin = require( 'html-webpack-plugin' )
 const path = require( 'path' )
 //const extractTextWebpackPlugin = require( 'extract-text-webpack-plugin' );
 module.exports = {
   entry : {
-    vendor: [ 'react' , 'react-dom' , 'redux' , 'react-redux' , 'react-router' , 'react-router-dom' ],
+    vendor: [ 'react' , 'react-dom' , 'redux' , 'react-redux' , 'react-router' , 'react-router-dom' ,'react-transition-group' , 'react-bootstrap' , 'redux-thunk' ],
     entry : path.join( __dirname ,  "/dev/App" )
   },
   output : {
     path : path.join( __dirname , "/public" ),
     filename: '[name].js',
-    chunkFilename: './static/js/[name].chunk.js'
+    chunkFilename: './static/js/[name].chunk.js',
+    publicPath: "/"
   },
   resolve : {
     alias : {
@@ -41,7 +41,7 @@ module.exports = {
 
     },
     historyApiFallback : {
-      index: 'index.html'
+      index: '/index.html'
     },
     inline : true
   },
@@ -76,12 +76,6 @@ module.exports = {
     new webpack.BannerPlugin( "Antinus Innovation\nAll rights reserved" ),
     new webpack.optimize.CommonsChunkPlugin({
       names: [ 'vendor' , 'common' ]
-    }),
-    new htmlWebpackPlugin({
-      title : 'Redux App',
-      chunksSortMode: 'dependency',
-      favicon : path.join( __dirname , "/dev/App/favicon.ico" ),
-      template : path.join( __dirname , "/dev/App/index.html.tmpl" ),
-    }),
+    })
   ]
 };

@@ -1,0 +1,21 @@
+@enterTime: 400ms;
+@exitTime: @enterTime;
+.appear,
+.enter {
+  top: 100%;
+  transition: top @enterTime ease;
+}
+
+.appearActive,
+.enterActive {
+  top: 0;
+}
+
+.exit {
+  transition: top @exitTime ease;
+  top: 0;
+}
+
+.exitActive {
+  top: 100%;
+}

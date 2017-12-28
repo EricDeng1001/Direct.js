@@ -1,20 +1,16 @@
-const lastState = localStorage['lastState'];
-//check lastState
-//do changes
-
-export default {
-  ModalManager: {
-    Modals: [],
-    alert: false,
-    masked: false
-  },
-  Sample: {
-  show: false,
-  loading: false,
-  loaded: 0,
-  lastFailedReason: '',
-  lat: -99999,
-  lng: -99999
+const lastState = localStorage.lastState;
+var exports;
+try {
+  exports = JSON.parse( lastState );
 }
-  //your state tree;
+catch ( e ){
+  exports = {};
+}
+export default {
+  ...exports,
+  UserManager: {
+    logined: true,
+    name: 'testdzh',
+    password: 'testdzh'
+  }
 };

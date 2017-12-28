@@ -1,0 +1,43 @@
+import React from 'react';
+import Routes from 'routes';
+import { withRouter } from 'react-router-dom';
+import { TransitionGroup , CSSTransition } from 'react-transition-group';
+
+import slideRL from 'slideRL';
+import slideUD from 'slideUD';
+
+import getClassNames from 'Algorithm/getAnimationNames';
+
+const slideRLClasses = getClassNames( slideRL );
+const slideUDClasses = getClassNames( slideUD );
+
+const timeout = 400;
+
+class AnimatedPages extends React.PureComponent {
+  render(){
+    const { location , history } = this.props;
+    var classNames;
+    if( history.action === "POP" ){
+      classNames = slideUDClasses;
+    }
+    else {
+      classNames = slideRLClasses;
+    }
+    return (
+      <TransitionGroup className="container">
+        <CSSTransition
+          key={location.pathname}
+          classNames={classNames}
+          timeout={timeout}
+          appear
+        >
+          <section className="page">
+            <Routes location={location} />
+          </section>
+        </CSSTransition>
+      </TransitionGroup>
+    );
+  }
+};
+
+export default withRouter( AnimatedPages );

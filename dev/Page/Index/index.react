@@ -1,0 +1,36 @@
+import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Link , Route } from 'react-router-dom';
+
+import Button from 'UI/Button';
+
+import makePage from 'HOC/makePage';
+
+class IndexPage extends React.Component {
+  constructor( props ){
+    super( props );
+  }
+
+  render(){
+    const { alert , openModal } = this.props;
+    return (
+      <React.Fragment>
+        <Link to="/learning/english">
+          英语学习
+        </Link>
+        <br/>
+        <Link to="/ui">
+          ui测试
+        </Link>
+        <br/>
+        <Link to="/nowhere">
+          nowhere
+        </Link>
+      </React.Fragment>
+    );
+  }
+
+};
+
+export default makePage( IndexPage );

@@ -1,0 +1,30 @@
+import React from 'react';
+import * as actions from 'App/WindowManager/actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+export default Comp => connect(
+  undefined,
+  dispatch => bindActionCreators( actions , dispatch )
+)( class extends React.Component {
+  constructor( props ){
+    super( props );
+    this.state = {
+      ined: false
+    };
+    setTimeout(
+      () => this.setState({
+        ined: true
+      }),
+      400
+    );
+  }
+  render(){
+    return (
+      <Comp
+        {...this.props}
+        ined={this.state.ined}
+      />
+    );
+  }
+});

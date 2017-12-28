@@ -1,2 +1,0 @@
-import React from 'react';
-export default () => { var a = [];for( let i = 0; i < 1000 ; i++ ){ a.push(<div key={i}>fast{i}</div>)} return a;}

@@ -1,0 +1,24 @@
+import React from 'react';
+import { Route , Switch , Link } from 'react-router';
+import { connect } from 'react-redux';
+
+import asyncLoad from 'HOC/asyncLoad';
+
+const EnglishLearning = asyncLoad( () => import( 'EnglishLearning' ) );
+const NotFound = asyncLoad( () => import( 'Page/NotFound' ) );
+
+class Learning extends React.PureComponent {
+    render(){
+      const { match } = this.props;
+      return (
+        <React.Fragment>
+          <Switch>
+            <Route exact path={`${match.url}/english`} component={EnglishLearning} />
+            <Route path="*" component={NotFound} />
+          </Switch>
+        </React.Fragment>
+      );
+    }
+};
+
+export default Learning;

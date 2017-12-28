@@ -1,40 +1,20 @@
 import React from 'react';
-import Index from 'Pages/Index';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route , withRouter , Switch} from 'react-router-dom';
+import asyncLoad from 'HOC/asyncLoad';
 
-function asyncComponent( importComponent ) {
-  class AsyncComponent extends React.Component {
-    constructor( props ) {
-      super( props );
-      this.state = {
-        component: null,
-      };
-    }
-    async componentDidMount() {
-      const { default: component } = await importComponent();
-      this.setState({
-        component: component
-      });
-    }
-    render() {
-      const C = this.state.component;
-      return C
-        ? <C {...this.props} />
-        : null;
-    }
-  }
-  return AsyncComponent;
-}
+import Index from 'Page/Index';
 
-const NotFound = asyncComponent( () => import('Pages/NotFound') );
-const testSpeed = asyncComponent( () => import('Pages/testSpeed') );
+const NotFound = asyncLoad( () => import('Page/NotFound') );
+const UITest = asyncLoad( () => import('Page/UITest') );
+const Learning = asyncLoad( () => import('Page/Learning') );
+
 class Routes extends React.Component {
   render() {
     return (
-      <Switch>
-        <Route exact path="/" component={Index}/>
-        <Route exact path="/nest" component={Index}/>
-        <Route exact path="/test" component={testSpeed}/>
+      <Switch location={this.props.location}>
+        <Route exact path="/" component={Index} />
+        <Route path="/learning" component={Learning} />
+        <Route exact path="/ui" component={UITest} />
         <Route path='*' component={NotFound} />
       </Switch>
     );

@@ -1,0 +1,78 @@
+import React from 'react';
+import style from 'style';
+import * as windowActions from 'App/WindowManager/actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import Button from 'UI/Button';
+
+import Fade from 'Animation/Fade';
+
+export default ( Comp , _shouldComponentUpdate ) => {  return connect(
+  undefined,
+  dispatch => bindActionCreators( windowActions , dispatch )
+)( class extends React.Component {
+  render(){
+    const { position , closeModal , windowId , width , height , cancelable , onCancel } = this.props;
+    return (
+      <div style={{
+          left: position.left,
+          top: position.top,
+          right: position.right,
+          bottom: positiom.bottom,
+          width: width,
+          height: height
+        }}
+        id={'modal__' + windowId }
+        className={style.window}
+      >
+      <Fade>
+          <div
+          className={style.header}
+          draggable
+          onDragStart={this.onDragStart}
+          >
+          {
+            cancelable ?
+            <Button
+              className={style.cancel}
+              onClick={this.closeWindow}
+              text="X"
+            />
+            :null
+          }
+          </div>
+          <div className={style.conentContainer}>
+            <Comp
+              {...this.props}
+              closeWindow={this.closeWindow}
+            />
+          </div>
+        </Fade>
+      </div>
+    );
+  }
+
+  closeWindow = () => {
+    const { closeWindow , windowId } = this.props;
+    closeWindow( windowId );
+  }
+  cancelEverything = () => {
+    const { onCancel , closeWindow , windowId , closeMask } = this.props;
+    closeWindow( windowId );
+    onCancel();
+  }
+
+  shouldComponentUpdate( nextProps  , nextState ){
+    return _shouldComponentUpdate ?
+    _shouldComponentUpdate( nextProps , nextState )
+    : true;
+  }
+  onDragStart = ( ev ) => {
+    var style = window.getComputedStyle( document.getElementById(`modal__${this.props.windowId}`) , null );
+    ev.dataTransfer.setData("text/plain",
+    ( parseInt( style.getPropertyValue( "left" ) , 10) - ev.clientX ) + ',' +
+    ( parseInt( style.getPropertyValue( "top" ) , 10) - ev.clientY ) + ',' +
+    this.props.windowId
+    );
+  }
+})};

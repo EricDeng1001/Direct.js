@@ -1,0 +1,42 @@
+/*
+**   Antinux Innovation
+**   Author: Eric Deng
+*/
+import React from 'react';
+import style from 'style';
+import Button from "UI/Button";
+
+class ButtonControlPane extends React.PureComponent {
+  constructor( props ){
+    super( props );
+  }
+
+  render(){
+    const { additionalActions , mainAction } = this.props;
+    return (
+      <div className={style.container}>
+        {
+        mainAction ?
+        <Button
+          className={style.mainAction}
+          text={mainAction.text}
+          onClick={mainAction.action}
+        />
+        :null
+      }
+      {
+        additionalActions.map( ( { action , text } , key ) =>
+          <Button
+            key={key}
+            className={style.additionalAction}
+            text={text}
+            onClick={action}
+          />
+        )
+      }
+      </div>
+    );
+  }
+};
+
+export default ButtonControlPane;

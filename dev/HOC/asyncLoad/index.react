@@ -1,0 +1,35 @@
+import React from 'react';
+import Loading from 'Animation/Loading';
+
+let  download = 0;
+export default importComponent => {
+  setTimeout(
+    importComponent,
+    1000 + 1000 * download++
+  );
+  return class extends React.Component {
+    constructor( props ) {
+      super( props );
+      this.state = {
+        component: null,
+      };
+    }
+
+    async componentDidMount() {
+      const { default: component } = await importComponent();
+      this.setState({
+        component: component
+      });
+    }
+
+    render() {
+      const C = this.state.component;
+      return C
+        ? <C {...this.props} />
+        :<Loading
+          center
+          loading
+        />;
+    }
+  };
+}

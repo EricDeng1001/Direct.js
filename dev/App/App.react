@@ -1,73 +1,56 @@
 import React from 'react';
-import Routes from 'routes';
-import Alert from 'Modals/Alert';
 import { connect } from 'react-redux';
-import history from 'history';
-import { Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import AnimatedPages from 'AnimatedPages';
 import { bindActionCreators } from 'redux';
-import { actions as modalActions } from 'ModalManager';
-import style from 'style';
+import * as windowActions from 'WindowManager/actions';
+import Alert from 'Windows/Alert';
+import windows from 'windows';
+import "Styles/global.less";
 
-class MaskedRoutes extends React.Component {
-  constructor( props ){
-    super( props );
-    this.positioned = [];
-    this.drop = this.drop.bind( this );
-  }
-
+class MaskedRoutes extends React.PureComponent {
+  positioned = [];
   render(){
-    const { Modals , masked , alertText , closeAlert } = this.props;
+    const { Windows , masked , alertText , closeAlert } = this.props;
     return (
-      <div className="container"
-      onDragOver={this.allowDrop}
-      onDrop={this.drop}
-      >
       <div
-        className={alertText ? style.alertMask : ''}
+        className="container"
+        onDragOver={this.allowDrop}
+        onDrop={this.drop}
       >
+      <div className={alertText ? windows.alertMask : ''} >
       {
-        alertText
-          ?<Alert
-              position={{
-                x: '45%',
-                y: '45%'
-              }}
-              text={alertText}
-              closeAlert={closeAlert}
-            />
-          :null
+        alertText ? <Alert /> : null
       }
       </div>
+      <div className={masked ? windows.masked : windows.positionSystem} >
       {
-        <div
-          className={masked ? style.masked : style.positionSystem}
-        >
-        {
-          Modals.map( ( Modal ) => {
-            return (
-              <Modal.Component
-                {...Modal.props}
-                modalId={Modal.modalId}
-                position={this.position( Modal.modalId )}
-                key={Modal.modalId}
-              />
-            );
-          })
-        }
-        </div>
-    }
-    <Router history={history}>
-      <Routes />
-    </Router>
+        Windows.map( Window =>
+          <Window.Component
+            position={this.position( Window.id )}
+            width="200px"
+            height="200px"
+            {...Window.props}
+            windowId={Window.id}
+            key={Window.id}
+          />
+        )
+      }
+      </div>
+      <BrowserRouter>
+        <AnimatedPages />
+      </BrowserRouter>
     </div>
     );
   }
 
-  position( id ){
+  position = ( id ) => {
     if( !this.positioned[id] ){
       this.positioned[id] = {
-        x: 40 + ( id / 20 ) + ( id % 20 ) * 20 + 'px',
-        y: 40 + ( id % 20 ) * 20 +'px',
+        left: 40 + ( id / 20 ) + ( id % 20 ) * 20 + 'px',
+        top: 40 + ( id % 20 ) * 20 +'px',
+        right: 'auto',
+        bottom: 'auto'
       };
     }
     return this.positioned[id];
@@ -77,7 +60,7 @@ class MaskedRoutes extends React.Component {
     return ev.preventDefault();
   }
 
-  drop( ev ){
+  drop = ( ev ) => {
     var [ x , y , id ] = ev.dataTransfer.getData("text/plain").split(',');
     var dm = document.getElementById( 'modal__' + id );
     var newLeft = ( ev.clientX + parseInt( x , 10 ) ) + 'px';
@@ -91,20 +74,13 @@ class MaskedRoutes extends React.Component {
     return ev.preventDefault();
   }
 
-  componentWillUnmount(){
-    if( confirm("store your state?") ){
-      localStorage['lastState'] = this.props.state;
-    }
-  }
-
 };
 
 export default connect(
-  ( state ) => ({
-    Modals: state.ModalManager.Modals,
-    masked: state.ModalManager.masked,
-    alertText: state.ModalManager.alert,
-    state: state
+  state => ({
+    Windows: state.WindowManager.Windows,
+    masked: state.WindowManager.masked,
+    alertText: state.WindowManager.alert
   }),
-  ( dispatch ) => bindActionCreators( modalActions , dispatch )
+  dispatch => bindActionCreators( windowActions , dispatch )
 )( MaskedRoutes );

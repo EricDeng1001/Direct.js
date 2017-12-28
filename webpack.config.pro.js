@@ -1,6 +1,5 @@
 const webpack = require( 'webpack' )
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-const htmlWebpackPlugin = require( 'html-webpack-plugin' )
 const path = require( 'path' )
 //const extractTextWebpackPlugin = require( 'extract-text-webpack-plugin' );
 module.exports = {
@@ -65,13 +64,6 @@ module.exports = {
     }),
     //new webpack.optimize.OccurrenceOrderPlugin(),
     new UglifyJSPlugin(),
-    new htmlWebpackPlugin({
-      title : 'Redux App',
-      chunksSortMode: 'dependency',
-      favicon : path.join( __dirname , "/dev/App/favicon.ico" ),
-      template : path.join( __dirname , "/dev/App/index.html.tmpl" ),
-      minify: true
-    }),
     //new extractTextWebpackPlugin({
     //  filename : '*.less',
     //  disable : false,

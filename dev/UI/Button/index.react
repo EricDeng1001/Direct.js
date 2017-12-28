@@ -1,7 +1,14 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import style from 'style';
-class MyButton extends React.Component {
+
+type Props = {
+  className?: string,
+  text: string,
+  onClick: () => any
+};
+
+class MyButton extends React.PureComponent<Props> {
   constructor( props ){
     super( props );
   }
@@ -14,9 +21,7 @@ class MyButton extends React.Component {
           className={style.basic + ' ' + className}
           onClick={onClick}
         >
-        {
-          text
-        }
+          {text}
         </Button>
       );
   }

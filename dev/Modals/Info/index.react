@@ -1,5 +1,0 @@
-import React from 'react';
-import makeModal from 'HOC/makeModal';
-var id = 0;
-var __props;
-export default makeModal( ( props ) => { __props = props; return (<h1>{props.info}</h1>)} , np => { if( np.info !== __props.info ){ __props.info = np.info ; return true } return false } )

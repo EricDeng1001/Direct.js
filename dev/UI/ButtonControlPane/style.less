@@ -1,0 +1,37 @@
+@niceGrey: hsl( 220 , 13% , 18% );
+@stripesWidth: 60px;
+@stripesHeight: @stripesWidth;
+.container {
+  
+  background-color: transparent;
+  display: flex;
+  font-family: Arvo;
+  flex-direction: row;
+  justify-content: center;
+
+  padding-left: 1%;
+  padding-right: 1%;
+
+  .mainAction {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 2;
+    max-width: 30%;
+    font-size: 2em;
+    font-weight: bold;
+    background-color: @niceGrey;
+  }
+
+  .additionalAction {
+    background-color: black;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 10%;
+    flex-grow: 1;
+    margin-left: .5%;
+  }
+}

@@ -1,0 +1,22 @@
+@enterTime: 1000ms;
+@exitTime: @enterTime;
+.appear,
+.enter {
+  margin-left: 100%;
+  transition: all @enterTime ease;
+}
+
+.appearActive,
+.enterActive {
+  margin-left: 0;
+}
+
+.exit {
+  transition: all @exitTime ease;
+  margin-left: 0;
+}
+
+.exitActive {
+
+  margin-left: -100%;
+}
