@@ -4,8 +4,8 @@ const path = require( 'path' )
 //const extractTextWebpackPlugin = require( 'extract-text-webpack-plugin' );
 module.exports = {
   entry : {
-    vendor: [ 'react' , 'react-dom' , 'redux' , 'react-redux' , 'react-router' , 'react-router-dom' ],
-    entry : path.join( __dirname ,  "/dev/App" )
+    vendor: [ 'react' , 'react-dom' , 'redux' , 'react-redux' , 'react-router' , 'react-router-dom' ,'react-transition-group' , 'react-bootstrap' , 'redux-thunk' ],
+    entry : path.join( __dirname ,  "/Frontend/App" )
   },
   output : {
     path : path.join( __dirname , "/public" ),
@@ -19,7 +19,7 @@ module.exports = {
     modules : [
       './',
       path.join( __dirname , "node_modules/" ),
-      path.join( __dirname , 'dev/' ),
+      path.join( __dirname , '/Frontend/' )
     ],
     extensions : [
       ".js",

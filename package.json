@@ -1,16 +1,23 @@
 {
-  "name": "appfilearch",
+  "name": "renextjs",
   "version": "1.0.0",
-  "description": "",
-  "main": "webpack.config.dev.js",
+  "description": "full-stack dev framework",
+  "main": "package.json",
   "scripts": {
     "test": "webpack-dev-server --config webpack.config.dev.js --open --hot",
     "make": "webpack --config webpack.config.pro.js",
-    "flow": "flow",
-    "hotDeploy": "webpack-dev-server --config webpack.config.dev.js --host=0.0.0.0"
+    "hotDeploy": "webpack-dev-server --config webpack.config.dev.js --host=0.0.0.0",
+    "start": "node server.js",
+    "flow": "flow"
   },
-  "author": "",
+  "author": "Eric Deng",
   "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongoose": "^4.13.7",
+    "node-fetch": "^1.7.3"
+  },
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
@@ -47,6 +54,5 @@
     "uglifyjs-webpack-plugin": "^1.1.3",
     "webpack": "^3.9.1",
     "webpack-dev-server": "^2.9.5"
-  },
-  "dependencies": {}
+  }
 }

@@ -1,0 +1,13 @@
+import React from 'react';
+import makePage from 'HOC/makePage';
+
+import UserManager "Connected/UserManager";
+class UserPage extends React.Component {
+  render(){
+    return (
+      <UserManager />
+    );
+  }
+};
+
+export default makePage( UserPage );
