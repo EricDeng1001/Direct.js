@@ -12,8 +12,8 @@
 };
 
 .hide {
-  margin-left: -@SidebarWidth;
-};
+  margin-left: -@SidebarWidth - @normal;
+}
 
 @picSize: @smallPic * 1.1;
 .btn {
@@ -43,7 +43,6 @@
   min-width: @SidebarWidth;
   color: lighten( @lightGrey , 14% );
   background-color: darken( @darkGrey , 12% );
-
   display: flex;
   flex-direction: column;
 
@@ -73,7 +72,7 @@
       align-items: center;
       height: 3 * @fontSize;
       width: 100%;
-
+      margin-right: @normal;
       cursor: pointer;
       &:hover {
         background-color: @grey;

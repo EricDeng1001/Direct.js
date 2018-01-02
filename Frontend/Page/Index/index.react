@@ -44,7 +44,7 @@ class IndexPage extends React.Component {
             />,
             <SidebarItem
               onClick={() => {openWindow( UserManager , UserManagerConfig );openMask()}}
-              text="user window with mask"
+              text="user window with mask "
             />,
             <SidebarItem
               onClick={() => alert("Alert Text")}
