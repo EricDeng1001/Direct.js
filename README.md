@@ -17,4 +17,5 @@ How to use
 npm run start for a server run
 npm run hotDeploy for a hot deploy
 npm run flow for a static type check
+
 npm run start starts the real server while npm run test open a webpac-dev-server
