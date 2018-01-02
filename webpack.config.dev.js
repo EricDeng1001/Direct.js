@@ -67,7 +67,12 @@ module.exports = {
           }
         },
         {
-          loader : 'less-loader'
+          loader : 'less-loader',
+          options: {
+            paths: [
+              path.join( __dirname , "/Frontend/Styles/" )
+            ]
+          }
         }
       ]
     }]

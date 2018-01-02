@@ -1,8 +1,8 @@
+@import "size";
 @niceGrey: hsl( 220 , 13% , 18% );
-@stripesWidth: 60px;
-@stripesHeight: @stripesWidth;
+
 .container {
-  
+
   background-color: transparent;
   display: flex;
   font-family: Arvo;
@@ -19,7 +19,8 @@
     align-items: center;
     flex-grow: 2;
     max-width: 30%;
-    font-size: 2em;
+    min-width: 10 * @big;
+    font-size: @big;
     font-weight: bold;
     background-color: @niceGrey;
   }
@@ -31,6 +32,8 @@
     justify-content: center;
     align-items: center;
     max-width: 10%;
+    font-size: @normal;
+    min-width: 5 * @normal;
     flex-grow: 1;
     margin-left: .5%;
   }

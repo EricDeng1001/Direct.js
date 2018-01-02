@@ -5,9 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Button from 'UI/Button';
 
-import Fade from 'Animation/Fade';
-
-export default ( Comp , _shouldComponentUpdate ) => {  return connect(
+export default ( Comp , _shouldComponentUpdate ) => connect(
   undefined,
   dispatch => bindActionCreators( windowActions , dispatch )
 )( class extends React.Component {
@@ -18,43 +16,42 @@ export default ( Comp , _shouldComponentUpdate ) => {  return connect(
           left: position.left,
           top: position.top,
           right: position.right,
-          bottom: positiom.bottom,
+          bottom: position.bottom,
           width: width,
           height: height
         }}
         id={'modal__' + windowId }
         className={style.window}
       >
-      <Fade>
-          <div
+        <div
           className={style.header}
           draggable
           onDragStart={this.onDragStart}
-          >
-          {
-            cancelable ?
-            <Button
-              className={style.cancel}
-              onClick={this.closeWindow}
-              text="X"
-            />
-            :null
-          }
-          </div>
-          <div className={style.conentContainer}>
-            <Comp
-              {...this.props}
-              closeWindow={this.closeWindow}
-            />
-          </div>
-        </Fade>
+        >
+        {
+          cancelable ?
+          <Button
+            className={style.cancel}
+            onClick={this.closeWindow}
+            text="X"
+          />
+          :null
+        }
+        </div>
+        <div className={style.conentContainer}>
+          <Comp
+            {...this.props}
+            closeWindow={this.closeWindow}
+          />
+        </div>
       </div>
     );
   }
 
   closeWindow = () => {
-    const { closeWindow , windowId } = this.props;
+    const { closeWindow , windowId , onCancel } = this.props;
     closeWindow( windowId );
+    onCancel( this.props );
   }
   cancelEverything = () => {
     const { onCancel , closeWindow , windowId , closeMask } = this.props;
@@ -75,4 +72,4 @@ export default ( Comp , _shouldComponentUpdate ) => {  return connect(
     this.props.windowId
     );
   }
-})};
+});

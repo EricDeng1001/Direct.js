@@ -1,11 +1,16 @@
 import React from 'react';
 import makePage from 'HOC/makePage';
 
-import UserManager "Connected/UserManager";
+import { view as UserManager } from "Connected/UserManager";
+
 class UserPage extends React.Component {
   render(){
+    const { history } = this.props;
     return (
-      <UserManager />
+      <UserManager
+        onCancel={history.goBack}
+        onSuccess={history.goBack}
+      />
     );
   }
 };

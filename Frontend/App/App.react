@@ -4,9 +4,12 @@ import { BrowserRouter } from 'react-router-dom';
 import AnimatedPages from 'AnimatedPages';
 import { bindActionCreators } from 'redux';
 import * as windowActions from 'WindowManager/actions';
-import Alert from 'Windows/Alert';
+import { TransitionGroup } from 'react-transition-group';
+import Fade from 'Animation/Fade';
+import SlideRL from 'Animation/SlideRL';
+import Alert from 'Alert';
 import windows from 'windows';
-import "global.less";
+import "Styles/global.less";
 
 class MaskedRoutes extends React.PureComponent {
   positioned = [];
@@ -14,29 +17,31 @@ class MaskedRoutes extends React.PureComponent {
     const { Windows , masked , alertText , closeAlert } = this.props;
     return (
       <div
-        className="container"
+        className="fullSpaceBFC"
         onDragOver={this.allowDrop}
         onDrop={this.drop}
       >
         <div className={alertText && windows.alertMask} >
         {
-          alertText ? <Alert /> : null
+          alertText ? <Fade play><Alert /></Fade> : null
         }
         </div>
-        <div className={masked ? windows.masked : windows.positionSystem} >
+        <div className={masked ? windows.masked : windows.positionSystem} />
+        <TransitionGroup>
         {
           Windows.map( Window =>
-            <Window.Component
-              position={this.position( Window.id )}
-              width="200px"
-              height="200px"
-              {...Window.props}
-              windowId={Window.id}
-              key={Window.id}
-            />
+            <Fade key={Window.id}>
+              <Window.Component
+                position={this.position( Window.id )}
+                width="200px"
+                height="200px"
+                {...Window.props}
+                windowId={Window.id}
+              />
+            </Fade>
           )
         }
-        </div>
+        </TransitionGroup>
         <BrowserRouter>
           <AnimatedPages />
         </BrowserRouter>

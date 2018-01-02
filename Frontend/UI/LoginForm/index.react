@@ -29,7 +29,7 @@ class LoginForm extends React.Component {
     var passwordValid =
       this.state.passwordValid || ( failed && usernameExist ? "error" : null );
     return (
-      <div className="container">
+      <div className="fullSpaceBFC">
         <form>
           <FormGroup
             controlId="userLoginUsername"

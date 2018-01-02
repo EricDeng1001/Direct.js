@@ -1,0 +1,50 @@
+import React from 'react';
+import style from 'style';
+
+class Sidebar extends React.PureComponent {
+  state = {
+    show: true
+  }
+
+  toggleSidebar = () => {
+    this.setState({
+      show: !this.state.show
+    });
+  }
+  render(){
+    const { children , brand , items , right } = this.props;
+    const { show } = this.state;
+    return (
+      <div className={`${style.container} fullSpaceBFC`}>
+        <div className={style.sidebar + ' ' + ( show ? style.show : style.hide)}>
+          <div className={style.brand}>
+            {brand}
+          </div>
+          <div className={style.items}>
+          {
+            items.map( ( it , key ) =>
+              <span
+                className={style.item}
+                key={key}
+              >
+              {it}
+              </span>
+            )
+          }
+          </div>
+        </div>
+        <div className={style.content}>
+          <div
+            className={style.btn}
+            onClick={this.toggleSidebar}
+          >
+            <img src="/static/pics/Category.png" />
+          </div>
+        {children}
+        </div>
+      </div>
+    );
+  }
+};
+
+export default Sidebar;

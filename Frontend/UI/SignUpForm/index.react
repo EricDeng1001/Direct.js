@@ -27,7 +27,7 @@ class SignUpForm extends React.Component {
     var passwordValidConfirm =
       this.state.consistent ? passwordValid ? "success" : null : "error";
     return (
-      <div className="container">
+      <div className="fullSpaceBFC">
         <form>
           <FormGroup
             controlId="userSignUpUsername"

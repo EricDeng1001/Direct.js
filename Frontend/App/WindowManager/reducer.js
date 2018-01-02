@@ -1,10 +1,10 @@
 import {
-  ALERT,
-  CLOSE_ALERT,
-  OPEN_MODAL,
-  CLOSE_MODAL,
-  SHADOW_CURRENT_PAGE,
-  UNSHADOW_CURRENT_PAGE
+  __ALERT,
+  __CLOSE_ALERT,
+  __OPEN_WINDOW,
+  __CLOSE_WINDOW,
+  __OPEN_MASK,
+  __CLOSE_MASK
 } from 'actionTypes';
 
 export default ( state = {
@@ -12,37 +12,48 @@ export default ( state = {
   masked: false,
   alert: null
 } , { type , payload , id } ) => {
-  if( type === SHADOW_CURRENT_PAGE ){
-    return { ...state,
-      masked: true
-    };
-  }
-  if( type === UNSHADOW_CURRENT_PAGE ){
-    return { ...state,
-      masked: false
-    };
-  }
-  var stack = [ ...state.Windows ];
   switch( type ){
-    case ALERT:
-      return { ...state,
+    case __ALERT: {
+      return {
+        ...state,
         alert: payload.text
       };
-    case CLOSE_ALERT:
-      return { ...state,
+    }
+    case __CLOSE_ALERT: {
+      return {
+        ...state,
         alert: null
       };
-    case OPEN_MODAL:
+    }
+    case __OPEN_WINDOW: {
+      let stack = [ ...state.Windows ];
       stack.push( payload );
-      break;
-    case CLOSE_MODAL:
+      return {
+        ...state,
+        Windows: stack
+      };
+    }
+    case __CLOSE_WINDOW: {
+      let stack = [ ...state.Windows ];
       stack = stack.filter( m => m.id !== payload.id );
-      break;
+      return {
+        ...state,
+        Windows: stack
+      };
+    }
+    case __OPEN_MASK: {
+      return {
+        ...state,
+        masked: true
+      };
+    }
+    case __CLOSE_MASK: {
+      return {
+        ...state,
+        masked: false
+      };
+    }
     default:
       return state;
   }
-  return {
-    ...state,
-    Windows: stack
-  };
 }

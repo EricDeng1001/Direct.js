@@ -24,7 +24,7 @@ class AnimatedPages extends React.PureComponent {
       classNames = slideRLClasses;
     }
     return (
-      <TransitionGroup className="container">
+      <TransitionGroup className="fullSpaceBFC">
         <CSSTransition
           key={location.pathname}
           classNames={classNames}

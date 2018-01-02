@@ -39,7 +39,7 @@ class SplitToPages extends React.PureComponent<Props> {
     var begin = page * capcity;
     var end;
     var actions;
-    if( ( page + 1 ) * capcity > children.length ){
+    if( ( page + 1 ) * capcity >= children.length ){
       lastPage = true;
       end  = children.length;
       actions = [this.actions[0]];
@@ -56,7 +56,7 @@ class SplitToPages extends React.PureComponent<Props> {
 
 
     return (
-      <div className="container">
+      <div className="fullSpaceBFC">
       {
         children.slice( begin , end )
       }

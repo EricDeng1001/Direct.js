@@ -4,29 +4,70 @@ import { connect } from 'react-redux';
 import { Link , Route } from 'react-router-dom';
 
 import Button from 'UI/Button';
+import Info from 'UI/Info';
+import SidebarItem from 'UI/SidebarItem';
+
+import UserManager from 'Windows/UserManager';
+
+import Sidebar from 'Wrapper/Sidebar';
 
 import makePage from 'HOC/makePage';
 
+const UserManagerConfig = {
+  width: '500px',
+  height: '300px',
+  position: {
+    left: 'calc( 50% - 250px )',
+    top: 'calc( 50% - 150px )'
+  },
+  cancelable: true,
+  onCancel: props => props.closeMask()
+};
+
+
 class IndexPage extends React.Component {
-  constructor( props ){
-    super( props );
-  }
 
   render(){
-    const { alert , openModal } = this.props;
+    const { alert , openWindow , openMask , closeMask } = this.props;
     return (
       <React.Fragment>
-        <Link to="/learning/english">
-          英语学习
-        </Link>
-        <br/>
-        <Link to="/ui">
-          ui测试
-        </Link>
-        <br/>
-        <Link to="/nowhere">
-          nowhere
-        </Link>
+        <Sidebar
+          brand="ReNextJs"
+          items={[
+            <SidebarItem
+              text="user page"
+              to="/user"
+            />,
+            <SidebarItem
+              onClick={() => openWindow( UserManager , UserManagerConfig )}
+              text="user window"
+            />,
+            <SidebarItem
+              onClick={() => {openWindow( UserManager , UserManagerConfig );openMask()}}
+              text="user window with mask"
+            />,
+            <SidebarItem
+              onClick={() => alert("Alert Text")}
+              text="alert"
+            />,
+            <SidebarItem
+              onClick={() => {openMask();setTimeout( closeMask , 5000 )}}
+              text="openMask for 5s"
+            />,
+            <SidebarItem
+              to="/nowhere/nowhere/nowhere/nowhere/nowhere/nowhere/nowhere/nonsense/nonsense/404/404/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t  /v/u/w/x/y/z/1/2/3/4/5/6/7?x=13241&c=231"
+              text="404 page"
+            />,
+            <SidebarItem
+              to="/ui"
+              text="ui test page"
+            />
+          ]}
+        >
+          <h1>ReNextJs</h1>
+          <Info info="A Index Page for ability display" />
+        </Sidebar>
+
       </React.Fragment>
     );
   }

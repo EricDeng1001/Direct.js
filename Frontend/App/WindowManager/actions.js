@@ -3,29 +3,29 @@
 **   Author: Eric Deng
 */
 import {
-  ALERT,
-  CLOSE_ALERT,
-  OPEN_MODAL,
-  CLOSE_MODAL,
-  SHADOW_CURRENT_PAGE,
-  UNSHADOW_CURRENT_PAGE
+  __ALERT,
+  __CLOSE_ALERT,
+  __OPEN_WINDOW,
+  __CLOSE_WINDOW,
+  __OPEN_MASK,
+  __CLOSE_MASK
 } from 'actionTypes';
 
 
 export const alert = ( text ) => ({
-  type: ALERT,
+  type: __ALERT,
   payload: {
     text: text
   }
 });
 
 export const closeAlert = () => ({
-  type: CLOSE_ALERT
+  type: __CLOSE_ALERT
 });
 
 let windowId = 1;
 export const openWindow = ( Window , props , getId ) => ({
-    type: OPEN_MODAL,
+    type: __OPEN_WINDOW,
     payload: {
       Component: Window,
       props: props,
@@ -34,16 +34,16 @@ export const openWindow = ( Window , props , getId ) => ({
 });
 
 export const closeWindow = ( wid ) => ({
-  type: CLOSE_MODAL,
+  type: __CLOSE_WINDOW,
   payload: {
     id: wid
   }
 });
 
 export const openMask = () => ({
-  type: SHADOW_CURRENT_PAGE
+  type: __OPEN_MASK
 });
 
 export const closeMask = () => ({
-  type: UNSHADOW_CURRENT_PAGE
+  type: __CLOSE_MASK
 });

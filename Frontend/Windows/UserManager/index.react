@@ -4,7 +4,7 @@ import { view as UserManager } from 'Connected/UserManager';
 export default makeWindow( ( props ) => (
   <UserManager
     {...props}
-    onCancel={() => {props.onCancel();props.closeWindow()}}
+    onCancel={() => {props.closeWindow()}}
     onSuccess={() => {props.onSuccess();props.closeWindow()}}
   />
 ));
