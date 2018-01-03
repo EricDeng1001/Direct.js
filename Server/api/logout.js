@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const validApiKeys = require('../inMemory/validKeys');
-
-module.exports = ({ key , onSuccess , onError }) => {
-  validApiKeys.remove( key );
+const UserLog = mongoose.model('UserLog');
+module.exports = ({ apiKey }) => {
+  validApiKeys.remove( apiKey );
 };

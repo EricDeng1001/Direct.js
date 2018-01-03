@@ -1,80 +1,70 @@
 import {
-  LOGIN
+  __ASYNC_LOGIN
 } from 'actionTypes';
 
 export default ( state = {
-    logined: false,
-    logining: false,
-    rememberPassword: false,
-    name: '',
+    loginState: {
+      pending: 0,
+      resolved: 0,
+      rejected: 0,
+      lastFailed: false,
+      failedReason: "network", // "json" , "server"
+      failedDetail: null
+    },
+    apiKey: '',
     token: '',
-    uid: 0,
-    password: '',
-    failed: false,
-    networkError: false,
-    serverError: false,
-    validName: false,
-    newTo: [],
+    rememberPassword: false,
+    userid: "",
+    password: "",
+    nickname: "",
+    authorized: -1
 } , { type , payload , id } ) => {
-  const { content } = state;
+
   switch( type ){
-    case LOGIN.pending:
+    /*
+    defineAsyncActionReducer __LOGIN start
+    */
+    case __ASYNC_LOGIN.pending: {
+      let loginState = { ...state.loginState };
+      let { userid , password } = payload;
+      loginState.lastFailed = false;
+      loginState.pending++;
       return {
         ...state,
-        logining: true,
-        name: payload.username,
-        password: payload.password,
-        networkError: false,
-        serverError: false,
-        failed: false,
-        validName: false
+        loginState,
+        userid,
+        password
       };
-
-    case LOGIN.resolved:
-      switch( payload.response.state ){
-        case "success":
-          return {
-            ...state,
-            logined: true,
-            logining: false,
-            validName: true,
-            newTo: payload.response.newTo
-          };
-        case "none":
-          return {
-            ...state,
-            logining: false,
-            validName: false,
-            failed: true
-          };
-        case "wrong":
-          return {
-            ...state,
-            logining: false,
-            validName: true,
-            failed: true
-          };
-        default:
-          return {
-            ...state,
-            networkError: true
-          };
+    }
+    case __ASYNC_LOGIN.resolved: {
+      let { response } = payload;
+      let loginState = { ...state.loginState };
+      loginState.resolved++;
+      loginState.pending--;
+      return {
+        ...state,
+        loginState,
+        apiKey: response.apiKey,
+        nickname: response.nickname,
+        authorized: response.status
       }
-    case LOGIN.rejected:
-      if( payload.reason === "network" ){
-        return {
-          ...state,
-          networkError: true,
-          logining: false
-        };
-      }
-      else {
-        return {
-          ...state,
-          logining: false,
-          serverError: true
-        }
-      }
+    }
+    case __ASYNC_LOGIN.rejected: {
+      let { reason , detail } = payload;
+      let loginState = { ...state.loginState };
+      loginState.rejected++;
+      loginState.pending--;
+      loginState.lastFailed = true;
+      loginState.failedReason = reason;
+      loginState.failedDetail = detail;
+      return {
+        ...state,
+        loginState
+      };
+    }
+    /*
+    defineAsyncActionReducer __LOGIN end
+    */
     default:
       return state;
   }

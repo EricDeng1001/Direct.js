@@ -31,12 +31,9 @@ module.exports = {
   devServer : {
     contentBase : "./public",
     proxy: {
-      '/api': {
-        target: 'http://apis.map.qq.com/',
+      '*': {
+        target: 'http://127.0.0.1/',
         changeOrigin: true,
-        pathRewrite: {
-          '^/api' : ''
-        }
       },
 
     },

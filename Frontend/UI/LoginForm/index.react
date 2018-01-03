@@ -15,45 +15,68 @@ class LoginForm extends React.Component {
   constructor( props ){
     super( props );
     this.state = {
-      username: props.initName,
-      usernameValid: null,
+      userid: props.initName,
+      useridValid: null,
       password: props.initPassword,
       passwordValid: null
     };
   }
 
   render(){
-    const { usernameExist , failed , onCancel , goSignUp } = this.props;
-    var usernameValid =
-      this.state.usernameValid || ( failed ? !usernameExist ? "warning" : "success" : null );
-    var passwordValid =
-      this.state.passwordValid || ( failed && usernameExist ? "error" : null );
+    const { userNotExist , passwordWrong , onCancel , goSignUp } = this.props;
+    const { useridValid , passwordValid } = this.state;
+    var useridValidationState = null;
+    var passwordValidationState = null;
+    var useridPrompt = null;
+    var passwordPrompt = null;
+    if( useridValid && passwordValid ){
+      if( userNotExist ){
+        useridValidationState = "warning";
+        useridPrompt = "userid not exist";
+      }
+      else {
+        useridValidationState = "success";
+      }
+      if( passwordWrong && !userNotExist ){
+        passwordValidationState = "warning";
+        passwordPrompt = "password wrong";
+      }
+      else {
+        passwordValidationState = "success";
+      }
+    }
+    else {
+      if( useridValid !== null ){
+        useridValidationState = "warning";
+      }
+      if( passwordValid !== null ){
+        passwordValidationState = "warning";
+      }
+    }
     return (
       <div className="fullSpaceBFC">
         <form>
           <FormGroup
             controlId="userLoginUsername"
-            validationState={usernameValid}
+            validationState={useridValidationState}
             onSubmit={this.onLogin}
           >
-            <ControlLabel>username</ControlLabel>
+            <ControlLabel>userid</ControlLabel>
             <FormControl
               type="text"
-              value={this.state.username}
-              placeholder="your username"
+              value={this.state.userid}
+              placeholder="your userid"
               onChange={this.inputUsername}
               onKeyDown={this.onKeyDown}
             />
             <FormControl.Feedback />
             {
-              usernameValid !== "success" && usernameValid ?
-                <ControlLabel>用户名{usernameExist ? "非法" : "不存在" }!</ControlLabel>
-                :null
+              useridPrompt
             }
           </FormGroup>
           <FormGroup
             controlId="userLoginUsername"
-            validationState={passwordValid}
+            validationState={passwordValidationState}
           >
             <ControlLabel>password</ControlLabel>
             <FormControl
@@ -65,9 +88,7 @@ class LoginForm extends React.Component {
             />
             <FormControl.Feedback />
             {
-              passwordValid === 'error' ?
-                <ControlLabel>{!usernameExist ? "密码非法!" : "密码错误!" }</ControlLabel>
-                :null
+              passwordPrompt
             }
           </FormGroup>
           <ButtonControlPane
@@ -89,21 +110,25 @@ class LoginForm extends React.Component {
   }
 
   onLogin = () => {
-    const { username , password } = this.state;
-    if( username.trim() && password.trim() ){
+    const { userid , password } = this.state;
+    if( userid.trim() && password.trim() ){
       this.props.onLogin({
-        username: this.state.username,
+        userid: this.state.userid,
         password: this.state.password
       });
+      this.setState({
+        useridValid: true,
+        passwordValid: true
+      })
     }
     else {
       this.setState({
-        usernameValid: username.trim() ? null : 'error',
-        passwordValid: password.trim() ? null : 'error'
+        useridValid: userid.trim() ? null : false,
+        passwordValid: password.trim() ? null : false
       });
       setTimeout( () => this.setState({
-        usernameValid: null,
-        username: username.trim(),
+        useridValid: null,
+        userid: userid.trim(),
         passwordValid: null,
         password: password.trim()
       }) , 2000 );
@@ -118,7 +143,7 @@ class LoginForm extends React.Component {
 
   inputUsername = ev => {
     this.setState({
-      username: ev.target.value
+      userid: ev.target.value
     });
   }
 

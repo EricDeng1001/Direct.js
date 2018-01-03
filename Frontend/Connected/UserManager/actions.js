@@ -1,64 +1,69 @@
 import {
-  LOGIN
+  __ASYNC_LOGIN
 } from 'actionTypes';
 
-import jsonToUrlencoded from 'Algorithm/jsonToUrlencoded';
-
-const startLogin = ({ username , password }) => ({
-  type: LOGIN.pending,
-  payload: {
-    username,
-    password
-  }
-});
-
-const loginSucceed = ( response ) => ({
-  type: LOGIN.resolved,
-  payload: {
-    response
-  }
-});
-
-const loginFailed = ( reason ) => ({
-    type: LOGIN.rejected,
+/*
+defineAsyncActionCreator login start
+*/
+let loginCounter = 0;
+const loginStart = ({ userid , password }) => ({
+    type: __ASYNC_LOGIN.pending,
     payload: {
-      reason
-    }
+      userid,
+      password
+    },
+    id: loginCounter
+});
+const loginResolved = ( response ) => ({
+    type: __ASYNC_LOGIN.resolved,
+    payload: {
+      response
+    },
+    id: loginCounter
+});
+const loginRejected = ( reason , detail ) => ({
+    type: __ASYNC_LOGIN.rejected,
+    payload: {
+      reason,
+      detail
+    },
+    id: loginCounter
 });
 
-let reqNum = 0;
-export const login = ({ username , password }) => ( dispatch ) => {
-  dispatch( startLogin({ username , password }) );
-  const reqId = ++reqNum;
-  const dispatchNewest = action => {
-    if( reqId === reqNum ){
+export const login = ({ userid , password }) => ( dispatch ) => {
+  const reqId = ++loginCounter;
+  const dispatchLastest = action => {
+    if( reqId === loginCounter ){
       dispatch( action );
     }
   }
-
-  fetch( 'http://139.129.210.230/LearningSystem/BackEnd/new_login.php' , {
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    method: 'POST',
-    body: jsonToUrlencoded({
-      username,
-      password
-    })
+  dispatch( loginStart( { userid , password }) );
+  fetch( "/login" , {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userid,
+        password
+      })
   })
   .then( response => {
     if( !response.ok ){
-      throw new Error(" response not ok with:" + response.status );
+      dispatchLastest( loginRejected( "server" , response.status ) );
+      return;
     }
     response.json()
-    .then( json => dispatchNewest( loginSucceed( json ) ) )
+    .then( json => dispatchLastest( loginResolved( json ) ) )
     .catch( err => {
-      console.log( "json parse err:" + err );
-      dispatchNewest( loginFailed( "json" ) );
-    })
+      dispatchLastest( loginRejected( "json" , err ) )
+    });
   })
   .catch( err => {
-    console.log( "network err:" + err );
-    dispatchNewest( loginFailed( "network" ) );
+      dispatchLastest( loginRejected( "network" , err ) );
   });
-}
+};
+
+/*
+defineAsyncActionCreator login end
+*/

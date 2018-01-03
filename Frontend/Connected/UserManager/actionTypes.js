@@ -1,5 +1,5 @@
-export const LOGIN = {
-  pending: 'USER/START_LOGIN',
-  resolved: 'USER/LOGIN_SUCC',
-  rejected: 'USER/LOGIN_FAILED'
+export const __ASYNC_LOGIN = {
+  pending: "USER/__LOGIN_PENDING",
+  resolved: "USER/__LOGIN_RESOLVED",
+  rejected: "USER/__LOGIN_REJECTED",
 };

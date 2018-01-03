@@ -6,98 +6,102 @@ import React from 'react';
 import { FormGroup , ControlLabel , FormControl } from 'react-bootstrap';
 import ButtonControlPane from 'UI/ButtonControlPane';
 
-class SignUpForm extends React.Component {
+class LoginForm extends React.Component {
+  static defaultProps = {
+    initName: "",
+    initPassword: ""
+  }
+
   constructor( props ){
     super( props );
     this.state = {
-      username: "",
-      usernameValid: null,
-      password: "",
-      passwordValid: null,
-      passwordConfirm: "",
-      consistent: true
+      userid: props.initName,
+      useridValid: null,
+      password: props.initPassword,
+      passwordValid: null
     };
   }
 
   render(){
-    const { usernameExist , failed , onCancel } = this.props;
-    var usernameValid =
-      this.state.usernameValid || ( failed ? usernameExist ? "warning" : "success" : null );
-    var passwordValid = this.state.passwordValid;
-    var passwordValidConfirm =
-      this.state.consistent ? passwordValid ? "success" : null : "error";
+    const { userNotExist , passwordWrong , onCancel , goSignUp } = this.props;
+    const { useridValid , passwordValid } = this.state;
+    var useridValidationState = null;
+    var passwordValidationState = null;
+    var useridPrompt = null;
+    var passwordPrompt = null;
+    if( useridValid && passwordValid ){
+      if( userNotExist ){
+        useridValidationState = "warning";
+        useridPrompt = "userid not exist";
+      }
+      else {
+        useridValidationState = "success";
+      }
+      if( passwordWrong ){
+        passwordValidationState = "warning";
+        passwordPrompt = "password wrong";
+      }
+      else {
+        passwordValidationState = "success";
+      }
+    }
+    else {
+      if( useridValid === null ){
+        useridValidationState = "warning";
+      }
+      if( passwordValid === null ){
+        useridValidationState = "warning";
+      }
+    }
     return (
       <div className="fullSpaceBFC">
         <form>
           <FormGroup
-            controlId="userSignUpUsername"
-            validationState={usernameValid}
+            controlId="userLoginUsername"
+            validationState={useridValidationState}
             onSubmit={this.onLogin}
           >
-            <ControlLabel>username</ControlLabel>
+            <ControlLabel>userid</ControlLabel>
             <FormControl
               type="text"
-              value={this.state.username}
-              placeholder="Signup name"
+              value={this.state.userid}
+              placeholder="your userid"
               onChange={this.inputUsername}
               onKeyDown={this.onKeyDown}
             />
             <FormControl.Feedback />
             {
-              usernameValid !== "success" && usernameValid ?
-                <ControlLabel>用户名{!usernameExist ? "非法" : "已存在" }!</ControlLabel>
-                :null
+              useridPrompt
             }
           </FormGroup>
-
           <FormGroup
-            controlId="userSignUpPassword"
-            validationState={passwordValid}
+            controlId="userLoginUsername"
+            validationState={passwordValidationState}
           >
             <ControlLabel>password</ControlLabel>
             <FormControl
               type="password"
               value={this.state.password}
-              placeholder="password"
+              placeholder="your password"
               onChange={this.inputPassword}
               onKeyDown={this.onKeyDown}
             />
             <FormControl.Feedback />
             {
-              passwordValid === 'error' ?
-                <ControlLabel>密码非法!</ControlLabel>
-                :null
+              passwordPrompt
             }
           </FormGroup>
-
-          <FormGroup
-            controlId="userSignUpConfirm"
-            validationState={passwordValidConfirm}
-          >
-            <ControlLabel>confirm your password</ControlLabel>
-            <FormControl
-              type="password"
-              value={this.state.passwordConfirm}
-              placeholder="reenter password"
-              onChange={this.inputPasswordConfirm}
-              onKeyDown={this.onKeyDown}
-            />
-            <FormControl.Feedback />
-            {
-              passwordValid === 'error' ?
-                <ControlLabel>密码非法!</ControlLabel>
-                :null
-            }
-          </FormGroup>
-
           <ButtonControlPane
             mainAction={{
-              action: this.onSignUp,
-              text: "signup"
+              action: this.onLogin,
+              text: "login"
             }}
             additionalActions={[{
               action: onCancel,
               text: "cancel"
+            },{
+              action: goSignUp,
+              text: "sign up"
             }]}
           />
         </form>
@@ -105,22 +109,22 @@ class SignUpForm extends React.Component {
     );
   }
 
-  onSignUp = () => {
-    const { username , password } = this.state;
-    if( username.trim() && password.trim() ){
-      this.props.onSignUp({
-        username: this.state.username,
+  onLogin = () => {
+    const { userid , password } = this.state;
+    if( userid.trim() && password.trim() ){
+      this.props.onLogin({
+        userid: this.state.userid,
         password: this.state.password
       });
     }
     else {
       this.setState({
-        usernameValid: username.trim() ? null : 'error',
+        useridValid: userid.trim() ? null : 'error',
         passwordValid: password.trim() ? null : 'error'
       });
       setTimeout( () => this.setState({
-        usernameValid: null,
-        username: username.trim(),
+        useridValid: null,
+        userid: userid.trim(),
         passwordValid: null,
         password: password.trim()
       }) , 2000 );
@@ -135,13 +139,7 @@ class SignUpForm extends React.Component {
 
   inputUsername = ev => {
     this.setState({
-      username: ev.target.value
-    });
-  }
-
-  inputPasswordConfirm = ev => {
-    this.setState({
-      passwordConfirm: ev.target.value
+      userid: ev.target.value
     });
   }
 
@@ -152,4 +150,4 @@ class SignUpForm extends React.Component {
   }
 };
 
-export default SignUpForm;
+export default LoginForm;

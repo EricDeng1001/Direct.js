@@ -6,17 +6,14 @@ import * as actionCreators from 'actions';
 import LoginForm from 'UI/LoginForm';
 import SignUpForm from 'UI/SignUpForm'
 
+import applyHOCs from 'HOC/applyHOCs';
+import asyncProcessControl from 'HOC/asyncProcessControl';
+
 import style from 'style';
 
 class UserManager extends React.PureComponent {
   state = {
     login: true
-  }
-
-  componentWillReceiveProps( nextProps ){
-    if( nextProps.logined && !this.props.logined ){
-      this.props.onSuccess();
-    }
   }
 
   signup = () => {
@@ -30,27 +27,25 @@ class UserManager extends React.PureComponent {
       login: true
     });
   }
+
   render(){
-    const { onCancel , login , signup , logined , logining , usernameExist , name , password , failed } = this.props;
+    const { onCancel , login , signup , initName , initPassword , authorized , userExist } = this.props;
     return (
       <React.Fragment>
       {
         this.state.login ?
           <LoginForm
-            logining={logining}
-            logined={logined}
-            failed={failed}
-            usernameExist={usernameExist}
-            initName={name}
-            initPassword={password}
+            passwordWrong={authorized === 2}
+            userNotExist={authorized === 1}
+            initName={initName}
+            initPassword={initPassword}
             onLogin={login}
             onCancel={onCancel}
             goSignUp={this.signup}
           />
           :
           <SignUpForm
-            failed={failed}
-            usernameExist={usernameExist}
+            userExist={userExist}
             onSignUp={signup}
             onCancel={this.goLogin}
           />
@@ -60,16 +55,26 @@ class UserManager extends React.PureComponent {
   }
 };
 
-export default connect(
-  ({ UserManager: state }) => ({
-    logined: state.logined,
-    logining: state.logining,
-    failed: state.failed,
-    networkError: state.networkError,
-    serverError: state.serverError,
-    usernameExist: state.validName,
-    name: state.name,
-    password: state.password
+export default applyHOCs([
+  asyncProcessControl({
+    loginState: {
+      onResolved({ authorized , onSuccess }){
+        if( authorized === 0 ){
+          onSuccess();
+        }
+      },
+      onRejected(){
+
+      }
+    }
   }),
-  dispatch => bindActionCreators( actionCreators , dispatch )
-)( UserManager );
+  connect(
+    ({ UserManager: state }) => ({
+      authorized: state.authorized,
+      loginState: state.loginState,
+      initName: state.userid,
+      initPassword: state.password
+    }),
+    dispatch => bindActionCreators( actionCreators , dispatch )
+  )
+] , UserManager );
