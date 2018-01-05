@@ -10,7 +10,13 @@ for( let i = 0 ; i < keys.length ; i++ ){
   initState[keys[i]] = reducerConfig[keys[i]]( undefined , { type: 'ReNextJSRestoreLastState' });
 }
 
-const lastState = JSON.parse( localStorage.lastState );
+let lastState;
+try {
+  lastState = JSON.parse( localStorage.lastState );
+}
+catch ( e ){
+  lastState = {};
+}
 
 merge( initState , lastState );
 
