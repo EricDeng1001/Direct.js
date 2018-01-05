@@ -1,11 +1,11 @@
-var mongoose = require( 'mongoose' );
-var UserAuthSchema = new mongoose.Schema({
+const mongoose = require('mongoose');
+
+const UserAuthSchema = new mongoose.Schema({
   userid: String,
-  identifier: Number,
   password: String,
   createTime: Date,
   updateTime: Date,
-  authorized: Array
+  userRole: String // admin , user
 });
 
 mongoose.model( 'UserAuth' , UserAuthSchema );

@@ -32,12 +32,13 @@ class AnimatedPages extends React.PureComponent {
           appear
         >
           <section className="page">
-            <Routes location={location} />
+            <Routes location={location} onAppWillClose={this.addOnAppWillClose}/>
           </section>
         </CSSTransition>
       </TransitionGroup>
     );
   }
+
 };
 
 export default withRouter( AnimatedPages );

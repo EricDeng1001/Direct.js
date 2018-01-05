@@ -22,7 +22,7 @@ export default Comp => connect(
   render(){
     return (
       <Comp
-        {...this.props}
+        {...this.props} // include history , onAppWillClose , alert , openWindow ...
         ined={this.state.ined}
       />
     );

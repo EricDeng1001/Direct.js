@@ -1,0 +1,209 @@
+/*
+**   Antinux Innovation
+**   Author: Eric Deng
+*/
+import React from 'react';
+import { FormGroup , ControlLabel , FormControl , Checkbox } from 'react-bootstrap';
+import ButtonControlPane from 'UI/ButtonControlPane';
+
+import { useridRegExp , passwordRegExp } from 'Connected/UserManager';
+
+class SignUpForm extends React.PureComponent {
+  static defaultProps = {
+    initName: "",
+    initPassword: ""
+  }
+
+  constructor( props ){
+    super( props );
+    this.state = {
+      userid: props.initName,
+      useridValid: useridRegExp.test( props.initName ),
+      password: props.initPassword,
+      passwordValid: passwordRegExp.test( props.initPassword ) && props.initPassword.length >= 8,
+      passwordConfirm: ""
+    };
+  }
+
+  render(){
+    const {
+      userExist,
+      onCancel
+    } = this.props;
+    const {
+      useridValid,
+      passwordValid,
+      userid,
+      password,
+      passwordConfirm
+    } = this.state;
+
+    var useridValidationState = null;
+    var passwordValidationState = null;
+    var confirmValidationState = null;
+    var useridPrompt = null;
+    var passwordPrompt = null;
+    var confirmPrompt = null;
+
+    if( useridValid && passwordValid ){
+      passwordValidationState = "success";
+      passwordPrompt = "ready";
+      if( userExist ){
+        useridValidationState = "warning";
+        useridPrompt = "userid has been taken";
+      }
+      else {
+        useridValidationState = "success";
+        useridPrompt = "ready";
+      }
+      if( passwordConfirm ){
+        if( passwordConfirm !== password ){
+          confirmValidationState = "error";
+          confirmPrompt = "password not match";
+        }
+        else {
+          confirmValidationState = "success";
+          confirmPrompt = "ready";
+        }
+      }
+    }
+    else {
+      if( useridValid !== null && !useridValid ){
+        useridValidationState = "error";
+        useridPrompt = "userid can only contain letters , numbers and underscore _";
+      }
+      if( passwordValid !== null && !passwordValid ){
+        passwordValidationState = "error";
+        passwordPrompt = (
+          <ul>
+            <li>password must be longer than 8</li>
+            <li>password must contain at least one of  {"{ * , @ , !}"} </li>
+            <li>password must have at least one upper case</li>
+          </ul>
+        )
+      }
+      else {
+        passwordValidationState = "success";
+        passwordPrompt = "ready";
+      }
+    }
+
+    return (
+      <div className="fullSpaceBFC">
+        <form>
+          <FormGroup
+            controlId="userSignupUserid"
+            validationState={useridValidationState}
+            onSubmit={this.onLogin}
+          >
+            <ControlLabel>userid</ControlLabel>
+            <FormControl
+              type="text"
+              value={userid}
+              placeholder="your userid"
+              onChange={this.inputUsername}
+              onKeyDown={this.onKeyDown}
+            />
+            <FormControl.Feedback />
+            {
+              useridPrompt
+            }
+          </FormGroup>
+          <FormGroup
+            controlId="userSignupPassword"
+            validationState={passwordValidationState}
+          >
+            <ControlLabel>password</ControlLabel>
+            <FormControl
+              type="password"
+              value={password}
+              placeholder="your password"
+              onChange={this.inputPassword}
+              onKeyDown={this.onKeyDown}
+            />
+            <FormControl.Feedback />
+            {
+              passwordPrompt
+            }
+          </FormGroup>
+          <FormGroup
+            controlId="userSignupCofirm"
+            validationState={confirmValidationState}
+          >
+            <ControlLabel>password confirm</ControlLabel>
+            <FormControl
+              type="password"
+              value={passwordConfirm}
+              placeholder="confirm your password"
+              onChange={this.inputConfirm}
+              onKeyDown={this.onKeyDown}
+            />
+            <FormControl.Feedback />
+            {
+              confirmPrompt
+            }
+          </FormGroup>
+          <ButtonControlPane
+            mainAction={{
+              action: this.onSignUp,
+              text: "signup"
+            }}
+            additionalActions={[{
+              action: onCancel,
+              text: "cancel"
+            }]}
+          />
+        </form>
+      </div>
+    );
+  }
+
+  onSignUp = () => {
+    const { userid , password , passwordConfirm } = this.state;
+    const useridValid = useridRegExp.test( userid );
+    const passwordValid = passwordRegExp.test( password ) && password.length >= 8;
+    if( passwordConfirm !== password ){
+      return;
+    }
+    if( useridValid && passwordValid ){
+      this.props.onSignUp({
+        userid,
+        password
+      });
+    }
+    this.setState({
+      useridValid,
+      passwordValid
+    });
+  }
+
+  onKeyDown = ev => {
+    if( ev.key === 'Enter' ){
+      this.onSignUp();
+    }
+  }
+
+  inputUsername = ev => {
+    const useridValid = useridRegExp.test( ev.target.value );
+    this.setState({
+      useridValid,
+      userid: ev.target.value
+    });
+  }
+
+  inputPassword = ev => {
+    const passwordValid = passwordRegExp.test( ev.target.value ) && ev.target.value.length >= 8;
+    this.setState({
+      passwordValid,
+      password: ev.target.value
+    });
+  }
+
+  inputConfirm = ev => {
+    this.setState({
+      passwordConfirm: ev.target.value
+    });
+  }
+};
+
+export default SignUpForm;

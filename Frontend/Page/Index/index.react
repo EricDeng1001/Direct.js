@@ -5,11 +5,12 @@ import { Link , Route } from 'react-router-dom';
 
 import Button from 'UI/Button';
 import Info from 'UI/Info';
-import SidebarItem from 'UI/SidebarItem';
+
 
 import UserManager from 'Windows/UserManager';
 
 import Sidebar from 'Wrapper/Sidebar';
+import SidebarItem from 'Wrapper/Sidebar/Item';
 
 import makePage from 'HOC/makePage';
 

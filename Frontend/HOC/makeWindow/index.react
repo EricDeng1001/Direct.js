@@ -9,6 +9,9 @@ export default ( Comp , _shouldComponentUpdate ) => connect(
   undefined,
   dispatch => bindActionCreators( windowActions , dispatch )
 )( class extends React.Component {
+  static defaultProps = {
+    onCancel: () => null
+  }
   render(){
     const { position , closeModal , windowId , width , height , cancelable , onCancel } = this.props;
     return (
@@ -52,11 +55,6 @@ export default ( Comp , _shouldComponentUpdate ) => connect(
     const { closeWindow , windowId , onCancel } = this.props;
     closeWindow( windowId );
     onCancel( this.props );
-  }
-  cancelEverything = () => {
-    const { onCancel , closeWindow , windowId , closeMask } = this.props;
-    closeWindow( windowId );
-    onCancel();
   }
 
   shouldComponentUpdate( nextProps  , nextState ){

@@ -13,7 +13,9 @@ export default ( asyncObj = {} ) => Comp => {
           asyncObj[asyncProps].onResolved.call( this , nextProps );
         }
         else if( nextProps[asyncProps].rejected !== this.props[asyncProps].rejected ){
-          asyncObj[asyncProps].onRejected.call( this , nextProps );
+          if( asyncObj[asyncProps].onRejected ){
+            asyncObj[asyncProps].onRejected.call( this , nextProps );
+          }
         }
       }
     }

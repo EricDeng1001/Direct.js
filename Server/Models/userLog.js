@@ -6,4 +6,4 @@ var UserLogSchema = new mongoose.Schema({
   time: Date
 });
 
-mongoose.model( 'UserAuth' , UserLogSchema );
+mongoose.model( 'UserLog' , UserLogSchema );

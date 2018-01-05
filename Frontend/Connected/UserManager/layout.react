@@ -1,19 +1,31 @@
+/*
+**   Antinux Innovation
+**   Author: Eric Deng
+*/
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Button from 'UI/Button';
 import * as actionCreators from 'actions';
-import LoginForm from 'UI/LoginForm';
-import SignUpForm from 'UI/SignUpForm'
+import LoginForm from 'LoginForm';
+import SignUpForm from 'SignUpForm';
 
 import applyHOCs from 'HOC/applyHOCs';
 import asyncProcessControl from 'HOC/asyncProcessControl';
 
 import style from 'style';
 
-class UserManager extends React.PureComponent {
+
+//@flow
+
+type Props = {
+  onCancel: () => any,
+  onSuccess: () => any
+};
+
+class UserManager extends React.PureComponent<Props> {
   state = {
-    login: true
+    login: true,
   }
 
   signup = () => {
@@ -29,22 +41,50 @@ class UserManager extends React.PureComponent {
   }
 
   render(){
-    const { onCancel , login , signup , initName , initPassword , authorized , userExist } = this.props;
+    const {
+      onCancel,
+      login,
+      signup,
+      logout,
+      toggleRememberPassword,
+      rememberPassword,
+      keepLogin,
+      toggleKeepLogin,
+      initName,
+      initPassword,
+      authorized,
+      userExist,
+      userNotExist,
+      passwordWrong
+    } = this.props;
+    if( authorized ){
+      return (
+        <h1>
+          You are authorized
+        </h1>
+      );
+    }
     return (
       <React.Fragment>
       {
         this.state.login ?
           <LoginForm
-            passwordWrong={authorized === 2}
-            userNotExist={authorized === 1}
+            passwordWrong={passwordWrong}
+            userNotExist={userNotExist}
             initName={initName}
             initPassword={initPassword}
+            rememberPassword={rememberPassword}
+            onToggleRememberPassword={toggleRememberPassword}
+            keepLogin={keepLogin}
+            onToggleKeepLogin={toggleKeepLogin}
             onLogin={login}
             onCancel={onCancel}
             goSignUp={this.signup}
           />
           :
           <SignUpForm
+            initName={initName}
+            initPassword={initPassword}
             userExist={userExist}
             onSignUp={signup}
             onCancel={this.goLogin}
@@ -62,16 +102,29 @@ export default applyHOCs([
         if( authorized === 0 ){
           onSuccess();
         }
-      },
-      onRejected(){
-
+      }
+    },
+    signupState: {
+      onResolved({ signupStatus }){
+        if( !signupStatus ){
+          this.goLogin();
+        }
       }
     }
   }),
   connect(
     ({ UserManager: state }) => ({
-      authorized: state.authorized,
+      authorized: state.loginStatus === 0,
+      signupStatus: state.signupStatus,
+      userExist: state.signupStatus === 1 || state.loginStatus === 2 || state.loginStatus === 0,
+      userNotExist: state.loginStatus === 1,
+      passwordWrong: state.loginStatus === 2,
+      rememberPassword: state.rememberPassword,
+      keepLogin: state.keepLogin,
       loginState: state.loginState,
+      signupState: state.signupState,
+      logoutState: state.logoutState,
+      readUserInfoState: state.readUserInfoState,
       initName: state.userid,
       initPassword: state.password
     }),

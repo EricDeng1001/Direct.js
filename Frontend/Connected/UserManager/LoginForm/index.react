@@ -3,10 +3,12 @@
 **   Author: Eric Deng
 */
 import React from 'react';
-import { FormGroup , ControlLabel , FormControl } from 'react-bootstrap';
+import { FormGroup , ControlLabel , FormControl , Checkbox } from 'react-bootstrap';
 import ButtonControlPane from 'UI/ButtonControlPane';
 
-class LoginForm extends React.Component {
+import { useridRegExp , passwordRegExp } from 'Connected/UserManager';
+
+class LoginForm extends React.PureComponent {
   static defaultProps = {
     initName: "",
     initPassword: ""
@@ -18,13 +20,28 @@ class LoginForm extends React.Component {
       userid: props.initName,
       useridValid: null,
       password: props.initPassword,
-      passwordValid: null
+      passwordValid: null,
     };
   }
 
   render(){
-    const { userNotExist , passwordWrong , onCancel , goSignUp } = this.props;
-    const { useridValid , passwordValid } = this.state;
+    const {
+      userNotExist,
+      passwordWrong,
+      onToggleRememberPassword,
+      rememberPassword,
+      onToggleKeepLogin,
+      keepLogin,
+      onCancel,
+      goSignUp
+    } = this.props;
+    const {
+      useridValid,
+      passwordValid,
+      password,
+      userid
+    } = this.state;
+
     var useridValidationState = null;
     var passwordValidationState = null;
     var useridPrompt = null;
@@ -38,21 +55,21 @@ class LoginForm extends React.Component {
         useridValidationState = "success";
       }
       if( passwordWrong ){
-        passwordValidationState = "warning";
+        passwordValidationState = "error";
         passwordPrompt = "password wrong";
-      }
-      else {
-        passwordValidationState = "success";
       }
     }
     else {
-      if( useridValid === null ){
-        useridValidationState = "warning";
+      if( useridValid !== null && !useridValid ){
+        useridValidationState = "error";
+        useridPrompt = "userid format is not correct";
       }
-      if( passwordValid === null ){
-        useridValidationState = "warning";
+      if( passwordValid !== null && !passwordValid ){
+        passwordValidationState = "error";
+        passwordPrompt = "password format is not correct";
       }
     }
+
     return (
       <div className="fullSpaceBFC">
         <form>
@@ -64,7 +81,7 @@ class LoginForm extends React.Component {
             <ControlLabel>userid</ControlLabel>
             <FormControl
               type="text"
-              value={this.state.userid}
+              value={userid}
               placeholder="your userid"
               onChange={this.inputUsername}
               onKeyDown={this.onKeyDown}
@@ -81,7 +98,7 @@ class LoginForm extends React.Component {
             <ControlLabel>password</ControlLabel>
             <FormControl
               type="password"
-              value={this.state.password}
+              value={password}
               placeholder="your password"
               onChange={this.inputPassword}
               onKeyDown={this.onKeyDown}
@@ -91,6 +108,20 @@ class LoginForm extends React.Component {
               passwordPrompt
             }
           </FormGroup>
+          <Checkbox
+            onChange={onToggleRememberPassword}
+            validationState={rememberPassword ? "success" : "error"}
+            checked={rememberPassword}
+          >
+            remember password
+          </Checkbox>
+          <Checkbox
+            onChange={onToggleKeepLogin}
+            validationState={keepLogin ? "success" : "error"}
+            checked={keepLogin}
+          >
+            keep login
+          </Checkbox>
           <ButtonControlPane
             mainAction={{
               action: this.onLogin,
@@ -111,27 +142,25 @@ class LoginForm extends React.Component {
 
   onLogin = () => {
     const { userid , password } = this.state;
-    if( userid.trim() && password.trim() ){
+    const useridValid = useridRegExp.test( userid );
+    const passwordValid = passwordRegExp.test( password ) && password.length >= 8;
+    if( useridValid && passwordValid ){
       this.props.onLogin({
-        userid: this.state.userid,
-        password: this.state.password
+        userid,
+        password
       });
     }
-    else {
-      this.setState({
-        useridValid: userid.trim() ? null : 'error',
-        passwordValid: password.trim() ? null : 'error'
-      });
-      setTimeout( () => this.setState({
-        useridValid: null,
-        userid: userid.trim(),
-        passwordValid: null,
-        password: password.trim()
-      }) , 2000 );
-    }
+    this.setState({
+      useridValid,
+      passwordValid
+    });
   }
 
   onKeyDown = ev => {
+    this.setState({
+      useridValid: null,
+      passwordValid: null
+    });
     if( ev.key === 'Enter' ){
       this.onLogin();
     }

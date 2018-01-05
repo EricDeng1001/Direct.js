@@ -38,12 +38,7 @@ class UIPage extends React.Component {
 
     return (
       <React.Fragment>
-        <Sidebar
-          brand="Sidebar brand"
-          items={[1,2,3,4,5,6,7]}
-        >
-          <Info info="hello world" />
-        </Sidebar>
+        <div/>
       </React.Fragment>
     );
   }
