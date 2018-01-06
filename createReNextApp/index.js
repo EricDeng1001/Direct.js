@@ -14,14 +14,13 @@ program
         copyDir( __dirname + '/resources' , path.resolve( './' , projectName )  , "" );
         process.chdir( projectName );
         npm.load( () => {
-          npm.commands.init();
-          console.log("installing renext...");
-          npm.commands.install(["renext"] , ( err , data ) => {
-            console.log( data );
+          npm.commands.init( () => {
+            console.log(" ----- start install renext ----");
+            npm.commands.install(["renext"] , ( err , data ) => {
+              console.log(" ------- installed completed! ------");
+            });
           });
-          console.log("------ installing renext completed! -----");
         })
-
       }
       else {
         console.log( projectName + " already exist");
