@@ -1,4 +1,4 @@
-!/usr/bin/env node
+#!env node
 const fs = require('fs');
 const path = require('path');
 var program = require('commander');
@@ -7,7 +7,7 @@ program
   .version('0.0.1')
   .arguments("<projectName>")
   .action( projectName => {
-    fs.stat( projectName , ( err , result => {
+    fs.stat( projectName , ( err , result ) => {
       if( err ){
         fs.mkdirSync( path.resolve( './' , projectName ) );
         copyDir( __dirname + '/resources' , path.resolve( './' , projectName ) );
@@ -16,8 +16,9 @@ program
         console.log( projectName + " already exist");
         console.log( projectName + " is a file");
       }
-    }))
-  });
+    })
+  })
+  .parse( process.argv );
 
 function copyDir( src , dest ){
   const files = fs.readdirSync( src );

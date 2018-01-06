@@ -1,10 +1,13 @@
 {
   "name": "createrenextapp",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "create a ReNext app",
   "main": "index.js",
   "author": "Eric Deng",
   "license": "ISC",
+  "bin": {
+    "create-renext-app": "./index.js"
+  },
   "dependencies": {
     "commander": "^2.12.2"
   }
