@@ -2,8 +2,6 @@
 const fs = require('fs');
 const path = require('path');
 var program = require('commander');
-const execSync = require("child_process").execSync;
-const exec = require("child_process").exec;
 const npm = require("npm");
 
 program
@@ -15,13 +13,15 @@ program
         fs.mkdirSync( path.resolve( './' , projectName ) );
         copyDir( __dirname + '/resources' , path.resolve( './' , projectName )  , "" );
         process.chdir( projectName );
-        exec( "npm install renext" , (error, stdout, stderr) => {
-          console.log('stdout: ' + stdout);
-          console.log('stderr: ' + stderr);
-          if (error !== null) {
-            console.log('exec error: ' + error);
-          }
+        npm.load( () => {
+          npm.commands.init();
+          console.log("installing renext...");
+          npm.commands.install(["renext"] , ( err , data ) => {
+            console.log( data );
+          });
+          console.log("------ installing renext completed! -----");
         })
+
       }
       else {
         console.log( projectName + " already exist");
