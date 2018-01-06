@@ -1,0 +1,25 @@
+@import "global";
+@import "size";
+
+.container {
+  .fullSpaceBFC;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  .messages {
+    width: 60%;
+
+    .oneMessage {
+      display: block;
+      width: 100%;
+      margin-bottom: 5px;
+
+      .userid {
+        font-size: @big;
+        margin-right: 5px;
+      }
+      
+    }
+  }
+}

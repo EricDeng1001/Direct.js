@@ -1,0 +1,18 @@
+import React from 'react';
+import makePage from 'renext/makePage';
+
+import { view as UserManager } from "Connected/UserManager";
+
+class UserPage extends React.Component {
+  render(){
+    const { history } = this.props;
+    return (
+      <UserManager
+        onCancel={history.goBack}
+        onSuccess={history.goBack}
+      />
+    );
+  }
+};
+
+export default makePage( UserPage );

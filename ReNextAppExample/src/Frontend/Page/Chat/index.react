@@ -1,0 +1,35 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import makePage from 'renext/makePage';
+import protect from 'renext/protect';
+import applyHOCs from 'renext/applyHOCs';
+
+import { view as Chat } from "Connected/Chat";
+
+class ChatPage extends React.PureComponent {
+
+  render(){
+    return (
+      <React.Fragment>
+        <Chat />
+      </React.Fragment>
+    );
+  }
+}
+
+export default applyHOCs([
+  protect({
+    logined: {
+      satisfy: a => a,
+      block: ({ history }) => {
+        history.push("/user");
+      }
+    }
+  }),
+  makePage,
+  connect(
+    state => ({
+      logined: state.UserManager.loginStatus === 0
+    })
+  )
+] , ChatPage );

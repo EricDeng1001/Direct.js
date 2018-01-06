@@ -1,9 +1,0 @@
-import makeAnimation from 'HOC/makeAnimation';
-import slideDU from 'style';
-
-const timeout = {
-  enter: 1000,
-  exit: 1000
-};
-
-export default makeAnimation( slideDU , timeout );

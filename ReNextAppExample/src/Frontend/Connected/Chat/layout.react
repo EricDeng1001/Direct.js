@@ -1,0 +1,73 @@
+import React from 'react';
+import style from 'style';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import * as actions from 'actions';
+
+import applyHOCs from 'renext/applyHOCs';
+import withSocket from 'renext/withSocket';
+
+class Chat extends React.PureComponent {
+  constructor( props ){
+    super( props );
+    const { socket , saveMessage } = props;
+    socket.on( "get message" , json => {
+      props.getMessage( json );
+    });
+    this.state = {
+      message: ""
+    };
+  }
+
+  inputMessage = ( ev ) => {
+    this.setState({
+      message: ev.target.value.trim()
+    });
+  }
+
+  sendMessage = ( ev ) => {
+    if( ev.key === "Enter" ){
+      this.props.sendMessage( this.props.socket , this.state.message );
+      this.setState({
+        message: ""
+      });
+    }
+  }
+
+  render(){
+    const { messages } = this.props;
+    return (
+      <div className={style.container}>
+        <div className={style.messages}>
+          {
+            messages.map( ( message , key ) =>
+              <div key={message + key} className={style.oneMessage}>
+                <span className={style.userid}>{message.userid}</span>
+                <span className={style.message}>{message.message}</span>
+              </div>
+            )
+          }
+        </div>
+        <div className={style.input}>
+          <input
+            onKeyDown={this.sendMessage}
+            onChange={this.inputMessage}
+            value={this.state.message}
+          />
+        </div>
+      </div>
+    );
+  }
+}
+
+export default applyHOCs([
+  withSocket,
+  connect(
+    state => ({
+      messages: state.Chat.messages
+    }),
+    dispatch => bindActionCreators( actions , dispatch )
+  )
+] , Chat );

@@ -1,2 +1,4 @@
-node_modules
-package-lock.json
+createReNextApp/node_modules
+createReNextApp/package-lock.json
+core/node_modules
+example/node_modules
