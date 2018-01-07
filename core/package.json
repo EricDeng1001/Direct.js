@@ -1,6 +1,6 @@
 {
   "name": "renext-core",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "renext-core",
   "main": "package.json",
   "scripts": {
@@ -31,6 +31,7 @@
     "mongoose": "^4.13.7",
     "node-fetch": "^1.7.3",
     "react": "^16.2.0",
+    "react-bootstrap": "^0.32.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",

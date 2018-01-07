@@ -5,8 +5,6 @@ import AnimatedPages from 'AnimatedPages';
 import { bindActionCreators } from 'redux';
 import * as windowActions from 'WindowManager/actions';
 import { TransitionGroup } from 'react-transition-group';
-import Fade from 'Animation/Fade';
-import SlideRL from 'Animation/SlideRL';
 import Alert from 'Alert';
 import windows from 'windows';
 import "Styles/global.less";
