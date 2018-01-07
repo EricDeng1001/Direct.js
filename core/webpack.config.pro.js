@@ -35,7 +35,7 @@ module.exports = {
         loader: "babel-loader"
       },
       include: [
-        __dirname,
+        /renext.*/,
         path.resolve( './src/' ),
         path.resolve( './src/Frontend/' )
       ]

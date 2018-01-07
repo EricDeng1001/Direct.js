@@ -1,6 +1,6 @@
 {
-  "name": "renext",
-  "version": "1.0.0",
+  "name": "renext-core",
+  "version": "1.0.2",
   "description": "renext-core",
   "main": "package.json",
   "scripts": {

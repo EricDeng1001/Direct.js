@@ -10,6 +10,7 @@ import SlideRL from 'Animation/SlideRL';
 import Alert from 'Alert';
 import windows from 'windows';
 import "Styles/global.less";
+import "global.less";
 
 class MaskedRoutes extends React.PureComponent {
   positioned = [];
