@@ -1,4 +1,9 @@
 {
-  "dependencies": {
+  "scripts": {
+    "test": "webpack-dev-server --config node_modules/renext/webpack.config.dev.js --open --hot",
+    "build": "webpack --config node_modules/renext/webpack.config.pro.js",
+    "hotDeploy": "webpack-dev-server --config node_modules/renext/webpack.config.dev.js --host=0.0.0.0",
+    "server": "node node_modules/renext/server.js",
+    "flow": "flow"
   }
 }
