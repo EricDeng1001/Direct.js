@@ -1,6 +1,6 @@
 {
   "name": "renext",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "main": "index.js",
   "dependencies": {
     "co-prompt": "^1.0.0",
