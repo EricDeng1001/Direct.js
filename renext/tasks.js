@@ -13,7 +13,7 @@ program
       case "build":
         process.chdir( __dirname );
         npm.load( () => {
-          npm.commands.run( task );
+          npm.commands.run( [task] );
         });
         break;
       case "server":

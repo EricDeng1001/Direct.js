@@ -3,6 +3,7 @@ const path = require( 'path' );
 
 const userpath = path.resolve( "../../" );
 
+
 module.exports = {
   entry: {
     vendor: [ 'react' , 'react-dom' , 'redux' , 'react-redux' , 'react-router' , 'react-router-dom' ,'react-transition-group' , 'react-bootstrap' , 'redux-thunk' ],
@@ -44,15 +45,19 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /node_modules\/renext-?.*\/.*\.(react|js)$/,
+        use: {
+          loader: "babel-loader"
+        }
+      },
     {
       test : /\.(react|js)$/,
       use : {
         loader: "babel-loader"
       },
-      include: [
-        /renext.*/,
-        path.resolve( userpath , './src/' ),
-        path.resolve( userpath , './src/Frontend/' )
+      exclude: [
+        /node_modules/
       ]
     },
     {

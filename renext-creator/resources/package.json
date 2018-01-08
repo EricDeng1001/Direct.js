@@ -1,9 +1,8 @@
 {
   "scripts": {
-    "dev": "webpack-dev-server --config node_modules/renext-core/webpack.config.dev.js --open --hot",
-    "build": "webpack --config node_modules/renext-core/webpack.config.pro.js",
-    "hotDeploy": "webpack-dev-server --config node_modules/renext-core/webpack.config.dev.js --host=0.0.0.0",
-    "server": "node node_modules/renext-core/server.js",
+    "dev": "renext dev",
+    "build": "renext build",
+    "server": "renext server",
     "flow": "flow"
   }
 }
