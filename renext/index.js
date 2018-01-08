@@ -16,7 +16,7 @@ program
         npm.load( () => {
           npm.commands.init( () => {
             console.log(" ----- start install renext ----");
-            npm.commands.install( ["renext-core"] , ( err , data ) => {
+            npm.commands.install( ["renext-core@latest"] , ( err , data ) => {
               console.log(" ------- installed completed! ------");
             });
           });
@@ -34,11 +34,11 @@ function copyDir( src , dest , path ){
   for( let i = 0 ; i < files.length ; i++ ){
     if( fs.statSync( src + '/' + files[i] ).isDirectory() ){
       fs.mkdirSync( dest + '/' + files[i]  );
-      copyDir( src + '/' + files[i] , dest + '/' + files[i] );
+      copyDir( src + '/' + files[i] , dest + '/' + files[i] , path + '/' + files[i] );
     }
     else {
       fs.copyFileSync( src + '/' + files[i] , dest + '/' + files[i] );
-      console.log( "created " + files[i] );
+      console.log( "created " + path + '/' + files[i] );
     }
   }
 }
