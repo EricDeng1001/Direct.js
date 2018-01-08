@@ -1,4 +1,4 @@
 renext/node_modules
 renext/package-lock.json
-core/node_modules
+renext-core/node_modules
 example/node_modules
