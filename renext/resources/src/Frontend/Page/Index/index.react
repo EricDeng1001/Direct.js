@@ -1,0 +1,27 @@
+import React from 'react';
+
+import applyHOCs from 'renext-core/applyHOCs';
+import makePage from 'renext-core/makePage';
+
+class IndexPage extends React.PureComponent {
+
+  render(){
+    const { alert , openWindow , openMask , closeMask , history } = this.props;
+    return (
+      <React.Fragment>
+        <h1>ReNextJs</h1>
+        <h2
+          style={{
+          textDecoration: 'underline',
+          cursor: "pointer"
+          }}
+          onClick={() => history.push('/a/b/c/d/e/f/g')}
+        >
+        default 404 Page</h2>
+      </React.Fragment>
+    );
+  }
+
+};
+
+export default makePage( IndexPage );

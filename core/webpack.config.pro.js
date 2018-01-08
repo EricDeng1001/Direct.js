@@ -56,8 +56,7 @@ module.exports = {
           loader : 'less-loader',
           options: {
             paths: [
-              path.resolve( "./src/Frontend/Styles/" ),
-              __dirname + "Styles/"
+              path.resolve( "./src/Frontend/Styles/" )
             ]
           }
         }
