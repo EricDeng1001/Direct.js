@@ -1,14 +1,16 @@
 const webpack = require( 'webpack' )
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const path = require( 'path' )
-//const extractTextWebpackPlugin = require( 'extract-text-webpack-plugin' );
+
+const userpath = path.resolve( "../../" );
+
 module.exports = {
   entry : {
     vendor: [ 'react' , 'react-dom' , 'redux' , 'react-redux' , 'react-router' , 'react-router-dom' ,'react-transition-group' , 'react-bootstrap' , 'redux-thunk' ],
     entry : __dirname + "/App"
   },
   output : {
-    path : path.resolve( "./public" ),
+    path : path.resolve( userpath , "./public" ),
     filename: '[name].js',
     chunkFilename: './static/js/[name].chunk.js',
     publicPath: "/"
@@ -16,10 +18,9 @@ module.exports = {
   resolve : {
     modules : [
       './',
-      path.resolve( "./node_modules" ),
-      path.resolve( './src/' ),
-      path.resolve( './src/Frontend/' ),
-      __dirname
+      path.resolve( userpath , "./node_modules" ),
+      path.resolve( userpath , './src/' ),
+      path.resolve( userpath , './src/Frontend/' )
     ],
     extensions : [
       ".js",
@@ -36,8 +37,8 @@ module.exports = {
       },
       include: [
         /renext.*/,
-        path.resolve( './src/' ),
-        path.resolve( './src/Frontend/' )
+        path.resolve( userpath , './src/' ),
+        path.resolve( userpath , './src/Frontend/' )
       ]
     },
     {
@@ -56,7 +57,7 @@ module.exports = {
           loader : 'less-loader',
           options: {
             paths: [
-              path.resolve( "./src/Frontend/Styles/" )
+              path.resolve( userpath , "./src/Frontend/Styles/" )
             ]
           }
         }
@@ -71,12 +72,6 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       names: [ 'vendor' , 'common' ]
     }),
-    //new webpack.optimize.OccurrenceOrderPlugin(),
     new UglifyJSPlugin(),
-    //new extractTextWebpackPlugin({
-    //  filename : '*.less',
-    //  disable : false,
-    //  allChunks : true
-    //})
   ]
 };

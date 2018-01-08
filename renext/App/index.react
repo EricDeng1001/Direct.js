@@ -8,7 +8,7 @@ import App from 'App';
 
 import store from 'store';
 
-import extract from "Algorithm/extractObject";
+import extract from "renext-core/Algorithm/extractObject";
 
 import AppLifeCycle from 'Config/AppLifeCycle';
 

@@ -6,7 +6,7 @@ import { TransitionGroup , CSSTransition } from 'react-transition-group';
 import slideRL from 'slideRL';
 import slideUD from 'slideUD';
 
-import getClassNames from 'Algorithm/getAnimationNames';
+import getClassNames from 'renext-core/Algorithm/getAnimationNames';
 
 const slideRLClasses = getClassNames( slideRL );
 const slideUDClasses = getClassNames( slideUD );

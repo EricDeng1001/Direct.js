@@ -10,8 +10,8 @@ import * as actionCreators from 'actions';
 import LoginForm from 'LoginForm';
 import SignUpForm from 'SignUpForm';
 
-import applyHOCs from 'renext/applyHOCs';
-import asyncProcessControl from 'renext/asyncProcessControl';
+import applyHOCs from 'renext-core/applyHOCs';
+import asyncProcessControl from 'renext-core/asyncProcessControl';
 
 import style from 'style';
 

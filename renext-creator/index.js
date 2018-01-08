@@ -16,7 +16,7 @@ program
         npm.load( () => {
           npm.commands.init( () => {
             console.log(" ----- start install renext ----");
-            npm.commands.install( ["renext-core@latest"] , ( err , data ) => {
+            npm.commands.install( ["renext@latest"] , ( err , data ) => {
               console.log(" ------- installed completed! ------");
             });
           });

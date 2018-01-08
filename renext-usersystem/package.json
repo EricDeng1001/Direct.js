@@ -5,7 +5,5 @@
   "main": "index.js",
   "author": "Eric Deng",
   "license": "ISC",
-  "dependencies": {
-    "renext-core": "^1.0.2"
-  }
+  "dependencies": {}
 }

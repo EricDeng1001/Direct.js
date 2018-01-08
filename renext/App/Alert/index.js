@@ -1,9 +1,11 @@
 import React from 'react';
-import Button from 'UI/Button';
-import style from 'style';
 import { connect } from 'react-redux';
-import { closeAlert } from 'App/WindowManager/actions';
-import Info from "UI/Info";
+import Button from 'renext-core/UI/Button';
+import Info from "renext-core/UI/Info";
+
+import { closeAlert } from 'renext-core/WindowManager/actions';
+
+import style from 'style';
 
 export default connect(
   state => ({
