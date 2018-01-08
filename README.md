@@ -53,3 +53,53 @@
   + 获得初始编译设置
   + 默认的404页
   + 一些基本的组件
+
+**Usage**
+
+  **require**
+  + node
+  + npm
+  + mongodb
+
+  **steps**
+
+  + without renext-creator
+
+    这种方法较为复杂,详见文档
+
+  + with renext-creator
+    + npm install renext-creator -g
+    + cd 你想要存放代码的目录
+    + create-renext-app 你的项目名字
+    + cd 你的项目名字
+
+    **至此,你已经得到了renext的全部能力**
+
+    接下来让我们做一些用法说明:
+
+    + npm run server
+
+    这个命令默认在localhost:443端口启动一个https服务
+    关于服务器的配置详见文档
+
+    + npm run dev
+
+    打开前端测试服务器,并且前端服务器的所有网络请求会被代理至本机的443端口
+    **启动前务必确保服务器正常运行**
+    该测试服务器可以动态检测前端代码变化并且自动编译,更新,方便前端开发.
+
+    + npm run build
+
+    制作前端的发布版,发布版拥有许多特性,比如
+
+      + 代码最小化
+      + 代码切片
+      + 编译时计算( 实验性质 ),以提高运行速度
+
+**renext项目编写指南**
+  以下所有指南基于 **renext-creator** 创建的工程架构
+
+  /
+  + /public
+    这里是网站对外发布的资源,应当包括:
+      +
