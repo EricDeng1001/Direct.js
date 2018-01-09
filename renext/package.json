@@ -3,17 +3,17 @@
   "author": "Eric Deng",
   "description": "quick set up a renext app",
   "license": "ISC",
-    "version": "2.1.8",
+    "version": "2.1.9",
   "bin": {
     "renext": "./tasks.js"
   },
   "scripts": {
     "build": "webpack --config webpack.config.pro.js",
-    "dev": "webpack-dev-server --config webpack.config.dev.js --hot --open",
-    "postinstall": "npm install renext-core@latest"
+    "dev": "webpack-dev-server --config webpack.config.dev.js --hot --open"
   },
   "main": "tasks.js",
   "dependencies": {
+    "renext": "*",
     "babel": "^6.23.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
