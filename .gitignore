@@ -5,5 +5,6 @@ renext-core/package-lock.json
 renext-creator/node_modules
 renext-creator/package-lock.json
 renext-usersystem/node_modules
-renext-usersysttem/pacakge-lock.json
-xinde.html
+renext-usersystem/pacakge-lock.json
+renext-wrapper/node_modules
+renext-wrapper/pacakge-lock.json
