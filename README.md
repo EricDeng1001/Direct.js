@@ -100,22 +100,22 @@
   + /public
 
     这里是网站对外发布的资源,应当包括:
-      + index.html(已包含)
-      + vendor.js(已包含)
-      + common.js(已包含)
-      + entry.js(已包含)
-      + /static
-       + /js
+    + index.html(已包含)
+    + vendor.js(已包含)
+    + common.js(已包含)
+    + entry.js(已包含)
+    + /static
+      + /js
 
-       这里是各个页面(不含入口页)的代码
+        这里是各个页面(不含入口页)的代码
 
-       + /images
+      + /images
 
-      这里是网站用到的图片资源.(CDN架构正在研发中)
+        这里是网站用到的图片资源.(CDN架构正在研发中)
 
   + /src
 
-  这里是网站源代码
+    这里是网站源代码
 
     + /Frontend
 
