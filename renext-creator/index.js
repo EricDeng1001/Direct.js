@@ -38,7 +38,7 @@ function copyDir( src , dest , path ){
     }
     else {
       fs.copyFileSync( src + '/' + files[i] , dest + '/' + files[i] );
-      console.log( "created " + path + '/' + files[i] );
     }
+    console.log( "created " + path + '/' + files[i] );
   }
 }
