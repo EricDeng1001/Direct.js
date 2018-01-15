@@ -14,7 +14,7 @@ import AppLifeCycle from 'Config/AppLifeCycle';
 
 import persistentState from 'Config/persistentState';
 
-import socket from "socket";
+import socket from "renext-core/socket";
 
 ReactDOM.render(
   <Provider store={store}>
