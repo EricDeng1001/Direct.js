@@ -13,7 +13,7 @@ export default ( state = {
       resolved: 0,
       rejected: 0,
       lastFailed: false,
-      failedReason: "network", // "json" , "server"
+      failedReason: "network",
       failedDetail: null
     },
     logoutState: {
@@ -21,15 +21,7 @@ export default ( state = {
       resolved: 0,
       rejected: 0,
       lastFailed: false,
-      failedReason: "network", // "json" , "server",
-      failedDetail: null
-    },
-    readUserInfoState: {
-      pending: 0,
-      resolved: 0,
-      rejected: 0,
-      lastFailed: false,
-      failedReason: "network", // "json" , "server",
+      failedReason: "network",
       failedDetail: null
     },
     signupState: {
@@ -37,18 +29,15 @@ export default ( state = {
       resolved: 0,
       rejected: 0,
       lastFailed: false,
-      failedReason: "network", // "json" , "server",
+      failedReason: "network",
       failedDetail: null
     },
-    apiKey: '',
+    token: '',
+    cert: "",
     userid: "",
     password: "",
     keepLogin: false,
     rememberPassword: false,
-    info: {
-      nickname: "",
-      gender: false
-    },
     signupStatus: -1,
     loginStatus: -1
 } , { type , payload , id } ) => {
@@ -83,13 +72,13 @@ export default ( state = {
     */
     case __ASYNC_SIGNUP.pending: {
       let signupState = { ...state.signupState };
-      let { userid , password } = payload;
+      let { cert , password } = payload;
       signupState.lastFailed = false;
       signupState.pending++;
       return {
         ...state,
         signupState,
-        userid,
+        cert,
         password
       };
     }
@@ -125,25 +114,26 @@ export default ( state = {
     */
     case __ASYNC_LOGIN.pending: {
       let loginState = { ...state.loginState };
-      let { userid , password } = payload;
+      let { cert , password } = payload;
       loginState.lastFailed = false;
       loginState.pending++;
       return {
         ...state,
         loginState,
-        userid,
+        cert,
         password
       };
     }
     case __ASYNC_LOGIN.resolved: {
-      let { response } = payload;
+      let { response: { token , userid } } = payload;
       let loginState = { ...state.loginState };
       loginState.resolved++;
       loginState.pending--;
       return {
         ...state,
         loginState,
-        apiKey: response.apiKey,
+        token,
+        userid,
         loginStatus: response.status
       }
     }
@@ -185,7 +175,8 @@ export default ( state = {
         ...state,
         logoutState,
         loginStatus: -1,
-        apiKey: "",
+        token: "",
+        userid: "",
         password: state.rememberPassword ? state.password : ""
       };
     }
@@ -206,45 +197,6 @@ export default ( state = {
     defineAsyncActionReducer __LOGOUT end
     */
 
-    /*
-    defineAsyncActionReducer __READ_USER_INFO start
-    */
-    case __ASYNC_READ_USER_INFO.pending: {
-      let readUserInfoState = { ...state.readUserInfoState };
-      readUserInfoState.lastFailed = false;
-      readUserInfoState.pending++;
-      return {
-        ...state,
-        readUserInfoState
-      };
-    }
-    case __ASYNC_READ_USER_INFO.resolved: {
-      let { response } = payload;
-      let readUserInfoState = { ...state.readUserInfoState };
-      readUserInfoState.resolved++;
-      readUserInfoState.pending--;
-      return {
-        ...state,
-        readUserInfoState,
-        info: response
-      };
-    }
-    case __ASYNC_READ_USER_INFO.rejected: {
-      let { reason , detail } = payload;
-      let readUserInfoState = { ...state.readUserInfoState };
-      readUserInfoState.rejected++;
-      readUserInfoState.pending--;
-      readUserInfoState.lastFailed = true;
-      readUserInfoState.failedReason = reason;
-      readUserInfoState.failedDetail = detail;
-      return {
-        ...state,
-        readUserInfoState
-      };
-    }
-    /*
-    defineAsyncActionReducer __READ_USER_INFO end
-    */
     default:
       return state;
   }

@@ -14,9 +14,6 @@ defineSyncActionCreator toggleRememberPassword start
 let toggleRememberPasswordCounter = 0;
 export const toggleRememberPassword = () => ({
     type: __TOGGLE_REMEMBER_PASSWORD,
-    payload: {
-
-    },
     id: toggleRememberPasswordCounter++
 });
 /*
@@ -26,13 +23,15 @@ defineSyncActionCreator toggleRememberPassword end
 defineSyncActionCreator toggleKeepLogin start
 */
 let toggleKeepLoginCounter = 0;
-export const toggleKeepLogin = () => ({
-    type: __TOGGLE_KEEP_LOGIN,
-    payload: {
-
-    },
-    id: toggleKeepLoginCounter++
-});
+export const toggleKeepLogin = socket => ( dispatch ) => {
+    socket.emit( "toggleKeepLogin" , () => {
+      console.log("server knows");
+    });
+    dispatch({
+      type: __TOGGLE_KEEP_LOGIN,
+      id: toggleKeepLoginCounter++
+    });
+};
 /*
 defineSyncActionCreator toggleKeepLogin end
 */
@@ -40,10 +39,10 @@ defineSyncActionCreator toggleKeepLogin end
 defineAsyncActionCreator signup start
 */
 let signupCounter = 0;
-const signupStart = ({ userid , password }) => ({
+const signupStart = ({ cert , password }) => ({
     type: __ASYNC_SIGNUP.pending,
     payload: {
-      userid,
+      cert,
       password
     },
     id: signupCounter
@@ -64,23 +63,21 @@ const signupRejected = ( reason , detail ) => ({
     id: signupCounter
 });
 
-export const signup = ({ userid , password }) => ( dispatch , getState ) => {
-  const oldState = getState();
+export const signup = ({ cert , password }) => ( dispatch , getState ) => {
   const reqId = ++signupCounter;
   const dispatchLastest = action => {
     if( reqId === signupCounter ){
       dispatch( action );
     }
   }
-  dispatch( signupStart({ userid , password }) );
+  dispatch( signupStart({ cert , password }) );
   fetch( "/signup" , {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-
       },
       body: JSON.stringify({
-        userid,
+        cert,
         password
       })
   })
@@ -107,10 +104,10 @@ defineAsyncActionCreator signup end
 defineAsyncActionCreator login start
 */
 let loginCounter = 0;
-const loginStart = ({ userid , password }) => ({
+const loginStart = ({ cert , password }) => ({
     type: __ASYNC_LOGIN.pending,
     payload: {
-      userid,
+      cert,
       password
     },
     id: loginCounter
@@ -131,21 +128,21 @@ const loginRejected = ( reason , detail ) => ({
     id: loginCounter
 });
 
-export const login = ({ userid , password }) => ( dispatch ) => {
+export const login = ({ cert , password }) => ( dispatch ) => {
   const reqId = ++loginCounter;
   const dispatchLastest = action => {
     if( reqId === loginCounter ){
       dispatch( action );
     }
   }
-  dispatch( loginStart( { userid , password }) );
+  dispatch( loginStart( { cert , password }) );
   fetch( "/login" , {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        userid,
+        cert,
         password
       })
   })
@@ -197,7 +194,7 @@ const logoutRejected = ( reason , detail ) => ({
 });
 
 export const logout = () => ( dispatch , getState ) => {
-  const oldState = getState();
+  const { UserManager: { token , userid }} = getState();
   const reqId = ++logoutCounter;
   const dispatchLastest = action => {
     if( reqId === logoutCounter ){
@@ -209,20 +206,17 @@ export const logout = () => ( dispatch , getState ) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        apiKey: oldState.UserManager.apiKey,
-        userid: oldState.UserManager.userid
-      }
+      },
+      body: JSON.stringify({
+        token,
+        userid
+      })
   })
   .then( response => {
     if( !response.ok ){
       dispatchLastest( logoutRejected( "server" , response.status ) );
       return;
     }
-    response.json()
-    .then( json => dispatchLastest( logoutResolved( json ) ) )
-    .catch( err => {
-      dispatchLastest( logoutRejected( "json" , err ) )
-    });
   })
   .catch( err => {
       dispatchLastest( logoutRejected( "network" , err ) );
@@ -231,71 +225,4 @@ export const logout = () => ( dispatch , getState ) => {
 
 /*
 defineAsyncActionCreator logout end
-*/
-
-/*
-defineAsyncActionCreator readUserInfo start
-*/
-let readUserInfoCounter = 0;
-const readUserInfoStart = () => ({
-    type: __ASYNC_READ_USER_INFO.pending,
-    payload: {
-
-    },
-    id: readUserInfoCounter
-});
-const readUserInfoResolved = ( response ) => ({
-    type: __ASYNC_READ_USER_INFO.resolved,
-    payload: {
-      response
-    },
-    id: readUserInfoCounter
-});
-const readUserInfoRejected = ( reason , detail ) => ({
-    type: __ASYNC_READ_USER_INFO.rejected,
-    payload: {
-      reason,
-      detail
-    },
-    id: readUserInfoCounter
-});
-
-export const readUserInfo = ({ targetUserid }) => ( dispatch , getState ) => {
-  const oldState = getState();
-  const reqId = ++readUserInfoCounter;
-  const dispatchLastest = action => {
-    if( reqId === readUserInfoCounter ){
-      dispatch( action );
-    }
-  }
-  dispatch( readUserInfoStart() );
-  fetch( "/readUserInfo" , {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apiKey: oldState.UserManager.apiKey,
-        userid: oldState.UserManager.userid
-      },
-      body: JSON.stringify({
-        targetUserid
-      })
-  })
-  .then( response => {
-    if( !response.ok ){
-      dispatchLastest( readUserInfoRejected( "server" , response.status ) );
-      return;
-    }
-    response.json()
-    .then( json => dispatchLastest( readUserInfoResolved( json ) ) )
-    .catch( err => {
-      dispatchLastest( readUserInfoRejected( "json" , err ) )
-    });
-  })
-  .catch( err => {
-      dispatchLastest( readUserInfoRejected( "network" , err ) );
-  });
-};
-
-/*
-defineAsyncActionCreator readUserInfo end
 */

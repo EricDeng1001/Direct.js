@@ -2,7 +2,6 @@ import view from 'layout';
 import * as actions from 'actions';
 import reducer from 'reducer';
 
-let useridRegExp = /^\w*$/;
-let passwordRegExp = /^[\w!@*]*([!@*]|[A-Z])+[\w!@*]*([!@*]|[A-Z])+[\w!@*]*$/;
+import { useridRegExp , passwordRegExp } from "../../../Constant/regExp";
 
 export { view , actions , reducer , useridRegExp , passwordRegExp };

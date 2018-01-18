@@ -5,13 +5,16 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Button from 'UI/Button';
+
 import * as actionCreators from 'actions';
+
 import LoginForm from 'LoginForm';
 import SignUpForm from 'SignUpForm';
+import Button from 'UI/Button';
 
 import applyHOCs from 'renext-core/applyHOCs';
 import asyncProcessControl from 'renext-core/asyncProcessControl';
+import withSocket from "renext-core/withSocket";
 
 import style from 'style';
 
@@ -28,7 +31,7 @@ class UserManager extends React.PureComponent<Props> {
     login: true,
   }
 
-  signup = () => {
+  goSignup = () => {
     this.setState({
       login: false
     });
@@ -40,6 +43,11 @@ class UserManager extends React.PureComponent<Props> {
     });
   }
 
+  toggleKeepLogin = () => {
+    const { toggleKeepLogin , socket } = this.props;
+    toggleKeepLogin( socket );
+  }
+  
   render(){
     const {
       onCancel,
@@ -47,20 +55,24 @@ class UserManager extends React.PureComponent<Props> {
       signup,
       logout,
       toggleRememberPassword,
+      toggleKeepLogin,
       rememberPassword,
       keepLogin,
-      toggleKeepLogin,
       initName,
       initPassword,
       authorized,
       userExist,
       userNotExist,
-      passwordWrong
+      passwordWrong,
     } = this.props;
     if( authorized ){
       return (
         <h1>
           You are authorized
+          <Button
+            text="logout"
+            onClick={logout}
+          />
         </h1>
       );
     }
@@ -74,12 +86,12 @@ class UserManager extends React.PureComponent<Props> {
             initName={initName}
             initPassword={initPassword}
             rememberPassword={rememberPassword}
-            onToggleRememberPassword={toggleRememberPassword}
             keepLogin={keepLogin}
-            onToggleKeepLogin={toggleKeepLogin}
+            onToggleRememberPassword={toggleRememberPassword}
+            onToggleKeepLogin={this.toggleKeepLogin}
             onLogin={login}
             onCancel={onCancel}
-            goSignUp={this.signup}
+            goSignUp={this.goSignup}
           />
           :
           <SignUpForm

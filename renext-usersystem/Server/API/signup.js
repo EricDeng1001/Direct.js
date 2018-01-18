@@ -1,13 +1,17 @@
-const mongoose = require('mongoose');
-const UserAuth = mongoose.model('UserAuth');
-const UserLog = mongoose.model('UserLog');
+const { model , Schema } = require('mongoose');
+
+const UserAuth = model('UserAuth');
+
+const { useridRegExp } = require("../../Constant/regExp");
+
+const crypto = require("crypto");
 
 module.exports = ({ res , req }) => {
-  const { userid , password } = req.body;
-  if( !useridRegExp.test( userid ) || !passwordRegExp.test( password ) || password.length < 8 ){
+  var { cert , password } = req.body;
+  if( !useridRegExp.test( cert ) || password.length !== 64 ){
     return res.status( 403 ).end();
   }
-  UserAuth.findOne({ userid: userid } , ( err , result ) => {
+  UserAuth.findOne({ cert: cert } , ( err , result ) => {
     if( err ){
       return res.status( 500 ).end();
     }
@@ -16,13 +20,13 @@ module.exports = ({ res , req }) => {
         status: 1
       });
     }
-    const date = new Date();
+    let hash = crypto.createHash("sha256");
+    hash.write( password );
+    password = hash.digest("hex");
     const user = new UserAuth({
-      userid,
-      password,
-      createTime: date,
-      updateTime: date,
-      userRole: 1
+      userid: new Schema.Types.ObjectId()
+      cert,
+      password
     });
     user.save( err => {
       if( err ){

@@ -1,18 +1,22 @@
-const mongoose = require('mongoose');
-const UserAuth = mongoose.model('UserAuth');
-const UserLog = mongoose.model('UserLog');
+const { Schema , model } = require("mongoose");
+const UserAuth = model("UserAuth");
+const UserLog = model("UserLog");
+const crypto = require("crypto");
 
-const validKeys = global.validKeys;
-const { useridRegExp , passwordRegExp } = global.regExps;
-
-const expireTime = 1000 * 60 * 60 * 24 * 15;//15days
+function randFromTo( min , max ){
+    var base = Math.random().toFixed( 0 + Math.random() * 10 );
+    var result = min;
+    var diff = max - min;
+    result += diff * base;
+    return result;
+}
 
 module.exports = ({ res , req }) => {
-  const { userid , password } = req.body;
-  if( !useridRegExp.test( userid ) || !passwordRegExp.test( password ) || password.length < 8 ){
+  const { cert , password } = req.body;
+  if( !useridRegExp.test( cert ) || password.length !== 64 ){
     return res.status( 403 ).end();
   }
-  UserAuth.findOne( { userid: userid } , ( err , result ) => {
+  UserAuth.findOne( { cert: cert } , ( err , result ) => {
     if( err ){
       return res.status( 500 ).end();
     }
@@ -21,43 +25,25 @@ module.exports = ({ res , req }) => {
         status: 1
       });
     }
-    if( result.password === password ){
-      if( validKeys[userid] ){
-        let log = new UserLog({
-          userid,
-          action: 0,
-          detail: 'hot login',
-          time: new Date()
-        });
-        log.save();
-        return res.send({
-          status: 0,
-          apiKey: validKeys[userid]
-        });
-      }
-      const key = ( new Buffer( userid + Date.now() ) ).toString('base64');
-      validKeys[userid] = key;
-      expireTimeout[userid] = setTimeout(
-        () => {
-          validKeys.remove( userid + 'secertKey' + key );
-          loginedUsers.remove( userid );
-          delete expireTimeout[userid];
-        },
-        expireTime
-      );
-
+    let hash = crypto.createHash("sha256");
+    hash.write( password );
+    if( result.password === hash.digest("hex") ){
+      const { userid } = result;
+      const sess = req.session;
+      const token = Number( randFromTo( -5261039 , 6329839 ).toFixed( Math.round( randFromTo( 0 , 11 ) ) ) ).toString( randFromTo( 2 , 36 ) );
+      sess[token] = userid;
+      sess.token = token;
+      res.send({
+        token,
+        userid,
+        status: 0
+      });
       let log = new UserLog({
         userid,
-        action: 0,
-        detail: 'cold login',
-        time: new Date()
+        action: "login",
+        detail: "ip" + req.ip
       });
-      log.save();
-
-      return res.send({
-        status: 0,
-        apiKey: key
-      });
+      return log.save();
     }
     return res.send({
       status: 2
