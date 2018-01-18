@@ -1,3 +1,4 @@
+const fs = require("fs");
 module.exports = function copyDir( src , dest , path ){
   const files = fs.readdirSync( src );
   for( let i = 0 ; i < files.length ; i++ ){

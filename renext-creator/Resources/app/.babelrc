@@ -1,8 +1,8 @@
 {
-  "presets" : [ "react" , "es2015" , "stage-0" , "env" , "flow" ],
+  "presets" : [ "react"  , "stage-0" , "env" , "flow" ],
   "plugins" : [
-    "babel-plugin-transform-object-rest-spread",
     "babel-plugin-transform-runtime",
+    "babel-plugin-transform-object-rest-spread",
     "babel-plugin-transform-regenerator",
     "babel-plugin-transform-class-properties"
   ]

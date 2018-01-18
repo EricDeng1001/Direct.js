@@ -1,4 +1,8 @@
 module.exports = {
+    https: true,
+    passphrase: "Antinux",
     port: 443,
-    passphrase: "Antinux"
+    session: {
+      secret: "Antinux"
+    }
 };
