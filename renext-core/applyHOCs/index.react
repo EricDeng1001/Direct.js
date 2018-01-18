@@ -1,6 +1,9 @@
 export default ( HOCarray , Comp ) => {
-  for( let i = 0 ; i < HOCarray.length ; i++ ){
-    Comp = HOCarray[i]( Comp );
+  if( !Array.isArray( HOCarray ) ){
+    throw "first argument must be an array";
+  }
+  for( let HOC of HOCarray ){
+    Comp = HOC( Comp );
   }
   return Comp;
 };

@@ -20,7 +20,6 @@ export default connect(
     return (
       <div className={style.alert}>
         <div className={style.leftBanner} >
-          <img src="/static/pics/hot.png"/>
         </div>
         <div className={style.content}>
           <div className={style.contentTop}>Warning!</div>

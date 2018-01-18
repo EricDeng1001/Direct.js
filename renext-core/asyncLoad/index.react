@@ -1,7 +1,7 @@
 import React from 'react';
 import Loading from 'Animation/Loading';
 
-let  download = 0;
+var download = 0;
 export default importComponent => {
   setTimeout(
     importComponent,
