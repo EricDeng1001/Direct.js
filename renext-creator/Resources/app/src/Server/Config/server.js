@@ -3,6 +3,8 @@ module.exports = {
     passphrase: "Antinux",
     port: 443,
     session: {
-      secret: "Antinux"
+      secret: "Antinux",
+      resave: true,
+      saveUninitialized: true
     }
 };
