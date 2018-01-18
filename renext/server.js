@@ -84,7 +84,7 @@ if( serverConfig.https ){
   server = app;
 }
 const socketServer = new io( server );
-socketServe.use( ( socket , next ) => {
+socketServer.use( ( socket , next ) => {
   sessionMiddleWare( socket.request , socket.request.res , next );
 });
 
