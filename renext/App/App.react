@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import * as windowActions from 'renext-core/WindowManager/actions';
 import Alert from 'renext-core/Alert';
 import { TransitionGroup } from 'react-transition-group';
-import windows from 'windows';
+import windowSystem from 'windowSystem';
 import "Styles/global.less";
 import "global.less";
 
@@ -20,12 +20,12 @@ class MaskedRoutes extends React.PureComponent {
         onDragOver={this.allowDrop}
         onDrop={this.drop}
       >
-        <div className={alertText && windows.alertMask} >
+        <div className={alertText && windowSystem.alertMask} >
         {
           alertText ? <Fade play><Alert /></Fade> : null
         }
         </div>
-        <div className={masked ? windows.masked : windows.positionSystem} />
+        <div className={masked ? windowSystem.masked : windowSystem.positionSystem} />
         <TransitionGroup>
         {
           Windows.map( Window =>

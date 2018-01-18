@@ -3,26 +3,30 @@ import Routes from 'routes';
 import { withRouter } from 'react-router-dom';
 import { TransitionGroup , CSSTransition } from 'react-transition-group';
 
-import slideRL from 'slideRL';
-import slideUD from 'slideUD';
+import pageSwitch from 'pageSwitch';
 
 import getClassNames from 'renext-core/Algorithm/getAnimationNames';
 
-const slideRLClasses = getClassNames( slideRL );
-const slideUDClasses = getClassNames( slideUD );
+const classNames = getClassNames( pageSwitch );
 
 const timeout = 400;
 
 class AnimatedPages extends React.PureComponent {
   render(){
     const { location , history } = this.props;
-    var classNames;
-    if( history.action === "POP" ){
-      classNames = slideUDClasses;
+    var realAnimationCSS;
+    if( history.action === "POP" ){ // go back
+      realAnimationCSS = {
+        appear: {
+          left: "-100%"
+        },
+        appearActive: {
+          left: "0"
+        }
+      };
     }
-    else {
-      classNames = slideRLClasses;
-    }
+    // in page will use appear
+    // out page will use leave
     return (
       <TransitionGroup className="fullSpaceBFC">
         <CSSTransition
@@ -32,7 +36,7 @@ class AnimatedPages extends React.PureComponent {
           appear
         >
           <section className="page">
-            <Routes location={location} onAppWillClose={this.addOnAppWillClose}/>
+            <Routes location={location} />
           </section>
         </CSSTransition>
       </TransitionGroup>

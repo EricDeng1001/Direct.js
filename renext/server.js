@@ -1,12 +1,16 @@
-const https = require('https');
-const express = require('express');
-const io = require("socket.io");
-const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
-const mongoose = require('mongoose');
 
-let userServerCodeRequire = ( name ) => require( path.resolve( './src/Server' , name ) );
+const express = require('express');
+const https = require('https');
+const io = require("socket.io");
+
+const bodyParser = require('body-parser');
+const session = require("express-session");
+
+const mongoose = require("mongoose");
+
+const userServerCodeRequire = ( name ) => require( path.resolve( './src/Server' , name ) );
 
 userServerCodeRequire('./Config/models.js');
 
@@ -23,10 +27,9 @@ app.use( bodyParser.urlencoded({
   extended: true
 }));
 
-app.all( '*', ( req , res ,next ) => {
-  res.header("Access-Control-Allow-Origin","*");
-  next();
-});
+const sessionMiddleWare = session( serverConfig.session );
+
+app.use( sessionMiddleWare );
 
 app.get( '*' , ( req , res )  => {
   fs.stat( publicBase + req.path , ( err , stat ) => {
@@ -37,6 +40,7 @@ app.get( '*' , ( req , res )  => {
   })
 });
 
+//mongodb connection
 {
   let { username , password , host , port , database , options } = userServerCodeRequire('./Config/database');
   let connection = 'mongodb://';
@@ -54,21 +58,36 @@ app.get( '*' , ( req , res )  => {
   mongoose.connect( connection );
 }
 
+//redis connection
+
+
 const routes = userServerCodeRequire('./Config/routes');
 
 const urls = Object.keys( routes );
 
-for( let i = 0 ; i < urls.length ; i++ ){
-  app.post( urls[i] , ( req , res , next ) => routes[urls[i]]({ req , res , next }) );
+for( let url of urls ){
+  if( !routes.method ){
+    app.post( url , ( req , res , next ) => routes[url]({ req , res , next }) );
+  } else {
+    app[routes.method]( url , ( req , res , next ) => routes[url]({ req , res , next }) );
+  }
 }
 
-const httpsServer = https.createServer({
-  key: fs.readFileSync( path.resolve( "./src/Server/Config/key.pem" ) ),
-  cert: fs.readFileSync( path.resolve( "./src/Server/Config/cert.pem" ) ),
-  passphrase: serverConfig.passphrase
-} , app );
+var server;
+if( serverConfig.https ){
+  server = https.createServer({
+    key: fs.readFileSync( path.resolve( "./src/Server/Config/key.pem" ) ),
+    cert: fs.readFileSync( path.resolve( "./src/Server/Config/cert.pem" ) ),
+    passphrase: serverConfig.passphrase
+  } , app );
+} else {
+  server = app;
+}
+const socketServer = new io( server );
+socketServe.use( ( socket , next ) => {
+  sessionMiddleWare( socket.request , socket.request.res , next );
+});
 
-const socketServer = new io( httpsServer );
 userServerCodeRequire("./socketServer")( socketServer );
 
-httpsServer.listen( serverConfig.port );
+server.listen( serverConfig.port );

@@ -6,15 +6,15 @@ const keys = Object.keys( reducerConfig );
 
 const initState = {};
 
-for( let i = 0 ; i < keys.length ; i++ ){
-  initState[keys[i]] = reducerConfig[keys[i]]( undefined , { type: '@@RenextJS/RestoreLastState' });
+for( let key of keys ){
+  initState[key] = reducerConfig[key]( undefined , { type: '@@RenextJS/RestoreLastState' });
 }
 
-let lastState;
+var lastState;
 try {
   lastState = JSON.parse( localStorage.lastState );
 }
-catch ( e ){
+catch( e ){
   lastState = {};
 }
 
