@@ -1,5 +1,5 @@
 {
-  "presets" : [ "react"  , "stage-0" , "env" , "flow" ],
+  "presets" : [ "react" , "env" , "flow" ],
   "plugins" : [
     "babel-plugin-transform-runtime",
     "babel-plugin-transform-object-rest-spread",

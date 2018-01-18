@@ -1,6 +1,6 @@
 {
   "name": "renext-creator",
-  "version": "1.2.8",
+  "version": "1.2.10",
   "main": "index.js",
   "dependencies": {
     "commander": "^2.12.2",
