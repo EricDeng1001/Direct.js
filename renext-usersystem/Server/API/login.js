@@ -1,6 +1,6 @@
-const { Schema , model } = require("mongoose");
-const UserAuth = model("UserAuth");
-const UserLog = model("UserLog");
+const mongoose = require("mongoose");
+const UserAuth = mongoose.model("UserAuth");
+const UserLog = mongoose.model("UserLog");
 const crypto = require("crypto");
 
 function randFromTo( min , max ){

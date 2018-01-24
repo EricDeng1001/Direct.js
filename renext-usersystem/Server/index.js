@@ -1,11 +1,13 @@
+const UserAuth = require("./Models/userAuth");
+const UserLog = require("./Models/userLog");
+
 const login = require("./API/login");
 const logout = require("./API/logout");
 const signup = require("./API/signup");
 
-const UserAuth = require("./Models/UserAuth");
-const UserLog = require("./Models/UserLog");
+const requireLogin = require("./HOF/requireLogin");
 
-const requireLogin = require("./HOC/requireLogin");
+const socketServer = require("./socketServer");
 
 module.exports = {
   login,
@@ -13,5 +15,6 @@ module.exports = {
   signup,
   UserAuth,
   UserLog,
-  requireLogin
+  requireLogin,
+  socketServer
 };

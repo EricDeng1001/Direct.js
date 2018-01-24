@@ -17,7 +17,8 @@ class IndexPage extends React.PureComponent {
           }}
           onClick={() => history.push("/a/b/c/d/e/f/g")}
         >
-        default 404 Page</h2>
+        default 404 Page
+      </h2>
       </React.Fragment>
     );
   }

@@ -66,10 +66,10 @@ const routes = userServerCodeRequire('./Config/routes');
 const urls = Object.keys( routes );
 
 for( let url of urls ){
-  if( !routes.method ){
-    app.post( url , ( req , res , next ) => routes[url]({ req , res , next }) );
+  if( !url.method ){
+    app.post( url , ( req , res , next ) => routes[url].api({ req , res , next }) );
   } else {
-    app[routes.method]( url , ( req , res , next ) => routes[url]({ req , res , next }) );
+    app[routes[url].method]( url , ( req , res , next ) => routes[url].api({ req , res , next }) );
   }
 }
 

@@ -1,8 +1,8 @@
-var { Schema , model } = require('mongoose');
+const mongoose = require("mongoose");
 
-var UserLogSchema = new Schema({
-  userid: Schema.Types.ObjectId,
-  action: String
+var UserLogSchema = new mongoose.Schema({
+  userid: mongoose.Schema.Types.ObjectId,
+  action: String,
   detail: String,
   time: {
     type: Date,
@@ -10,4 +10,4 @@ var UserLogSchema = new Schema({
   }
 });
 
-model( 'UserLog' , UserLogSchema );
+mongoose.model( 'UserLog' , UserLogSchema );

@@ -32,7 +32,12 @@ window.addEventListener( "load" , () => {
 
 window.addEventListener( "beforeunload" , () => {
   var resolved = false;
-  onAppWillClose( () => resolved = true , store.getState() , persistentState , socket );
+  try {
+    onAppWillClose( () => resolved = true , store.getState() , persistentState , socket );
+  }
+  catch ( e ){
+    console.log( e );
+  }
   var a = Date.now();
   for(;;){
     if( resolved ){

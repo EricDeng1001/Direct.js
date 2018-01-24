@@ -1,7 +1,7 @@
-const { Schema , model } = require("mongoose");
+const mongoose = require("mongoose");
 
-var UserAuth = new Schema({
-  userid: Schema.Types.ObjectId,
+var UserAuth = new mongoose.Schema({
+  userid: mongoose.Schema.Types.ObjectId,
   cert: String,
   password: String,
   createTime: {
@@ -10,4 +10,4 @@ var UserAuth = new Schema({
   }
 });
 
-model( "UserAuth" , UserAuth );
+mongoose.model( "UserAuth" , UserAuth );
