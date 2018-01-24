@@ -3,7 +3,7 @@
   "author": "Eric Deng",
   "description": "quick set up a renext app",
   "license": "ISC",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "bin": {
     "renext": "./tasks.js"
   },
