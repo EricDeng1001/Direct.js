@@ -41,7 +41,7 @@ app.get( '*' , ( req , res )  => {
 });
 
 //mongodb connection
-{
+try {
   let { username , password , host , port , database , options } = userServerCodeRequire('./Config/database');
   let connection = 'mongodb://';
   if( username ){
@@ -56,6 +56,9 @@ app.get( '*' , ( req , res )  => {
     connection += '?' + jsonToUrlencoded( options );
   }
   mongoose.connect( connection );
+} catch ( e ){
+  console.log( "unable to connect to your mongod" );
+  console.log( "running server without database" );
 }
 
 //redis connection
