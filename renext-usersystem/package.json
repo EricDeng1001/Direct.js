@@ -1,6 +1,6 @@
 {
   "name": "renext-usersystem",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "description": "a safe usersystem based on session and cookie",
   "main": "index.js",
   "author": "Eric Deng",
