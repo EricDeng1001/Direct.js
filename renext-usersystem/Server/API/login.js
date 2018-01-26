@@ -4,7 +4,7 @@ const UserLog = mongoose.model("UserLog");
 const crypto = require("crypto");
 const { certRegExp , passwordRegExp } = require("../../Constant/regExp");
 function randFromTo( min , max ){
-    var base = Math.random().toFixed( 0 + Math.random() * 10 );
+    var base = Math.random();
     var result = min;
     var diff = max - min;
     result += diff * base;
@@ -29,7 +29,7 @@ module.exports = ({ res , req }) => {
     hash.write( password );
     if( result.password === hash.digest("hex") ){
       const { userid } = result;
-      const token = String(Number( randFromTo( -5261039 , 6329839 ).toFixed( Math.round( randFromTo( 0 , 11 ) ) ) ).toString( randFromTo( 2 , 36 ) ));
+      const token = String(Number( randFromTo( Number.SAFE_MIN_INTEGER , Number.SAFE_MAX_INTEGER ).toFixed( Math.round( randFromTo( 0 , 11 ) ) ) ).toString( randFromTo( 2 , 36 ) ));
       req.session[token] = userid;
       req.session.token = token;
       res.send({
