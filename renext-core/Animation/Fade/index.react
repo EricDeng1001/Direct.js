@@ -1,4 +1,4 @@
-import makeAnimation from '../makeAnimation';
+import makeAnimation from '../../makeAnimation';
 import fade from 'style';
 
 const timeout = {
