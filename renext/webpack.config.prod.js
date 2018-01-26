@@ -9,7 +9,7 @@ const { devServer , devtool , plugins , ...prodConfig } = baseConfig;
 prodConfig.plugins = [
   new webpack.BannerPlugin( "Antinus Innovation\nAll rights reserved" ),
   new webpack.DefinePlugin({
-    'process.env.NODE_ENV': "production"
+    'process.env.NODE_ENV': JSON.stringify("production")
   }),
   new webpack.optimize.CommonsChunkPlugin({
     names: [ 'vendor' , 'common' ]

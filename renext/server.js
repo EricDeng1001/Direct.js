@@ -52,6 +52,7 @@ try {
   if( port ){
     connection += ':'  + port;
   }
+
   connection += '/' + database;
   if( options ){
     connection += '?' + jsonToUrlencoded( options );
