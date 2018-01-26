@@ -37,7 +37,7 @@ module.exports = {
     proxy: {
       '*': {
         target: `${protocol}://127.0.0.1:${port}/`,
-        secure: serverConfig.https
+        secure: false
       },
 
     },
