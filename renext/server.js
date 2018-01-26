@@ -3,6 +3,7 @@ const path = require('path');
 
 const express = require('express');
 const https = require('https');
+const http = require("http");
 const io = require("socket.io");
 
 const bodyParser = require('body-parser');
@@ -84,7 +85,7 @@ if( serverConfig.https ){
     passphrase: serverConfig.passphrase
   } , app );
 } else {
-  server = app;
+  server = http.createServer( app );
 }
 const socketServer = new io( server );
 socketServer.use( ( socket , next ) => {
