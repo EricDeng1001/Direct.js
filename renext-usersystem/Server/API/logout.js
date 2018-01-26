@@ -13,5 +13,5 @@ module.exports = requireLogin(({ res , req }) => {
       action: "logout",
       detail: "token: " + token,
     })).save();
-    res.end();
+    res.status( 200 ).end();
 });

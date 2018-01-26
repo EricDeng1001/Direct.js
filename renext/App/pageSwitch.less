@@ -1,11 +1,13 @@
 @enterTime: 400ms;
 @exitTime: @enterTime;
-.appear {
-  left: 100%;
+.appear,
+.enter {
+  left: -100%;
   transition: all @enterTime ease;
 }
 
-.appearActive {
+.appearActive,
+.enterActive {
   left: 0;
 }
 

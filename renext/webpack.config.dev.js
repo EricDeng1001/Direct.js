@@ -3,7 +3,9 @@ const path = require( 'path' );
 
 const userpath = path.resolve( "../../" );
 
-
+const serverConfig = require( path.resolve( userpath , "./src/Server/Config/server" ) );
+var protocol = serverConfig.https ? "https" : "http";
+var port = serverConfig.port;
 module.exports = {
   entry: {
     vendor: [ 'react' , 'react-dom' , 'redux' , 'react-redux' , 'react-router' , 'react-router-dom' ,'react-transition-group' , 'react-bootstrap' , 'redux-thunk' ],
@@ -33,8 +35,8 @@ module.exports = {
     contentBase : "./public",
     proxy: {
       '*': {
-        target: 'https://127.0.0.1/',
-        secure: false
+        target: `${protocol}://127.0.0.1:${port}/`,
+        secure: serverConfig.https
       },
 
     },
@@ -46,7 +48,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /renext.*\.(react|js)/,
+        test: /node_modules\/renext-?.*\/.*\.(react|js)$/,
         use: {
           loader: "babel-loader"
         }

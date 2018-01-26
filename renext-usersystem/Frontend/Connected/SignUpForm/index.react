@@ -4,9 +4,9 @@
 */
 import React from 'react';
 import { FormGroup , ControlLabel , FormControl , Checkbox } from 'react-bootstrap';
-import ButtonControlPane from 'UI/ButtonControlPane';
+import ButtonControlPane from '../ButtonControlPane';
 
-import { useridRegExp , passwordRegExp } from 'Connected/UserManager';
+import { certRegExp , passwordRegExp } from '../../../Constant/regExp';
 
 class SignUpForm extends React.PureComponent {
   static defaultProps = {
@@ -17,8 +17,8 @@ class SignUpForm extends React.PureComponent {
   constructor( props ){
     super( props );
     this.state = {
-      userid: props.initName,
-      useridValid: useridRegExp.test( props.initName ),
+      cert: props.initName,
+      certValid: certRegExp.test( props.initName ),
       password: props.initPassword,
       passwordValid: passwordRegExp.test( props.initPassword ) && props.initPassword.length >= 8,
       passwordConfirm: ""
@@ -31,30 +31,30 @@ class SignUpForm extends React.PureComponent {
       onCancel
     } = this.props;
     const {
-      useridValid,
+      certValid,
       passwordValid,
-      userid,
+      cert,
       password,
       passwordConfirm
     } = this.state;
 
-    var useridValidationState = null;
+    var certValidationState = null;
     var passwordValidationState = null;
     var confirmValidationState = null;
-    var useridPrompt = null;
+    var certPrompt = null;
     var passwordPrompt = null;
     var confirmPrompt = null;
 
-    if( useridValid && passwordValid ){
+    if( certValid && passwordValid ){
       passwordValidationState = "success";
       passwordPrompt = "ready";
       if( userExist ){
-        useridValidationState = "warning";
-        useridPrompt = "userid has been taken";
+        certValidationState = "warning";
+        certPrompt = "cert has been taken";
       }
       else {
-        useridValidationState = "success";
-        useridPrompt = "ready";
+        certValidationState = "success";
+        certPrompt = "ready";
       }
       if( passwordConfirm ){
         if( passwordConfirm !== password ){
@@ -68,9 +68,9 @@ class SignUpForm extends React.PureComponent {
       }
     }
     else {
-      if( useridValid !== null && !useridValid ){
-        useridValidationState = "error";
-        useridPrompt = "userid can only contain letters , numbers and underscore _";
+      if( certValid !== null && !certValid ){
+        certValidationState = "error";
+        certPrompt = "cert can only contain letters , numbers and underscore _";
       }
       if( passwordValid !== null && !passwordValid ){
         passwordValidationState = "error";
@@ -93,20 +93,20 @@ class SignUpForm extends React.PureComponent {
         <form>
           <FormGroup
             controlId="userSignupUserid"
-            validationState={useridValidationState}
+            validationState={certValidationState}
             onSubmit={this.onLogin}
           >
-            <ControlLabel>userid</ControlLabel>
+            <ControlLabel>cert</ControlLabel>
             <FormControl
               type="text"
-              value={userid}
-              placeholder="your userid"
+              value={cert}
+              placeholder="your cert"
               onChange={this.inputUsername}
               onKeyDown={this.onKeyDown}
             />
             <FormControl.Feedback />
             {
-              useridPrompt
+              certPrompt
             }
           </FormGroup>
           <FormGroup
@@ -159,20 +159,20 @@ class SignUpForm extends React.PureComponent {
   }
 
   onSignUp = () => {
-    const { userid , password , passwordConfirm } = this.state;
-    const useridValid = useridRegExp.test( userid );
+    const { cert , password , passwordConfirm } = this.state;
+    const certValid = certRegExp.test( cert );
     const passwordValid = passwordRegExp.test( password ) && password.length >= 8;
     if( passwordConfirm !== password ){
       return;
     }
-    if( useridValid && passwordValid ){
+    if( certValid && passwordValid ){
       this.props.onSignUp({
-        userid,
+        cert,
         password
       });
     }
     this.setState({
-      useridValid,
+      certValid,
       passwordValid
     });
   }
@@ -184,10 +184,10 @@ class SignUpForm extends React.PureComponent {
   }
 
   inputUsername = ev => {
-    const useridValid = useridRegExp.test( ev.target.value );
+    const certValid = certRegExp.test( ev.target.value );
     this.setState({
-      useridValid,
-      userid: ev.target.value
+      certValid,
+      cert: ev.target.value
     });
   }
 

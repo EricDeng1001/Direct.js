@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const UserAuth = mongoose.model("UserAuth");
 const UserLog = mongoose.model("UserLog");
 const crypto = require("crypto");
-
+const { certRegExp , passwordRegExp } = require("../../Constant/regExp");
 function randFromTo( min , max ){
     var base = Math.random().toFixed( 0 + Math.random() * 10 );
     var result = min;
@@ -13,10 +13,10 @@ function randFromTo( min , max ){
 
 module.exports = ({ res , req }) => {
   const { cert , password } = req.body;
-  if( !useridRegExp.test( cert ) || password.length !== 64 ){
+  if( !certRegExp.test( cert ) || !passwordRegExp.test( password ) ){
     return res.status( 403 ).end();
   }
-  UserAuth.findOne( { cert: cert } , ( err , result ) => {
+  UserAuth.findOne( { cert } , ( err , result ) => {
     if( err ){
       return res.status( 500 ).end();
     }
@@ -29,10 +29,9 @@ module.exports = ({ res , req }) => {
     hash.write( password );
     if( result.password === hash.digest("hex") ){
       const { userid } = result;
-      const sess = req.session;
-      const token = Number( randFromTo( -5261039 , 6329839 ).toFixed( Math.round( randFromTo( 0 , 11 ) ) ) ).toString( randFromTo( 2 , 36 ) );
-      sess[token] = userid;
-      sess.token = token;
+      const token = String(Number( randFromTo( -5261039 , 6329839 ).toFixed( Math.round( randFromTo( 0 , 11 ) ) ) ).toString( randFromTo( 2 , 36 ) ));
+      req.session[token] = userid;
+      req.session.token = token;
       res.send({
         token,
         userid,

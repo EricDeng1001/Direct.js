@@ -4,9 +4,9 @@
 */
 import React from 'react';
 import { FormGroup , ControlLabel , FormControl , Checkbox } from 'react-bootstrap';
-import ButtonControlPane from 'UI/ButtonControlPane';
+import ButtonControlPane from '../ButtonControlPane';
 
-import { useridRegExp , passwordRegExp } from 'Connected/UserManager';
+import { certRegExp , passwordRegExp } from '../../../Constant/regExp';
 
 class LoginForm extends React.PureComponent {
   static defaultProps = {
@@ -17,8 +17,8 @@ class LoginForm extends React.PureComponent {
   constructor( props ){
     super( props );
     this.state = {
-      userid: props.initName,
-      useridValid: null,
+      cert: props.initName,
+      certValid: null,
       password: props.initPassword,
       passwordValid: null,
     };
@@ -36,23 +36,23 @@ class LoginForm extends React.PureComponent {
       goSignUp
     } = this.props;
     const {
-      useridValid,
+      certValid,
       passwordValid,
       password,
-      userid
+      cert
     } = this.state;
 
-    var useridValidationState = null;
+    var certValidationState = null;
     var passwordValidationState = null;
-    var useridPrompt = null;
+    var certPrompt = null;
     var passwordPrompt = null;
-    if( useridValid && passwordValid ){
+    if( certValid && passwordValid ){
       if( userNotExist ){
-        useridValidationState = "warning";
-        useridPrompt = "userid not exist";
+        certValidationState = "warning";
+        certPrompt = "cert not exist";
       }
       else {
-        useridValidationState = "success";
+        certValidationState = "success";
       }
       if( passwordWrong ){
         passwordValidationState = "error";
@@ -60,9 +60,9 @@ class LoginForm extends React.PureComponent {
       }
     }
     else {
-      if( useridValid !== null && !useridValid ){
-        useridValidationState = "error";
-        useridPrompt = "userid format is not correct";
+      if( certValid !== null && !certValid ){
+        certValidationState = "error";
+        certPrompt = "cert format is not correct";
       }
       if( passwordValid !== null && !passwordValid ){
         passwordValidationState = "error";
@@ -75,20 +75,20 @@ class LoginForm extends React.PureComponent {
         <form>
           <FormGroup
             controlId="userLoginUsername"
-            validationState={useridValidationState}
+            validationState={certValidationState}
             onSubmit={this.onLogin}
           >
-            <ControlLabel>userid</ControlLabel>
+            <ControlLabel>cert</ControlLabel>
             <FormControl
               type="text"
-              value={userid}
-              placeholder="your userid"
+              value={cert}
+              placeholder="your cert"
               onChange={this.inputUsername}
               onKeyDown={this.onKeyDown}
             />
             <FormControl.Feedback />
             {
-              useridPrompt
+              certPrompt
             }
           </FormGroup>
           <FormGroup
@@ -141,24 +141,24 @@ class LoginForm extends React.PureComponent {
   }
 
   onLogin = () => {
-    const { userid , password } = this.state;
-    const useridValid = useridRegExp.test( userid );
+    const { cert , password } = this.state;
+    const certValid = certRegExp.test( cert );
     const passwordValid = passwordRegExp.test( password ) && password.length >= 8;
-    if( useridValid && passwordValid ){
+    if( certValid && passwordValid ){
       this.props.onLogin({
-        userid,
+        cert,
         password
       });
     }
     this.setState({
-      useridValid,
+      certValid,
       passwordValid
     });
   }
 
   onKeyDown = ev => {
     this.setState({
-      useridValid: null,
+      certValid: null,
       passwordValid: null
     });
     if( ev.key === 'Enter' ){
@@ -168,7 +168,7 @@ class LoginForm extends React.PureComponent {
 
   inputUsername = ev => {
     this.setState({
-      userid: ev.target.value
+      cert: ev.target.value
     });
   }
 

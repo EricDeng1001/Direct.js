@@ -1,4 +1,4 @@
 module.exports = {
-  useridRegExp: /^\w*$/,
+  certRegExp: /^\w*$/,
   passwordRegExp: /^[\w!@*]*([!@*]|[A-Z])+[\w!@*]*([!@*]|[A-Z])+[\w!@*]*$/
 };

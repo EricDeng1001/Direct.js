@@ -10,7 +10,7 @@ import * as actionCreators from 'actions';
 
 import LoginForm from 'LoginForm';
 import SignUpForm from 'SignUpForm';
-import Button from 'UI/Button';
+import Button from 'Button';
 
 import applyHOCs from 'renext-core/applyHOCs';
 import asyncProcessControl from 'renext-core/asyncProcessControl';
@@ -47,7 +47,7 @@ class UserManager extends React.PureComponent<Props> {
     const { toggleKeepLogin , socket } = this.props;
     toggleKeepLogin( socket );
   }
-  
+
   render(){
     const {
       onCancel,
@@ -111,8 +111,10 @@ export default applyHOCs([
   asyncProcessControl({
     loginState: {
       onResolved({ authorized , onSuccess }){
-        if( authorized === 0 ){
+        if( authorized ){
           onSuccess();
+        } else {
+
         }
       }
     },
@@ -136,10 +138,10 @@ export default applyHOCs([
       loginState: state.loginState,
       signupState: state.signupState,
       logoutState: state.logoutState,
-      readUserInfoState: state.readUserInfoState,
-      initName: state.userid,
+      initName: state.cert,
       initPassword: state.password
     }),
     dispatch => bindActionCreators( actionCreators , dispatch )
-  )
+  ),
+  withSocket
 ] , UserManager );

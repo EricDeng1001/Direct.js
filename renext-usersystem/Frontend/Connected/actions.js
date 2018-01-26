@@ -76,6 +76,7 @@ export const signup = ({ cert , password }) => ( dispatch , getState ) => {
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: "same-origin",
       body: JSON.stringify({
         cert,
         password
@@ -141,6 +142,7 @@ export const login = ({ cert , password }) => ( dispatch ) => {
       headers: {
         'Content-Type': 'application/json'
       },
+      credentials: "same-origin",
       body: JSON.stringify({
         cert,
         password
@@ -196,17 +198,13 @@ const logoutRejected = ( reason , detail ) => ({
 export const logout = () => ( dispatch , getState ) => {
   const { UserManager: { token , userid }} = getState();
   const reqId = ++logoutCounter;
-  const dispatchLastest = action => {
-    if( reqId === logoutCounter ){
-      dispatch( action );
-    }
-  }
   dispatch( logoutStart() );
   fetch( "/logout" , {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: "same-origin",
       body: JSON.stringify({
         token,
         userid
@@ -214,12 +212,14 @@ export const logout = () => ( dispatch , getState ) => {
   })
   .then( response => {
     if( !response.ok ){
-      dispatchLastest( logoutRejected( "server" , response.status ) );
+      dispatch( logoutRejected( "server" , response.status ) );
       return;
+    } else {
+      dispatch( logoutResolved() );
     }
   })
   .catch( err => {
-      dispatchLastest( logoutRejected( "network" , err ) );
+      dispatch( logoutRejected( "network" , err ) );
   });
 };
 

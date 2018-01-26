@@ -1,7 +1,7 @@
 import React from 'react';
 import makePage from 'renext-core/makePage';
 
-import { view as UserManager } from "Connected/UserManager";
+import { view as UserManager } from "../Connected";
 
 class UserPage extends React.Component {
   render(){

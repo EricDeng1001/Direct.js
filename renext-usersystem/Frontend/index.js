@@ -1,6 +1,11 @@
-import * as Connected from "Connected/UserManager";
-import UserPage from "Page/User";
-import AppLifeCycle from "Config/AppLifeCycle";
-import UserWindow from "Window/UserManager";
+const Connected = require("./Connected");
+const Page = require("./Page").default;
+const onAppWillClose = require("./Config/AppLifeCycle").default;
+const Window = require("./Window").default;
 
-export { Connected , UserPage , AppLifeCycle , UserWindow };
+module.exports = {
+  Connected,
+  Page,
+  onAppWillClose,
+  Window
+};

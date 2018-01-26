@@ -125,7 +125,7 @@ export default ( state = {
       };
     }
     case __ASYNC_LOGIN.resolved: {
-      let { response: { token , userid } } = payload;
+      let { response: { token , userid , status } } = payload;
       let loginState = { ...state.loginState };
       loginState.resolved++;
       loginState.pending--;
@@ -134,7 +134,7 @@ export default ( state = {
         loginState,
         token,
         userid,
-        loginStatus: response.status
+        loginStatus: status
       }
     }
     case __ASYNC_LOGIN.rejected: {

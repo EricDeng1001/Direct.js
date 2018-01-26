@@ -7,6 +7,6 @@ module.exports = api => ({ req , res , next }) => {
     res.status( 403 ).end();
   }
   else {
-    func({ req , res , next });
+    api({ req , res , next });
   }
 };
