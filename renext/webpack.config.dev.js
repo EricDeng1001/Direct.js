@@ -49,7 +49,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /node_modules\/renext-?.*\/.*\.(react|js)$/,
+        test: /renext.*\.(react|js)$/,
         use: {
           loader: "babel-loader"
         }
