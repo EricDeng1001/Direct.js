@@ -5,6 +5,7 @@ import AnimatedPages from 'AnimatedPages';
 import { bindActionCreators } from 'redux';
 import * as windowActions from 'renext-core/WindowManager/actions';
 import Alert from 'renext-core/Alert';
+import Fade from "renext-core/Animation/Fade";
 import { TransitionGroup } from 'react-transition-group';
 import windowSystem from 'windowSystem';
 import "Styles/global.less";
