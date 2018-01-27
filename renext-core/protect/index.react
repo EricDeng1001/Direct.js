@@ -9,11 +9,11 @@ export default ( depObj , always = false ) => Comp => {
       for( let key of keys ){
         if( !depObj[key].satisfy( this.props[key] ) ){
           allResolved = false;
-          depObj[key].block( this.props );
+          depObj[key].block.call( this );
         }
       }
       this.state = {
-        allResolved: allResolved
+        allResolved
       };
     }
 
