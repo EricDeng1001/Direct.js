@@ -6,8 +6,9 @@ const requireLogin = require("../HOF/requireLogin");
 
 module.exports = requireLogin(({ res , req }) => {
     const { token , userid } = req.body;
-    delete req.session[token];
-    delete req.session.token;
+    //delete req.session[token];
+    //delete req.session.token;
+    delete req.session.logined;
     (new UserLog({
       userid,
       action: "logout",

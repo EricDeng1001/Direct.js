@@ -9,8 +9,9 @@ module.exports = socket => {
   });
   socket.on( "disconnect" , reason => {
     if( !socket.request.session.keepLogin ){
-      delete socket.request.session[socket.request.session.token];
-      delete socket.request.session.token;
+      //delete socket.request.session[socket.request.session.token];
+      //delete socket.request.session.token;
+      delete socket.request.session.logined;
     }
   });
 };
