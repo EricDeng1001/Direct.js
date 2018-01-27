@@ -4,7 +4,7 @@ const onAppWillClose = require("./Config/AppLifeCycle").default;
 const Window = require("./Window").default;
 
 module.exports = {
-  Connected,
+  ...Connected,
   Page,
   onAppWillClose,
   Window
