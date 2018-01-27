@@ -92,7 +92,7 @@ class LoginForm extends React.PureComponent {
             }
           </FormGroup>
           <FormGroup
-            controlId="userLoginUsername"
+            controlId="userLoginPassword"
             validationState={passwordValidationState}
           >
             <ControlLabel>password</ControlLabel>
