@@ -32,7 +32,7 @@ export default ( state = {
       failedReason: "network",
       failedDetail: null
     },
-    token: '',
+    //token: '',
     cert: "",
     userid: "",
     password: "",
@@ -132,7 +132,7 @@ export default ( state = {
       return {
         ...state,
         loginState,
-        token,
+        //token,
         userid,
         loginStatus: status
       }

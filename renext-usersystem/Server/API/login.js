@@ -29,12 +29,13 @@ module.exports = ({ res , req }) => {
     hash.write( password );
     if( result.password === hash.digest("hex") ){
       const { userid } = result;
-      const token = String(Number( randFromTo( Number.SAFE_MIN_INTEGER , Number.SAFE_MAX_INTEGER ).toFixed( Math.round( randFromTo( 0 , 11 ) ) ) ).toString( randFromTo( 2 , 36 ) ));
-      req.session[token] = userid;
-      req.session.token = token;
+      //const token = String(Number( randFromTo( Number.SAFE_MIN_INTEGER , Number.SAFE_MAX_INTEGER ).toFixed( Math.round( randFromTo( 0 , 11 ) ) ) ).toString( randFromTo( 2 , 36 ) ));
+      //req.session[token] = userid;
+      //req.session.token = token;
+      req.session.logined = userid;
       res.send({
-        token,
-        userid,
+        //token,
+        //userid,
         status: 0
       });
       let log = new UserLog({
