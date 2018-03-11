@@ -5,7 +5,7 @@ import { TransitionGroup , CSSTransition } from 'react-transition-group';
 
 import pageSwitch from 'pageSwitch';
 
-import getClassNames from 'renext-core/Algorithm/getAnimationNames';
+import getClassNames from 'direct-core/Algorithm/getAnimationNames';
 
 const classNames = getClassNames( pageSwitch );
 

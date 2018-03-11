@@ -1,11 +1,11 @@
 {
-  "name": "renext",
+  "name": "direct",
   "author": "Eric Deng",
-  "description": "quick set up a renext app",
+  "description": "quick set up a direct app",
   "license": "ISC",
-  "version": "2.4.6",
+  "version": "1.0.0",
   "bin": {
-    "renext": "./tasks.js"
+    "direct": "./tasks.js"
   },
   "scripts": {
     "build": "webpack --config webpack.config.prod.js",
@@ -33,7 +33,7 @@
     "less-loader": "^4.0.5",
     "mongoose": "^4.13.7",
     "npm": "^5.6.0",
-    "renext-core": "latest",
+    "direct-core": "latest",
     "socket.io": "^2.0.4",
     "style-loader": "^0.19.0",
     "uglifyjs-webpack-plugin": "^1.1.3",

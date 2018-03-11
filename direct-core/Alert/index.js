@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Button from 'renext-core/UI/Button';
-import Info from "renext-core/UI/Info";
+import Button from 'direct-core/UI/Button';
+import Info from "direct-core/UI/Info";
 
-import { closeAlert } from 'renext-core/WindowManager/actions';
+import { closeAlert } from 'direct-core/WindowManager/actions';
 
 import style from 'style';
 

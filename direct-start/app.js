@@ -17,8 +17,8 @@ program
         process.chdir( projectName );
         npm.load( () => {
           npm.commands.init( () => {
-            console.log(" ----- start install renext ----");
-            npm.commands.install( ["renext@latest"] , ( err , data ) => {
+            console.log(" ----- start install direct ----");
+            npm.commands.install( ["direct@latest"] , ( err , data ) => {
               console.log(" ------- installed completed! ------");
             });
           });

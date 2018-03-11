@@ -1,5 +1,5 @@
 import React from 'react';
-import makeWindow from 'renext-core/makeWindow';
+import makeWindow from 'direct-core/makeWindow';
 import { view as UserManager } from '../Connected';
 export default makeWindow( ( props ) => (
   <UserManager

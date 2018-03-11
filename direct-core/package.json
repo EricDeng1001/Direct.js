@@ -1,9 +1,9 @@
 {
-  "name": "renext-core",
+  "name": "direct-core",
   "author": "Eric Deng",
-  "description": "renext-core",
+  "description": "direct-core",
   "license": "ISC",
-  "version": "1.1.6",
+  "version": "1.0.0",
   "dependencies": {
     "node-fetch": "^1.7.3",
     "react": "^16.2.0",

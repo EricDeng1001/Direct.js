@@ -12,9 +12,9 @@ import LoginForm from 'LoginForm';
 import SignUpForm from 'SignUpForm';
 import Button from 'Button';
 
-import applyHOCs from 'renext-core/applyHOCs';
-import asyncProcessControl from 'renext-core/asyncProcessControl';
-import withSocket from "renext-core/withSocket";
+import applyHOCs from 'direct-core/applyHOCs';
+import asyncProcessControl from 'direct-core/asyncProcessControl';
+import withSocket from "direct-core/withSocket";
 
 import style from 'style';
 

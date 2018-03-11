@@ -8,13 +8,13 @@ import App from 'App';
 
 import store from 'store';
 
-import extract from "renext-core/Algorithm/extractObject";
+import extract from "direct-core/Algorithm/extractObject";
 
 import AppLifeCycle from 'Config/AppLifeCycle';
 
 import persistentState from 'Config/persistentState';
 
-import socket from "renext-core/socket";
+import socket from "direct-core/socket";
 
 ReactDOM.render(
   <Provider store={store}>

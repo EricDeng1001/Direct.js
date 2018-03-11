@@ -1,11 +1,11 @@
 {
-  "name": "renext-usersystem",
-  "version": "1.1.1",
+  "name": "direct-usersystem",
+  "version": "1.0.0",
   "description": "a safe usersystem based on session and cookie",
   "main": "index.js",
   "author": "Eric Deng",
   "license": "ISC",
   "dependencies": {
-    "renext-core": "latest"
+    "direct-core": "latest"
   }
 }
