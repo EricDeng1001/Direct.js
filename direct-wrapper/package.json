@@ -1,0 +1,15 @@
+{
+  "name": "direct-wrapper",
+  "version": "1.0.0",
+  "description": "wrapper for direct.js",
+  "main": "\"\"",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Wrapper",
+    "Direct"
+  ],
+  "author": "Eric Deng",
+  "license": "ISC"
+}
