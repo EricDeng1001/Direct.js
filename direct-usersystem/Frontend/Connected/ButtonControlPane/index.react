@@ -4,7 +4,7 @@
 */
 import React from 'react';
 import style from 'style';
-import Button from "../Button";
+import Button from "direct-core/Button";
 
 class ButtonControlPane extends React.PureComponent {
   constructor( props ){
