@@ -39,7 +39,7 @@ window.addEventListener( "beforeunload" , () => {
     console.log( e );
   }
   var a = Date.now();
-  for(;;){
+  while( true ){
     if( resolved ){
       break;
     }

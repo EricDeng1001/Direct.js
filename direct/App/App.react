@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import AnimatedPages from 'AnimatedPages';
 import { bindActionCreators } from 'redux';
 import * as windowActions from 'direct-core/WindowManager/actions';
 import Alert from 'direct-core/Alert';
 import Fade from "direct-core/Animation/Fade";
 import { TransitionGroup } from 'react-transition-group';
+import AnimatedPages from 'AnimatedPages';
 import windowSystem from 'windowSystem';
 import "Styles/global.less";
 import "global.less";
