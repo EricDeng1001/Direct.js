@@ -2,6 +2,9 @@ import React from 'react';
 import style from 'style';
 
 class Sidebar extends React.PureComponent {
+  static defaultProps = {
+    CategoryIcon: "/static/pics/Category.png"
+  }
   state = {
     show: true
   }
@@ -12,7 +15,7 @@ class Sidebar extends React.PureComponent {
     });
   }
   render(){
-    const { children , brand , items , right } = this.props;
+    const { children , brand , items , right , CategoryIcon } = this.props;
     const { show } = this.state;
     return (
       <div className={`${style.container} fullSpaceBFC`}>
@@ -38,7 +41,7 @@ class Sidebar extends React.PureComponent {
             className={style.btn}
             onClick={this.toggleSidebar}
           >
-            <img src="/static/pics/Category.png" />
+            <img src={CategoryIcon} />
           </div>
         {children}
         </div>
