@@ -1,5 +1,5 @@
 import React from 'react';
-import Loading from 'Animation/Loading';
+import Loading from '../Animation/Loading';
 
 var download = 0;
 export default importComponent => {
