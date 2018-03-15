@@ -9,7 +9,7 @@ class IndexPage extends React.PureComponent {
     const { alert , openWindow , openMask , closeMask , history } = this.props;
     return (
       <React.Fragment>
-        <h1>ReNextJs</h1>
+        <h1>Direct</h1>
         <h2
           style={{
           textDecoration: "underline",
