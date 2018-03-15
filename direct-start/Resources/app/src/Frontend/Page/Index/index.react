@@ -1,7 +1,7 @@
 import React from "react";
 
-import applyHOCs from "renext-core/applyHOCs";
-import makePage from "renext-core/makePage";
+import applyHOCs from "direct-core/applyHOCs";
+import makePage from "direct-core/makePage";
 
 class IndexPage extends React.PureComponent {
 

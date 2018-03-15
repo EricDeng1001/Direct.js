@@ -18,7 +18,7 @@ program
         npm.load( () => {
           npm.commands.init( () => {
             console.log(" ----- start install direct ----");
-            npm.commands.install( ["direct@latest"] , ( err , data ) => {
+            npm.commands.install( ["simple-direct@latest"] , ( err , data ) => {
               console.log(" ------- installed completed! ------");
             });
           });

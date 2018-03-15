@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "dev": "renext dev",
-    "build": "renext build",
-    "server": "renext server",
+    "dev": "direct dev",
+    "build": "direct build",
+    "server": "direct server",
     "flow": "flow"
   }
 }

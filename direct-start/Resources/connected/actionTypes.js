@@ -1,7 +1,7 @@
-export const __actionTypeName = "ScopeName/__actionTypeName"; // SYNC
+export const __actionTypeName = new Symbol(); // SYNC
 
 export const __ASYNC_actionName = {
-  pending: "scopeName/__actionName_PENDING",
-  resolved: "scopeName/__actionName_RESOLVED",
-  rejected: "scopeName/__actionName_REJECTED",
+  pending: new Symbol(),
+  resolved: new Symbol(),
+  rejected: new Symbol(),
 };

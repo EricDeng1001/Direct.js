@@ -1,4 +1,4 @@
-import asyncLoad from "renext-core/asyncLoad";
+import asyncLoad from "direct-core/asyncLoad";
 
 import Index from "Page/Index";
 

@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import applyHOCs from "renext-core/applyHOCs";
-import withSocket from "renext-core/withSocket";
+import applyHOCs from "direct-core/applyHOCs";
+import withSocket from "direct-core/withSocket";
 
 import * as _thisActionGroup from "actions";
 

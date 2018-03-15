@@ -1,14 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
-import Button from "UI/Button";
+import Button from "direct-core/UI/Button";
 import style from "style";
 
-import makePage from "renext-core/makePage";
+import makePage from "direct-core/makePage";
 
-import SlideLR from "Animation/SlideLR";
-import SlideRL from "Animation/SlideRL";
-import SlideDU from "Animation/SlideDU";
-import Fade from "Animation/Fade";
+import SlideLR from "direct-core/Animation/SlideLR";
+import SlideRL from "direct-core/Animation/SlideRL";
+import SlideDU from "direct-core/Animation/SlideDU";
+import Fade from "direct-core/Animation/Fade";
 
 class NotFoundPage extends React.PureComponent {
   state = {
