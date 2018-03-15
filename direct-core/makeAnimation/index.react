@@ -1,6 +1,6 @@
 import React from 'react';
 import { CSSTransition } from 'react-transition-group';
-import getClassNames from 'Algorithm/getAnimationNames';
+import getClassNames from '../Algorithm/getAnimationNames';
 
 export default ( animationCSS , timeout )=> {
   const classNames = getClassNames( animationCSS );
