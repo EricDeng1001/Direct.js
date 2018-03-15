@@ -49,7 +49,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /direct.*\.(react|js)$/,
+        test: /.*node_modules.*direct.*\.(react|js)$/,
         use: {
           loader: "babel-loader"
         }
