@@ -3,7 +3,7 @@
   "author": "Eric Deng",
   "description": "direct-core",
   "license": "ISC",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "dependencies": {
     "node-fetch": "^1.7.3",
     "react": "^16.2.0",
