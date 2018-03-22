@@ -34,7 +34,7 @@ const publicBase = path.resolve( './public' );
 const sessionMiddleWare = session( serverConfig.session );
 
 //mongodb connection
-try {
+{
   let { username , password , host , port , database , options } = userServerCodeRequire('./Config/database');
   let connection = 'mongodb://';
   if( username ){
@@ -49,10 +49,10 @@ try {
   if( options ){
     connection += '?' + jsonToUrlencoded( options );
   }
-  mongoose.connect( connection );
-} catch ( e ){
-  console.log( "unable to connect to your mongod" );
-  console.log( "running server without database" );
+  mongoose.connect( connection , err => {
+    console.log( "unable to connect to your mongod" );
+    console.log( "running server without database" );
+  });
 }
 
 //redis connection
@@ -114,9 +114,11 @@ userServerCodeRequire("./socketServer")( socketServer );
 
 server.listen( serverConfig.port );
 
-http.createServer( ( req , res ) => {
-  res.writeHead( 301 , {
-    Location: `https://${req.headers.host}${req.url}`
-  });
-  res.end()
-}).listen( 80 );
+if( serverConfig.https ){
+  http.createServer( ( req , res ) => {
+    res.writeHead( 301 , {
+      Location: `https://${req.headers.host}${req.url}`
+    });
+    res.end()
+  }).listen( 80 );
+}
