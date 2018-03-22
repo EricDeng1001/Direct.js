@@ -50,8 +50,10 @@ const sessionMiddleWare = session( serverConfig.session );
     connection += '?' + jsonToUrlencoded( options );
   }
   mongoose.connect( connection , err => {
-    console.log( "unable to connect to your mongod" );
-    console.log( "running server without database" );
+    if( err ){
+      console.log( "unable to connect to your mongod" );
+      console.log( "running server without database" );
+    }
   });
 }
 
