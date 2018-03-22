@@ -1,15 +1,26 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+
 import { bindActionCreators } from 'redux';
-import * as windowActions from 'direct-core/WindowManager/actions';
-import Alert from 'direct-core/Alert';
-import Fade from "direct-core/Animation/Fade";
+
+import { connect } from 'react-redux';
+
+import { BrowserRouter } from 'react-router-dom';
+
 import { TransitionGroup } from 'react-transition-group';
+
+import * as windowActions from 'direct-core/WindowManager/actions';
+
+import Alert from 'direct-core/Alert';
+
+import Fade from "direct-core/Animation/Fade";
+
 import AnimatedPages from 'AnimatedPages';
+
 import windowSystem from 'windowSystem';
-import "Styles/global.less";
+
 import "global.less";
+
+import "Styles/global.less";
 
 class MaskedRoutes extends React.PureComponent {
   positioned = [];
@@ -68,8 +79,8 @@ class MaskedRoutes extends React.PureComponent {
   drop = ( ev ) => {
     var [ x , y , id ] = ev.dataTransfer.getData("text/plain").split(',');
     var dm = document.getElementById( 'modal__' + id );
-    var newLeft = ( ev.clientX + parseInt( x , 10 ) ) + 'px';
-    var newTop = ( ev.clientY + parseInt( y , 10 ) ) + 'px';
+    var newLeft = ( ev.clientX + parseInt( x ) ) + 'px';
+    var newTop = ( ev.clientY + parseInt( y ) ) + 'px';
     dm.style.left = newLeft;
     dm.style.top = newTop;
     this.positioned[id] = {

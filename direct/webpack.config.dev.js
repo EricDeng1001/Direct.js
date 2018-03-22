@@ -1,5 +1,9 @@
 const webpack = require( 'webpack' );
 const path = require( 'path' );
+const HappyPack = require('happypack');
+const os = require("os");
+
+const HappyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
 
 const userpath = path.resolve( "../../" );
 
@@ -33,13 +37,12 @@ module.exports = {
   },
   devtool : 'source-map',
   devServer : {
-    contentBase : "./public",
+    contentBase : path.join( userpath , "./public" ),
     proxy: {
       '*': {
-        target: `${protocol}://127.0.0.1:${port}/`,
+        target: `${protocol}://127.0.0.1:${port}`,
         secure: false
-      },
-
+      }
     },
     historyApiFallback : {
       index: '/index.html'
@@ -50,22 +53,31 @@ module.exports = {
     rules: [
       {
         test: /.*node_modules.*direct.*\.(react|js)$/,
-        use: {
-          loader: "babel-loader"
-        }
+        use: "happypack/loader?id=react"
       },
     {
-      test : /\.(react|js)$/,
-      use : {
-        loader: "babel-loader"
-      },
+      test: /\.(react|js)$/,
+      use: "happypack/loader?id=react",
       exclude: [
         /node_modules/
       ]
     },
     {
       test : /\.less$/,
-      use : [
+      use: "happypack/loader?id=styles"
+    }]
+  },
+  plugins : [
+    new webpack.BannerPlugin( "Antinus Innovation\nAll rights reserved" ),
+    new webpack.optimize.CommonsChunkPlugin({ names: [ 'vendor' , 'common' ] }),
+    new HappyPack({
+      id: "react",
+      loaders: ["babel-loader?cacheDirectory"],
+      threadPool: HappyThreadPool
+    }),
+    new HappyPack({
+      id: "styles",
+      loaders: [
         {
           loader : "style-loader"
         },
@@ -83,13 +95,8 @@ module.exports = {
             ]
           }
         }
-      ]
-    }]
-  },
-  plugins : [
-    new webpack.BannerPlugin( "Antinus Innovation\nAll rights reserved" ),
-    new webpack.optimize.CommonsChunkPlugin({
-      names: [ 'vendor' , 'common' ]
+      ],
+      threadPool: HappyThreadPool
     })
   ]
 };

@@ -1,8 +1,11 @@
 import React from 'react';
+
 import { Route , withRouter , Switch } from 'react-router-dom';
+
 import RoutesConfig from 'Config/routes';
 
 const paths = Object.keys( RoutesConfig );
+
 const routesVDOMDescriptor = ( props ) => (
   <Switch location={props.location}>
     {

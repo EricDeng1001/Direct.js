@@ -1,17 +1,25 @@
+// @flow
 import React from 'react';
+
 import Loading from '../Animation/Loading';
 
 var download = 0;
-export default importComponent => {
+
+type dynamicImport = () => ContravariantOf<React.Component>;
+
+export default ( importComponent: dynamicImport ) => {
+
   setTimeout(
     importComponent,
     1000 + 1000 * download++
+    // this will lead the client to download every following pages in every 1 second
   );
+
   return class extends React.Component {
     constructor( props ) {
       super( props );
       this.state = {
-        component: null,
+        component: null
       };
     }
 
@@ -24,12 +32,13 @@ export default importComponent => {
 
     render() {
       const C = this.state.component;
-      return C
-        ? <C {...this.props} />
+      return ( C ?
+        <C {...this.props} />
         :<Loading
           center
           loading
-        />;
+        />
+      );
     }
   };
 }

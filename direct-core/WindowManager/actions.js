@@ -1,7 +1,3 @@
-/*
-**   Antinux Innovation
-**   Author: Eric Deng
-*/
 import {
   __ALERT,
   __CLOSE_ALERT,

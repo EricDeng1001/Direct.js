@@ -34,7 +34,7 @@ export default ( state = {
       };
     }
     case __CLOSE_WINDOW: {
-      let stack = [ ...state.Windows ];
+      let stack = [...state.Windows];
       stack = stack.filter( m => m.id !== payload.id );
       return {
         ...state,

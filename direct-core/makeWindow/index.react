@@ -1,8 +1,13 @@
 import React from 'react';
+
 import style from 'style';
+
 import * as windowActions from '../WindowManager/actions';
+
 import { bindActionCreators } from 'redux';
+
 import { connect } from 'react-redux';
+
 import Button from '../UI/Button';
 
 export default ( Comp , _shouldComponentUpdate ) => connect(
@@ -10,12 +15,25 @@ export default ( Comp , _shouldComponentUpdate ) => connect(
   dispatch => bindActionCreators( windowActions , dispatch )
 )( class extends React.Component {
   static defaultProps = {
-    onCancel: () => null
+    onCancel: () => null,
+    headerClass: style.header
   }
   render(){
-    const { position , closeModal , windowId , width , height , cancelable , onCancel } = this.props;
+    const {
+      position,
+      closeModal,
+      windowId,
+      //above are given by window system
+      //below are given ny user
+      width,
+      height,
+      cancelable,
+      onCancel,
+      headerClass
+    } = this.props;
     return (
-      <div style={{
+      <div
+        style={{
           left: position.left,
           top: position.top,
           right: position.right,
@@ -27,23 +45,25 @@ export default ( Comp , _shouldComponentUpdate ) => connect(
         className={style.window}
       >
         <div
-          className={style.header}
+          className={headerClass}
           draggable
           onDragStart={this.onDragStart}
         >
-        {
-          cancelable ?
-          <Button
-            className={style.cancel}
-            onClick={this.closeWindow}
-            text="X"
-          />
-          :null
-        }
+          {
+            cancelable ?
+            <Button
+              className={style.cancel}
+              onClick={this.closeWindow}
+              text="X"
+            />
+            :null
+          }
         </div>
         <div className={style.conentContainer}>
           <Comp
             {...this.props}
+            //give the component the ability to close the window it open
+            //this will trigger onCancel
             closeWindow={this.closeWindow}
           />
         </div>
@@ -65,8 +85,8 @@ export default ( Comp , _shouldComponentUpdate ) => connect(
   onDragStart = ( ev ) => {
     var style = window.getComputedStyle( document.getElementById(`modal__${this.props.windowId}`) , null );
     ev.dataTransfer.setData("text/plain",
-    ( parseInt( style.getPropertyValue( "left" ) , 10) - ev.clientX ) + ',' +
-    ( parseInt( style.getPropertyValue( "top" ) , 10) - ev.clientY ) + ',' +
+    ( parseInt( style.getPropertyValue( "left" ) ) - ev.clientX ) + ',' +
+    ( parseInt( style.getPropertyValue( "top" ) ) - ev.clientY ) + ',' +
     this.props.windowId
     );
   }
