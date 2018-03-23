@@ -13,8 +13,5 @@
   },
   "dependencies": {
     "direct-core": "^1.0.0"
-  },
-  "devDependencies": {
-    "simple-direct": "^1.0.0"
   }
 }

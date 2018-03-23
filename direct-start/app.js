@@ -20,6 +20,9 @@ program
             console.log(" ----- start install direct ----");
             npm.commands.install( ["simple-direct@latest"] , ( err , data ) => {
               console.log(" ------- installed completed! ------");
+              // in some windows os
+              // this tool will not exited as wished
+              process.exit();
             });
           });
         })
