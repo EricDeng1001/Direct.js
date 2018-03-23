@@ -49,8 +49,8 @@ const sessionMiddleWare = session( serverConfig.session );
   if( options ){
     connection += '?' + jsonToUrlencoded( options );
   }
-  mongoose.connect( connection , err => {
-    if( err ){
+  mongoose.connect( connection , e => {
+    if( e ){
       console.log( "unable to connect to your mongod" );
       console.log( "running server without database" );
     }

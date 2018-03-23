@@ -19,7 +19,7 @@ module.exports = {
   output: {
     path: path.resolve( userpath , "./public" ),
     filename: '[name].js',
-    chunkFilename: './static/js/[name].chunk.js',
+    chunkFilename: './static/js/[name].chunk-[chunkhash].js',
     publicPath: "/"
   },
   resolve : {
@@ -37,9 +37,9 @@ module.exports = {
   },
   devtool : 'source-map',
   devServer : {
-    contentBase : path.join( userpath , "./public" ),
+    contentBase : path.join( userpath , "/public" ),
     proxy: {
-      '*': {
+      '/api': {
         target: `${protocol}://127.0.0.1:${port}`,
         secure: false
       }
@@ -68,8 +68,6 @@ module.exports = {
     }]
   },
   plugins : [
-    new webpack.BannerPlugin( "Antinus Innovation\nAll rights reserved" ),
-    new webpack.optimize.CommonsChunkPlugin({ names: [ 'vendor' , 'common' ] }),
     new HappyPack({
       id: "react",
       loaders: ["babel-loader?cacheDirectory"],
