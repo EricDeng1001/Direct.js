@@ -1,16 +1,27 @@
 import io from 'socket.io-client';
 
 import socketConfig from "Config/socket";
-let socket = io( socketConfig );
+var socket = io( socketConfig );
 
 socket.io.opts.transports = ['polling', 'websocket'];
 
-let failed = 0
+var failed = 0;
+var time = 2;
+
 socket.on( 'reconnect_attempt' , () => {
   failed++;
-  if( failed > 10 ){
+  if( failed >= 3 ){
+    console.log("aborting tcp connection");
+    time += 1;
     socket.close();
-    console.log("aborting tcp connection")
+    if( time === 7 ){
+      time = 120;
+    }
+    console.log(`aborted , next reonnecting started at ${time}s`);
+    setTimeout( () => {
+      failed = 0;
+      socket.connect();
+    }, time * 1000 )
   }
 });
 
