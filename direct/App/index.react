@@ -27,7 +27,7 @@ ReactDOM.render(
 const { onAppWillMount , onAppWillClose } = AppLifeCycle;
 
 window.addEventListener( "load" , () => {
-  onAppWillMount( socket );
+  onAppWillMount( socket , store.dispatch.bind( store ) );
 });
 
 window.addEventListener( "beforeunload" , () => {

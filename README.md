@@ -1,10 +1,10 @@
-官方文档请移步[这里](https://gitantinus1.gitbooks.io/renext-docs/content/)
+官方文档请移步[这里](https://gitantinus1.gitbooks.io/direct-docs/content/)
 -----
 以下是简要说明
 
 **Description**
 ------
-+ **renext**
++ **direct**
 
   这个库提供了:
   + 完整的编译栈
@@ -34,10 +34,10 @@
     + 条件持久化存储系统
     + 更多详见文档
 
-+ **renext-core**
++ **direct-core**
 
-  这个库在安装renext时会被一并安装,提供以下能力:
-  + 为renext和renext的插件提供依赖和核心算法
+  这个库在安装direct时会被一并安装,提供以下能力:
+  + 为direct和direct的插件提供依赖和核心算法
   + 提供一系列的API,包括
     + 调用视窗系统
     + 调用遮罩
@@ -47,9 +47,9 @@
     + 动画组件制作器( 符合动画组件规范 )
     + 更多详见文档
 
-+ **renext-creator**
++ **direct-creator**
 
-  + 快速构建一个renext工程架构
+  + 快速构建一个direct工程架构
   + 获得初始编译设置
   + 默认的404页
   + 一些基本的组件
@@ -63,17 +63,17 @@
   * mongodb
 
 **steps:**
-  + without renext-creator
+  + without direct-creator
 
   这种方法较为复杂,详见文档
 
-  + with renext-creator
-    + npm install renext-creator -g
+  + with direct-creator
+    + npm install direct-creator -g
     + cd 你想要存放代码的目录
-    + create-renext-app 你的项目名字
+    + create-direct-app 你的项目名字
     + cd 你的项目名字
 
-    **至此,你已经得到了renext的全部能力**
+    **至此,你已经得到了direct的全部能力**
 
     接下来让我们做一些用法说明:
     + npm run server
@@ -96,9 +96,9 @@
       + 代码切片
       + 编译时计算( 实验性质 ),以提高运行速度
 
-**renext项目编写指南**
+**direct项目编写指南**
 
-  以下所有指南基于 **renext-creator** 创建的工程架构
+  以下所有指南基于 **direct-creator** 创建的工程架构
 
   /
   + /public
