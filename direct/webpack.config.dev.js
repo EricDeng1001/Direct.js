@@ -44,7 +44,8 @@ module.exports = {
         secure: false
       },
       "/socket.io": {
-        target: `${protocol}://127.0.0.1:${port}`
+        target: `${protocol}://127.0.0.1:${port}`,
+        secure: false
       }
     },
     historyApiFallback : {
