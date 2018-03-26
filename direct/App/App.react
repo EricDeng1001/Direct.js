@@ -24,13 +24,20 @@ import "Styles/global.less";
 
 class MaskedRoutes extends React.PureComponent {
   positioned = [];
+
+  constructor( props ){
+    super( props );
+    this.moveWindow = this.props.moveWindow;
+  }
+
   render(){
     const { Windows , masked , alertText , closeAlert } = this.props;
     return (
       <div
         className="fullSpaceBFC"
-        onDragOver={this.allowDrop}
-        onDrop={this.drop}
+        onDragEnter={this.getInit}
+        onDragOver={this.smoothlyMove}
+        onDrop={this.allowDrop}
       >
         <div className={alertText && windowSystem.alertMask} >
         {
@@ -72,21 +79,23 @@ class MaskedRoutes extends React.PureComponent {
     return this.positioned[id];
   }
 
-  allowDrop( ev ){
+  getInit = ( ev ) => {
+    const { left , top , id } = this.props.draging;
+    this.initLeft = left;
+    this.initTop = top;
+    this.id = id;
+  }
+
+  smoothlyMove = ( ev ) => {
+    this.moveWindow({
+      left: ev.clientX + this.initLeft,
+      top: ev.clientY + this.initTop,
+      id: this.id
+    });
     return ev.preventDefault();
   }
 
-  drop = ( ev ) => {
-    var [ x , y , id ] = ev.dataTransfer.getData("text/plain").split(',');
-    var dm = document.getElementById( 'modal__' + id );
-    var newLeft = ( ev.clientX + parseInt( x ) ) + 'px';
-    var newTop = ( ev.clientY + parseInt( y ) ) + 'px';
-    dm.style.left = newLeft;
-    dm.style.top = newTop;
-    this.positioned[id] = {
-      x: newLeft,
-      y: newTop
-    };
+  allowDrop = ( ev ) => {
     return ev.preventDefault();
   }
 
@@ -95,6 +104,7 @@ class MaskedRoutes extends React.PureComponent {
 export default connect(
   state => ({
     Windows: state.WindowManager.Windows,
+    draging: state.WindowManager.draging,
     masked: state.WindowManager.masked,
     alertText: state.WindowManager.alert
   }),

@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 
 import Button from '../UI/Button';
 
-export default ( Comp , _shouldComponentUpdate ) => connect(
+export default ( Comp ) => connect(
   undefined,
   dispatch => bindActionCreators( windowActions , dispatch )
 )( class extends React.Component {
@@ -36,19 +36,23 @@ export default ( Comp , _shouldComponentUpdate ) => connect(
         style={{
           left: position.left,
           top: position.top,
-          right: position.right,
-          bottom: position.bottom,
           width: width,
           height: height
         }}
-        id={'modal__' + windowId }
         className={style.window}
       >
         <div
-          className={headerClass}
           draggable
           onDragStart={this.onDragStart}
+          onDragEnd={this.onDragEnd}
+          ref={this.getDragHandle}
         >
+          drag handle
+        </div>
+        <div
+          className={headerClass}
+        >
+
           {
             cancelable ?
             <Button
@@ -71,23 +75,25 @@ export default ( Comp , _shouldComponentUpdate ) => connect(
     );
   }
 
+  getDragHandle = ref => this.dragHandle = ref
+
   closeWindow = () => {
     const { closeWindow , windowId , onCancel } = this.props;
     closeWindow( windowId );
     onCancel( this.props );
   }
 
-  shouldComponentUpdate( nextProps  , nextState ){
-    return _shouldComponentUpdate ?
-    _shouldComponentUpdate( nextProps , nextState )
-    : true;
-  }
   onDragStart = ( ev ) => {
-    var style = window.getComputedStyle( document.getElementById(`modal__${this.props.windowId}`) , null );
-    ev.dataTransfer.setData("text/plain",
-    ( parseInt( style.getPropertyValue( "left" ) ) - ev.clientX ) + ',' +
-    ( parseInt( style.getPropertyValue( "top" ) ) - ev.clientY ) + ',' +
-    this.props.windowId
-    );
+    const { windowId , setDrag , position:{ left , top } } = this.props;
+    setDrag({
+      left: parseInt( left ) - ev.clientX,
+      top: parseInt( top ) - ev.clientY,
+      id: windowId
+    });
+    this.dragHandle.style.opacity = 0;
+  }
+
+  onDragEnd = () => {
+    this.dragHandle.style.opacity = 1;
   }
 });

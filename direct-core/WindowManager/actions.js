@@ -4,7 +4,9 @@ import {
   __OPEN_WINDOW,
   __CLOSE_WINDOW,
   __OPEN_MASK,
-  __CLOSE_MASK
+  __CLOSE_MASK,
+  __MOVE_WINDOW,
+  __SET_DRAG
 } from 'actionTypes';
 
 
@@ -28,6 +30,24 @@ export const openWindow = ( Window , props , getId ) => ({
       id: getId ? ( getId( windowId ) ?  windowId++ : windowId++ ) : windowId++
     }
 });
+
+export const moveWindow = ({ id , top , left }) => ({
+  type: __MOVE_WINDOW,
+  payload: {
+    id,
+    top,
+    left
+  }
+})
+
+export const setDrag = ({ left , top , id }) => ({
+  type: __SET_DRAG,
+  payload: {
+    left,
+    top,
+    id
+  }
+})
 
 export const closeWindow = ( wid ) => ({
   type: __CLOSE_WINDOW,
