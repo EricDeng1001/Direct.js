@@ -2,6 +2,8 @@ import merge from 'direct-core/Algorithm/mergeObject';
 
 import reducerConfig from 'Config/reducer';
 
+import injectedState from "Config/injectedState";
+
 const keys = Object.keys( reducerConfig );
 
 const initState = {};
@@ -19,5 +21,9 @@ catch( e ){
 }
 
 merge( initState , lastState );
+
+if( injectedState ){
+  merge( initState , injectedState );
+}
 
 export default initState;

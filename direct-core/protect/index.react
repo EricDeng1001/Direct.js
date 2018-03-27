@@ -53,16 +53,12 @@ export default ( depObj , always = true ) => Comp => {
     constructor( props ){
       super( props );
       //this loop fix all props required to be true to be true
-      while( !makeProtection.call( this , this.props ) ){
-        continue;
-      }
+      makeProtection.call( this , this.props )
     }
 
     componentWillReceiveProps( nextProps ){
       if( always ){
-        while( !makeProtection.call( this , nextProps ) ){
-          continue;
-        }
+        makeProtection.call( this , nextProps )
       }
       // after this loop, nextProps will be the required shape
     }
