@@ -11,5 +11,7 @@ module.exports = {
       secret: "Antinux",
       resave: true,
       saveUninitialized: true
-    }
+    },
+    mainApiHost: "127.0.0.1",
+    proxy: {}
 };
