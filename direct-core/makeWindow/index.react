@@ -45,14 +45,13 @@ export default ( Comp ) => connect(
           draggable
           onDragStart={this.onDragStart}
           onDragEnd={this.onDragEnd}
+          className={`${style.dragHandle} ${headerClass}`}
           ref={this.getDragHandle}
         >
-          drag handle
         </div>
         <div
           className={headerClass}
         >
-
           {
             cancelable ?
             <Button

@@ -3,19 +3,23 @@
 .appear,
 .enter {
   left: -100%;
+  position: absolute;
   transition: all @enterTime ease;
 }
 
 .appearActive,
 .enterActive {
+  position: absolute;
   left: 0;
 }
 
 .exit {
   transition:all @exitTime ease;
+  position: absolute;
   left: 0;
 }
 
 .exitActive {
+  position: absolute;
   left: 100%;
 }

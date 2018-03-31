@@ -25,5 +25,4 @@ merge( initState , lastState );
 if( injectedState ){
   merge( initState , injectedState );
 }
-
 export default initState;

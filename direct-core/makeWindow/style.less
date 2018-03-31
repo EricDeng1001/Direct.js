@@ -6,19 +6,27 @@
   flex-direction: column;
   overflow: hidden;
   z-index: 999;
+  box-shadow: 1px 1px 8px;
+  border-top-right-radius: 11px;
+  border-top-left-radius: 11px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+
+  .dragHandle {
+    position: absolute;
+    top: 0;
+  }
   .header {
     width: 100% !important;
     height: 32px;
-    border-top-left-radius: 11px;
-    border-top-right-radius: 11px;
     background-color: @niceGrey;
     background-size: 80px 80px;
-    background-image: linear-gradient(90deg, rgba(255, 255, 255, .2) 25%, transparent 25% , transparent 50% , rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25% , transparent 50% , rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
     background-repeat: repeat;
     box-shadow: 1px grey;
   }
   .conentContainer {
-    border: 1px solid black;
+    border: 1px solid lightgrey;
     flex-grow: 2;
     width: 100%;
     overflow: scroll;

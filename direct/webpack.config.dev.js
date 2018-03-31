@@ -8,10 +8,8 @@ const HappyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
 const userpath = path.resolve( "../../" );
 
 const serverConfig = require( path.resolve( userpath , "./src/Server/Config/server" ) );
-const protocol = serverConfig.https ? "https" : "http";
-const port = serverConfig.port;
-const mainApiHost = serverConfig.mainApiHost;
-const proxy = serverConfig.proxy;
+var protocol = serverConfig.https ? "https" : "http";
+var port = serverConfig.port;
 
 module.exports = {
   entry: {
@@ -42,14 +40,14 @@ module.exports = {
     contentBase : path.join( userpath , "/public" ),
     proxy: {
       '/api': {
-        target: `${protocol}://${mainApiHost}:${port}`,
+        target: `${protocol}://127.0.0.1:${port}`,
         secure: false
       },
       "/socket.io": {
-        target: `${protocol}://${mainApiHost}:${port}`,
+        target: `${protocol}://127.0.0.1:${port}`,
         secure: false
       },
-      ...proxy
+      ...serverConfig.proxy
     },
     historyApiFallback : {
       index: '/index.html'
