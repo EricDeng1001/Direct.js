@@ -6,6 +6,8 @@ import { bindActionCreators } from 'redux';
 
 import { connect } from 'react-redux';
 
+import animationTime from "../animationTime.js";
+
 const ableToOperateWindow = connect(
   undefined,
   dispatch => bindActionCreators( actions , dispatch )
@@ -21,7 +23,7 @@ export default Comp => ableToOperateWindow( class extends React.PureComponent {
       () => this.setState({
         ined: true
       }),
-      400
+      animationTime
       // 400ms is the time of PageSwitch animation for now
     );
   }
