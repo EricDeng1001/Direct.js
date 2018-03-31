@@ -4,44 +4,63 @@ import Routes from 'routes';
 
 import { withRouter } from 'react-router-dom';
 
-import { TransitionGroup , CSSTransition } from 'react-transition-group';
+import { TransitionGroup , Transition } from 'react-transition-group';
 
-import pageSwitch from 'pageSwitch';
+import timeout from "direct-core/animationTime";
 
-import getClassNames from 'direct-core/Algorithm/getAnimationNames';
+const defaultStyle = {
+  transition: `all ${timeout}ms ease`
+};
 
-const classNames = getClassNames( pageSwitch );
-
-const timeout = 400;
-
+const animation = ( action , state ) =>  {
+  let pop = action === "POP";
+  switch( state ){
+    case "entering":
+      return {
+        left: pop ?  "-100%" : "100%"
+      };
+    case "entered":
+      return {
+        left: "0"
+      };
+    case "exiting":
+      return {
+        left: pop ? "100%" : "-100%"
+      };
+    case "exited":
+      return {
+        left: "0"
+      };
+  }
+}
 class AnimatedPages extends React.PureComponent {
   render(){
     const { location , history } = this.props;
-    var realAnimationCSS;
-    if( history.action === "POP" ){ // go back
-      realAnimationCSS = {
-        appear: {
-          left: "-100%"
-        },
-        appearActive: {
-          left: "0"
-        }
-      };
-    }
     // in page will use appear
     // out page will use leave
     return (
       <TransitionGroup className="fullSpaceBFC">
-        <CSSTransition
+        <Transition
           key={location.pathname}
-          classNames={classNames}
-          timeout={timeout}
+          timeout={{
+            enter: 0,
+            exit: timeout
+          }}
           appear
         >
-          <section className="page">
-            <Routes location={location} />
-          </section>
-        </CSSTransition>
+          {
+            state =>
+              <section
+                className="page"
+                style={{
+                  ...defaultStyle,
+                  ...animation( history.action , state )
+                }}
+              >
+                <Routes location={location} />
+              </section>
+          }
+        </Transition>
       </TransitionGroup>
     );
   }
