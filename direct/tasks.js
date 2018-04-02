@@ -18,7 +18,8 @@ program
         break;
       case "cleanCache":
         try {
-          fs.rmdirSync( __dirname + "/node_modules/.cache" );
+          cleanFile( __dirname + "/node_modules/.cache" );
+          console.log( "clean finised" );
         } catch( e ){
           //...
           console.log( e );
@@ -32,3 +33,18 @@ program
     }
   })
   .parse( process.argv );
+
+
+function cleanFile( path ){
+  const files = fs.readdirSync( path );
+  for( let i = 0 ; i < files.length ; i++ ){
+    if( fs.statSync( path + "/" + files[i] ).isDirectory() ){
+      cleanFile( path + "/" + files[i]  );
+      console.log( "cleaned " + path + "/" + files[i] );
+    }
+    else {
+      fs.unlinkSync( path + "/" + files[i] );
+      console.log( "removed " + path + "/" + files[i] );
+    }
+  }
+}
