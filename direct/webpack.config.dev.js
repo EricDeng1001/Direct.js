@@ -57,11 +57,11 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /.*node_modules.*direct.*\.(react|js)$/,
+        test: /.*node_modules.*direct.*\.(jsx|react|js)$/,
         use: "happypack/loader?id=react"
       },
     {
-      test: /\.(react|js)$/,
+      test: /\.(jsx|react|js)$/,
       use: "happypack/loader?id=react",
       exclude: [
         /node_modules/

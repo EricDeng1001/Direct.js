@@ -16,6 +16,14 @@ program
           npm.commands.run( [task] );
         });
         break;
+      case "cleanCache":
+        try {
+          fs.rmdirSync( __dirname + "/node_modules/.cache" );
+        } catch( e ){
+          //...
+          console.log( e );
+        }
+        break;
       case "server":
         require("./server");
         break;
