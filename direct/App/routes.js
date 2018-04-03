@@ -1,25 +1,39 @@
 import React from 'react';
 
-import { Route , Switch } from 'react-router-dom';
+import { Route , Switch , Redirect } from 'react-router-dom';
 
-import RoutesConfig from 'Config/routes';
+import routesConfig from 'Config/routes';
 
-const paths = Object.keys( RoutesConfig );
+const paths = Object.keys( routesConfig );
 
-const TheRoutes = paths.map( path => (
-    <Route
-      key={path}
-      path={path}
-      exact={RoutesConfig[path].exact}
-      component={RoutesConfig[path].page}
-    />
-))
+const theRoutes = paths.map( path => {
+  let tmp = routesConfig[path];
+  if( tmp.redirect ){
+    return (
+      <Redirect
+        key={tmp.from + tmp.to}
+        from={path}
+        to={tmp.redirect}
+        exact={tmp.exact}
+      />
+    );
+  } else {
+    return (
+      <Route
+        key={path}
+        path={path}
+        exact={!tmp.nested}
+        component={tmp.page}
+      />
+    );
+  }
+});
 
-class Routes extends React.Component {
+class Routes extends React.PureComponent {
   render() {
     return (
       <Switch location={this.props.location}>
-      {TheRoutes}
+      {theRoutes}
       </Switch>
     );
   }
