@@ -6,10 +6,12 @@ const NotFound = asyncLoad( () => import("Page/NotFound") );
 
 export default {
   "/": {
-    page: Index,
-    exact: true
+    page: Index
+  },
+  "/notFound": {
+    page: NotFound
   },
   "*": {
-    page: NotFound
+    redirect: "/notFound"
   }
 };
