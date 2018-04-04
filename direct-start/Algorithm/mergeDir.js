@@ -4,7 +4,7 @@ module.exports = function mergeDir( src , dest , path ){
   for( let i = 0 ; i < files.length ; i++ ){
     if( fs.statSync( src + "/" + files[i] ).isDirectory() ){
       try {
-        fs.statSync( src + "/" + files[i] )
+        fs.statSync( dest + "/" + files[i] )
       } catch( e ){
         fs.mkdirSync( dest + "/" + files[i] );
       }
