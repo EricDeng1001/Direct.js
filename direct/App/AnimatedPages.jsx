@@ -16,23 +16,21 @@ const fromConfig = routesAnimationConfig['*'].from;
 
 const toConfig = routesAnimationConfig['*'].to;
 
+const defaultConfig = routesAnimationConfig['*']['*'];
+
 const defaultStyle = {};
 
+console.log( defaultConfig );
 const animation = ( from , to , state ) =>  {
-  var timingFunction = 'ease';
-  var toAnimated = 'all';
+  if( state === "exited" ){
+    return {
+      display: "none"
+    };
+  }
+  var timingFunction = defaultConfig.timingFunction;
+  var toAnimate = defaultConfig.toAnimate;
 
-  var animation = {
-    exiting: {
-      left: "-100%"
-    },
-    entering: {
-      left: "100%"
-    },
-    entered: {
-      left: "0"
-    }
-  };
+  var animation = defaultConfig;
 
   if( from in routesAnimationConfig ){
     if( to in routesAnimationConfig[from] ){
@@ -46,16 +44,16 @@ const animation = ( from , to , state ) =>  {
   if( Number.isInteger( animation.time ) ){
     timeout.setTime( animation.time );
   } else {
-    timeout.setTime( 1000 );
+    timeout.setTime( defaultConfig.time );
   }
   if( typeof animation.timingFunction === "string" ){
     timingFunction = animation.timingFunction;
   }
-  if( typeof animation.toAnimated === "string" ){
-    toAnimated = animation.toAnimated;
+  if( typeof animation.toAnimate === "string" ){
+    toAnimate = animation.toAnimate;
   }
 
-  defaultStyle.transition = `${toAnimated} ${timeout.value}ms ${timingFunction}`;
+  defaultStyle.transition = `${toAnimate} ${timeout.value}ms ${timingFunction}`;
   /*
   entering -> entered , this is the enter animation
   entered -> exiting , this is the exiting animation
