@@ -1,6 +1,6 @@
 {
   "name": "direct-start",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "main": "index.js",
   "dependencies": {
     "commander": "^2.12.2",
@@ -9,7 +9,8 @@
   "bin": {
     "direct-start": "./app.js",
     "direct-connected": "./connected.js",
-    "direct-ui": "./ui.js"
+    "direct-ui": "./ui.js",
+    "direct-update": "./update.js"
   },
   "author": "Eric Deng",
   "license": "ISC",

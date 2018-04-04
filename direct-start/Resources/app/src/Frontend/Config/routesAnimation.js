@@ -5,6 +5,21 @@ entered -> exiting , this is the exiting animation
 
 export default {
   "*": {
+    "*": {
+      entering: {
+        left: "100%"
+      },
+      entered: {
+        left: "0",
+        right: "0"
+      },
+      exiting: {
+        right: "100%"
+      },
+      time: 1000,
+      timingFunction: "ease",
+      toAnimate: "all"
+    },
     from: {
       "/notFound": {
         entering: {
@@ -35,7 +50,7 @@ export default {
         top: "0"
       },
       exiting: {
-        top: "-100%"
+        bottom: "100%"
       }
     }
   }
