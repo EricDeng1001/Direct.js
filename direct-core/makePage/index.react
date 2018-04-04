@@ -23,8 +23,7 @@ export default Comp => ableToOperateWindow( class extends React.PureComponent {
       () => this.setState({
         ined: true
       }),
-      animationTime
-      // 400ms is the time of PageSwitch animation for now
+      animationTime.value
     );
   }
   render(){
