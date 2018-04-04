@@ -35,7 +35,7 @@ const animation = ( from , to , state ) =>  {
   };
 
   if( from in routesAnimationConfig ){
-    if( to in routesAnimationConfig ){
+    if( to in routesAnimationConfig[from] ){
       animation = routesAnimationConfig[from][to];
     }
   } else if( from in fromConfig ){
