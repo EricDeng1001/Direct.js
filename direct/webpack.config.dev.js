@@ -1,6 +1,6 @@
-const webpack = require( 'webpack' );
-const path = require( 'path' );
-const HappyPack = require('happypack');
+const webpack = require("webpack");
+const path = require("path");
+const HappyPack = require("happypack");
 const os = require("os");
 
 const HappyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
@@ -13,45 +13,45 @@ var port = serverConfig.port;
 
 module.exports = {
   entry: {
-    vendor: [ 'react' , 'react-dom' , 'redux' , 'react-redux' , 'react-router' , 'react-router-dom' ,'react-transition-group' , 'react-bootstrap' , 'redux-thunk' ],
+    vendor: [ "react" , "react-dom" , "redux" , "react-redux" , "react-router" , "react-router-dom" ,"react-transition-group" ],
     entry : __dirname + "/App"
   },
   output: {
     path: path.resolve( userpath , "./public" ),
-    filename: '[name].js',
-    chunkFilename: './static/js/[name].chunk-[chunkhash].js',
+    filename: "[name].js",
+    chunkFilename: "./static/js/[name].chunk-[chunkhash].js",
     publicPath: "/"
   },
   resolve : {
     modules : [
-      './',
+      "./",
       path.resolve( userpath , "./node_modules" ),
-      path.resolve( userpath , './src/' ),
-      path.resolve( userpath , './src/Frontend/' ),
+      path.resolve( userpath , "./src/" ),
+      path.resolve( userpath , "./src/Frontend/" ),
     ],
     extensions : [
       ".js",
       ".jsx",
       ".react",
-      '.less'
+      ".less"
     ]
   },
-  devtool : 'source-map',
-  devServer : {
-    contentBase : path.join( userpath , "/public" ),
+  devtool : "source-map",
+  devServer: {
+    contentBase: path.join( userpath , "/public" ),
     proxy: {
-      '/api': {
-        target: `${protocol}://127.0.0.1:${port}`,
+      "/api": {
+        target: `${protocol}://${serverConfig.mainApiHost}:${port}`,
         secure: false
       },
       "/socket.io": {
-        target: `${protocol}://127.0.0.1:${port}`,
+        target: `${protocol}://${serverConfig.mainApiHost}:${port}`,
         secure: false
       },
-      ...serverConfig.proxy
+      ...serverConfig.devServerProxy
     },
-    historyApiFallback : {
-      index: '/index.html'
+    historyApiFallback: {
+      index: "/index.html"
     },
     inline : true
   },
@@ -73,7 +73,7 @@ module.exports = {
       use: "happypack/loader?id=styles"
     }]
   },
-  plugins : [
+  plugins: [
     new HappyPack({
       id: "react",
       loaders: ["babel-loader?cacheDirectory"],
@@ -92,7 +92,7 @@ module.exports = {
           }
         },
         {
-          loader : 'less-loader',
+          loader : "less-loader",
           options: {
             paths: [
               path.resolve( userpath , "./src/Frontend/Styles/" )

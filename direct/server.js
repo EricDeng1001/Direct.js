@@ -62,11 +62,14 @@ const sessionMiddleWare = session( serverConfig.session );
 
 const app = express();
 
-app.use( bodyParser.json() );
-app.use( bodyParser.urlencoded({ extended: true }) );
+app.use( bodyParser.json({ strict: false }) );
 app.use( compression() );
 app.use( sessionMiddleWare );
+for( let mw of serverConfig.middleWares ){
+  app.use( mw );
+}
 
+//below for client-routing
 app.get( '*' , ( req , res )  => {
   fs.stat( publicBase + req.path , ( err , stat ) => {
     if( stat && stat.isFile() ){
@@ -93,7 +96,7 @@ var ca;
 try {
   ca = fs.readFileSync( path.resolve( serverConfig.caFile ) )
 } catch( e ){
-  console.log( "unable to find your CA file:" );
+  console.log( "unable to find your CA file:" , e );
 }
 
 if( serverConfig.https ){
@@ -111,6 +114,10 @@ const socketServer = new io( server );
 socketServer.use( ( socket , next ) => {
   sessionMiddleWare( socket.request , socket.request.res , next );
 });
+
+for( let mw of serverConfig.socketMiddleWares ){
+  socketServer.use( mw );
+}
 
 userServerCodeRequire("./socketServer")( socketServer );
 

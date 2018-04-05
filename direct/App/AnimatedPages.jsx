@@ -20,7 +20,6 @@ const defaultConfig = routesAnimationConfig['*']['*'];
 
 const defaultStyle = {};
 
-console.log( defaultConfig );
 const animation = ( from , to , state ) =>  {
   if( state === "exited" ){
     return {
