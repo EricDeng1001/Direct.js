@@ -17,7 +17,7 @@ class Node {
 //A very good DS to store unrelated string group
 class TrieTree {
   constructor( trieTreeRoot ){
-    if( trieTreeRoot ){
+    if( trieTreeRoot instanceof TrieTree ){
       this.root = trieTreeRoot.root;
       return;
     }
@@ -145,6 +145,10 @@ class TrieTree {
 
   toArray(){
     return this.__toArrayRecursive( this.root );
+  }
+
+  toJSON(){
+    return this.toArray();
   }
 };
 
