@@ -1,4 +1,4 @@
-import logger from "redux-logger";
+//import logger from "redux-logger";
 export default {
-  middleWare: [ logger ]
+  middleWare: []
 } ;
