@@ -1,0 +1,11 @@
+{
+  "name": "direct-animation",
+  "version": "0.0.1",
+  "description": "animation libary of Direct.js",
+  "keywords": [
+    "animation",
+    "Frontend"
+  ],
+  "author": "Eric Deng",
+  "license": "ISC"
+}
