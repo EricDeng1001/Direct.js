@@ -1,6 +1,4 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
-import style from 'style';
 
 type Props = {
   className?: string,
@@ -14,14 +12,13 @@ class MyButton extends React.PureComponent<Props> {
   }
 
   render(){
-      const { className , text , onClick } = this.props;
+      const { className , text , children , onClick } = this.props;
       return (
         <Button
-          bsStyle="primary"
-          className={style.basic + ' ' + className}
+          className={`btn btn-primary ${className}`}
           onClick={onClick}
         >
-          {text}
+          {text || children}
         </Button>
       );
   }
