@@ -1,5 +1,3 @@
-import merge from 'direct-core/Algorithm/mergeObject';
-
 import reducerConfig from 'Config/reducer';
 
 import injectedState from "Config/injectedState";
@@ -13,6 +11,7 @@ for( let key of keys ){
 }
 
 var lastState;
+
 try {
   lastState = JSON.parse( localStorage.lastState );
 }
@@ -20,9 +19,9 @@ catch( e ){
   lastState = {};
 }
 
-merge( initState , lastState );
+Object.assign( initState , lastState );
 
 if( injectedState ){
-  merge( initState , injectedState );
+  Object.assign( initState , injectedState );
 }
 export default initState;
