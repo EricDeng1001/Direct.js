@@ -1,5 +1,5 @@
 const fs = require("fs");
-const mergeObject = require("mergeObject");
+const mergeObject = require("./mergeObject");
 
 const getStandardFrontendConfig = file => require(`./Resources/app/src/Frontend/Config/${file}`);
 const getStandardServerConfig = file => require(`./Resources/app/src/Server/Config/${file}`);
