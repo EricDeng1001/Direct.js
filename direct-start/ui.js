@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 const fs = require("fs");
 const path = require("path");
-var program = require("commander");
+const program = require("commander");
+const version = require("./package.json").version;
 const copyDir = require("./Algorithm/copyDir");
 
 program
-  .version("0.0.1")
+  .version( version )
   .arguments("<name>")
   .action( name => {
     fs.stat( name , ( err , result ) => {
