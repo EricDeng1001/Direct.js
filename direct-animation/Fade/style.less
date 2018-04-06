@@ -1,0 +1,21 @@
+@enterTime: 300ms;
+@exitTime: 200ms;
+.appear,
+.enter {
+  opacity: 0;
+  transition: opacity @enterTime linear;
+}
+
+.appearActive,
+.enterActive {
+  opacity: 1;
+}
+
+.exit {
+  opacity: 1;
+  transition: opacity @exitTime linear;
+}
+
+.exitActive {
+  opacity: 0;
+}

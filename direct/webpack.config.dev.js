@@ -3,13 +3,30 @@ const path = require("path");
 const HappyPack = require("happypack");
 const os = require("os");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const HappyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
+const HappyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length + 2 })
 
 const userpath = path.resolve( "../../" );
 
 const serverConfig = require( path.resolve( userpath , "./src/Server/Config/server" ) );
 var protocol = serverConfig.https ? "https" : "http";
 var port = serverConfig.port;
+
+var compilerConfig = {
+  mainApiHost: "127.0.0.1",
+  module: {
+    rules: []
+  },
+  devServerProxy: {},
+  devPlugins: [],
+  HtmlWebpackPluginConfig: {
+    template: "./template.html"
+  }
+};
+try {
+  Object.assign( compilerConfig , require( path.resolve( userpath , "./webpack.config.json") ) );
+} catch( e ){
+
+}
 
 module.exports = {
   entry : __dirname + "/App",
@@ -38,14 +55,14 @@ module.exports = {
     contentBase: path.join( userpath , "/public" ),
     proxy: {
       "/api": {
-        target: `${protocol}://${serverConfig.mainApiHost}:${port}`,
+        target: `${protocol}://${compilerConfig.mainApiHost}:${port}`,
         secure: false
       },
       "/socket.io": {
-        target: `${protocol}://${serverConfig.mainApiHost}:${port}`,
+        target: `${protocol}://${compilerConfig.mainApiHost}:${port}`,
         secure: false
       },
-      ...serverConfig.devServerProxy
+      ...compilerConfig.devServerProxy
     },
     historyApiFallback: {
       index: "/index.html"
@@ -54,6 +71,7 @@ module.exports = {
   },
   module: {
     rules: [
+      ...compilerConfig.module.rules,
       {
         test: /.*node_modules.*direct.*\.(jsx|react|js)$/,
         use: "happypack/loader?id=react"
@@ -76,9 +94,10 @@ module.exports = {
     ]
   },
   plugins: [
+    ...compilerConfig.devPlugins,
     new HtmlWebpackPlugin({
       //template:path.resolve( userpath , "./public/template.html"),
-      template: "./template.html"
+      ...compilerConfig.HtmlWebpackPluginConfig
     }),
     new HappyPack({
       id: "react",
@@ -87,7 +106,8 @@ module.exports = {
     }),
     new HappyPack({
       id: "images",
-      loaders: ["file-loader"]
+      loaders: ["file-loader"],
+      threadPool: HappyThreadPool
     }),
     new HappyPack({
       id: "styles",
