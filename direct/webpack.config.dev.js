@@ -2,7 +2,7 @@ const webpack = require("webpack");
 const path = require("path");
 const HappyPack = require("happypack");
 const os = require("os");
-
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HappyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
 
 const userpath = path.resolve( "../../" );
@@ -12,13 +12,10 @@ var protocol = serverConfig.https ? "https" : "http";
 var port = serverConfig.port;
 
 module.exports = {
-  entry: {
-    vendor: [ "react" , "react-dom" , "redux" , "react-redux" , "react-router" , "react-router-dom" ,"react-transition-group" ],
-    entry : __dirname + "/App"
-  },
+  entry : __dirname + "/App",
   output: {
     path: path.resolve( userpath , "./public" ),
-    filename: "[name].js",
+    filename: "[name]-[hash].js",
     chunkFilename: "./static/js/[name].chunk-[chunkhash].js",
     publicPath: "/"
   },
@@ -74,6 +71,10 @@ module.exports = {
     }]
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      //template:path.resolve( userpath , "./public/template.html"),
+      template: "./template.html"
+    }),
     new HappyPack({
       id: "react",
       loaders: ["babel-loader?cacheDirectory"],
@@ -102,5 +103,6 @@ module.exports = {
       ],
       threadPool: HappyThreadPool
     })
-  ]
+  ],
+  mode: "development"
 };

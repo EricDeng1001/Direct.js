@@ -14,7 +14,9 @@ import Alert from 'direct-core/Alert';
 
 import Fade from "direct-core/Animation/Fade";
 
-import AnimatedPages from 'AnimatedPages';
+import asyncLoad from "direct-core/asyncLoad";
+
+const  AnimatedPages = asyncLoad( () => import(/* webpackChunkName: 'AnimatedPages' */  'AnimatedPages') );
 
 import windowSystem from 'windowSystem';
 

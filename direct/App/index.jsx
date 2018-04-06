@@ -6,49 +6,59 @@ import { Provider } from 'react-redux';
 
 import App from 'App';
 
-import store from 'store';
-
 import extract from "direct-core/Algorithm/extractObject";
-
-import AppLifeCycle from 'Config/AppLifeCycle';
-
-import persistentState from 'Config/persistentState';
 
 import socket from "direct-core/socket";
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('reactRoot')
-);
+const loadStore = () => import(/* webpackChunkName: "store" */ 'store');
+
+const loadAppLifeCycle = () => import(/* webpackChunkName: "AppLifeCycle" */ 'Config/AppLifeCycle');
+
+const loadPersistentState = () => import(/* webpackChunkName: "persistentState" */ 'Config/persistentState');
 
 
-const { onAppWillMount , onAppWillClose } = AppLifeCycle;
+(async function loadConfigComplete(){
+  var AppLifeCycle = loadAppLifeCycle();
+  var persistentState = loadPersistentState();
+  var store = loadStore();
+  console.log( store );
+  AppLifeCycle = (await AppLifeCycle).default;
+  persistentState = (await persistentState).default;
+  store = (await store).default;
+  ReactDOM.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById('reactRoot')
+  );
 
-window.addEventListener( "load" , () => {
-  onAppWillMount( socket , store.dispatch.bind( store ) );
-});
 
-window.addEventListener( "beforeunload" , () => {
-  var resolved = false;
-  try {
-    onAppWillClose( () => resolved = true , store.getState() , persistentState , socket );
-  }
-  catch ( e ){
-    console.log( e );
-  }
-  var a = Date.now();
-  while( true ){
-    if( resolved ){
-      break;
+  const { onAppWillMount , onAppWillClose } = AppLifeCycle;
+
+  window.addEventListener( "load" , () => {
+    onAppWillMount( socket , store.dispatch.bind( store ) );
+  });
+
+  window.addEventListener( "beforeunload" , () => {
+    var resolved = false;
+    try {
+      onAppWillClose( () => resolved = true , store.getState() , persistentState , socket );
     }
-    if( Date.now() > a + 6000 ){
-      break;
+    catch ( e ){
+      console.log( e );
     }
-  }
-  const stateToStore = extract( store.getState() ,  persistentState , socket );
+    var a = Date.now();
+    while( true ){
+      if( resolved ){
+        break;
+      }
+      if( Date.now() > a + 6000 ){
+        break;
+      }
+    }
+    const stateToStore = extract( store.getState() ,  persistentState , socket );
 
-  localStorage.lastState = JSON.stringify(  stateToStore );
+    localStorage.lastState = JSON.stringify(  stateToStore );
 
-});
+  });
+})();

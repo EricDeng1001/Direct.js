@@ -22,19 +22,19 @@ program
             npm.commands.install( ["simple-direct@latest"] , ( err , data ) => {
               console.log(" ------- installed completed! ------");
               console.log(
-                "--------------------------------------------------------------------------------\n\
-                  run\n\
-                  npm install direct-animation\n\
-                  to install animation lib for direct\n\
-                  npm install direct-algorithm\n\
-                  to install a lot of useful algorithm\n\
-                  npm install direct-datastructure\n\
-                  to install a lot of useful datastructure\n\
-                  npm install direct-wrapper\n\
-                  to install a lot of useful wrapper\n\
-                  and more...
+                `--------------------------------------------------------------------------------\n
+                  run\n
+                  npm install direct-animation\n
+                  to install animation lib for direct\n
+                  npm install direct-algorithm\n
+                  to install a lot of useful algorithm\n
+                  npm install direct-datastructure\n
+                  to install a lot of useful datastructure\n
+                  npm install direct-wrapper\n
+                  to install a lot of useful wrapper\n
+                  and more...\n
                   see [url]
-                "
+                `
               );
               // in some windows os
               // this tool will not exited as wished
