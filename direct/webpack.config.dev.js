@@ -23,7 +23,7 @@ var compilerConfig = {
   }
 };
 try {
-  Object.assign( compilerConfig , require( path.resolve( userpath , "./webpack.config.json") ) );
+  Object.assign( compilerConfig , require( path.resolve( userpath , "./webpack.config.js") ) );
 } catch( e ){
 
 }
