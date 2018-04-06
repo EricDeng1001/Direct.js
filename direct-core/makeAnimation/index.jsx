@@ -19,9 +19,7 @@ export default ( animationCSS , timeout )=> {
           timeout={timeout}
           appear
           >
-          <section className="fullSpaceBFC">
             {children}
-          </section>
         </CSSTransition>
         );
     }

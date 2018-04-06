@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 type Props = {
   className?: string,
@@ -14,12 +14,12 @@ class MyButton extends React.PureComponent<Props> {
   render(){
       const { className , text , children , onClick } = this.props;
       return (
-        <Button
-          className={`btn btn-primary ${className}`}
+        <div
+          className={className || "btn btn-primary"}
           onClick={onClick}
         >
           {text || children}
-        </Button>
+        </div>
       );
   }
 };
