@@ -21,7 +21,6 @@ const loadPersistentState = () => import(/* webpackChunkName: "persistentState" 
   var AppLifeCycle = loadAppLifeCycle();
   var persistentState = loadPersistentState();
   var store = loadStore();
-  console.log( store );
   AppLifeCycle = (await AppLifeCycle).default;
   persistentState = (await persistentState).default;
   store = (await store).default;
