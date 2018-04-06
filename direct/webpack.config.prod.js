@@ -21,7 +21,7 @@ prodConfig.mode = "production";
 
 prodConfig.plugins = [
   ...plugins,
-  ...prodPlugins,
+  ...compilerConfig.prodPlugins,
   new webpack.optimize.SplitChunksPlugin(),
   new webpack.BannerPlugin( "Antinus Innovation\nAll rights reserved" ),
 ];
