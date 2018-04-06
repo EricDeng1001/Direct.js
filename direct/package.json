@@ -3,7 +3,7 @@
   "author": "Eric Deng",
   "description": "quick set up a direct app",
   "license": "ISC",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "bin": {
     "direct": "./tasks.js"
   },
@@ -26,9 +26,10 @@
     "babel-preset-stage-0": "^6.24.1",
     "commander": "^2.12.2",
     "css-loader": "^0.28.11",
-    "flow-bin": "^0.61.0",
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
+    "file-loader": "^1.1.11",
+    "flow-bin": "^0.61.0",
     "npm": "^5.8.0",
     "direct-core": "latest",
     "style-loader": "^0.20.3",

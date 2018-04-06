@@ -58,17 +58,22 @@ module.exports = {
         test: /.*node_modules.*direct.*\.(jsx|react|js)$/,
         use: "happypack/loader?id=react"
       },
-    {
-      test: /\.(jsx|react|js)$/,
-      use: "happypack/loader?id=react",
-      exclude: [
-        /node_modules/
-      ]
-    },
-    {
-      test : /\.less$/,
-      use: "happypack/loader?id=styles"
-    }]
+      {
+        test: /\.(jsx|react|js)$/,
+        use: "happypack/loader?id=react",
+        exclude: [
+          /node_modules/
+        ]
+      },
+      {
+        test: /\.less$/,
+        use: "happypack/loader?id=styles"
+      },
+      {
+        test: /\.(png|svg|webp|jpe?g|gif)/,
+        use: "happypack/loader?id=images"
+      }
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -81,15 +86,18 @@ module.exports = {
       threadPool: HappyThreadPool
     }),
     new HappyPack({
+      id: "images",
+      loaders: ["file-loader"]
+    }),
+    new HappyPack({
       id: "styles",
       loaders: [
-        {
-          loader : "style-loader"
-        },
+        "style-loader",
         {
           loader : "css-loader" ,
           options : {
-            modules : true
+            modules : true,
+            minimize: true
           }
         },
         {
