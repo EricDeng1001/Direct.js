@@ -7,22 +7,22 @@ class ErrorBoundary extends React.Component {
   state = { hasError: false }
 
   componentDidCatch( error, info ){
-    const { handler , showErrorMesaage } = this.props;
-    showErrorMesaage ?
+    const { handler , showErrorMessage } = this.props;
+    showErrorMessage ?
     this.setState({ hasError: true , error , info })
     :this.setState({ hasError: true });
     handler( error, info );
   }
 
   render() {
-    const { children , showErrorMesaage } = this.props;
+    const { children , showErrorMessage } = this.props;
     const { error , info , hasError } = this.state;
     if ( hasError ){
       return (
         <React.Fragment>
           <h1>Something went wrong.</h1>
           {
-            showErrorMesaage ? (
+            showErrorMessage ? (
               <div>
                 <h2>error:</h2>
                 <p>{error}</p>

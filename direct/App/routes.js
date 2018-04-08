@@ -34,7 +34,7 @@ const theRoutes = paths.map( path => {
 class Routes extends React.PureComponent {
   render() {
     return (
-      <ErrorBoundary>
+      <ErrorBoundary showErrorMessage>
         <Switch location={this.props.location}>
           {theRoutes}
         </Switch>

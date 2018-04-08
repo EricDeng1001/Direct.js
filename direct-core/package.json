@@ -3,7 +3,7 @@
   "author": "Eric Deng",
   "description": "direct-core",
   "license": "ISC",
-  "version": "1.1.8",
+  "version": "1.1.8-beta.1",
   "dependencies": {
     "react": "^16.3.1",
     "react-bootstrap": "^0.32.0",
