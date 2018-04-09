@@ -1,13 +1,15 @@
 // @flow
-import React from 'react';
+import React from "react";
 
-import Loading from '../Animation/Loading';
+import Loading from "../Animation/Loading";
 
 var download = 0;
 
-type dynamicImport = () => ContravariantOf<React.Component>;
+type DynamicImport = () => ContravariantOf<React.Component> | ContravariantOf<React.PureComponent>;
 
-export default ( importComponent: dynamicImport ) => {
+type ErrorHandler = ( ContravariantOf<Error> ) => any;
+
+export default ( importComponent: DynamicImport , errorHandler?: ErrorHandler ) => {
 
   setTimeout(
     importComponent,
@@ -15,7 +17,7 @@ export default ( importComponent: dynamicImport ) => {
     // this will lead the client to download every following pages in every 1 second
   );
 
-  return class extends React.Component {
+  return class extends React.PureComponent {
     constructor( props ) {
       super( props );
       this.state = {
@@ -24,7 +26,11 @@ export default ( importComponent: dynamicImport ) => {
     }
 
     async componentDidMount() {
-      const { default: component } = await importComponent();
+      try {
+        const { default: component } = await importComponent();
+      } catch( e ){
+        errorHandler( e );
+      }
       this.setState({
         component: component
       });

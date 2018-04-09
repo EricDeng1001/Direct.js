@@ -1,38 +1,38 @@
-import React from 'react';
+import React from "react";
 
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom";
 
-import { Provider } from 'react-redux';
+import { Provider } from "react-redux";
 
-import App from 'App';
+import App from "App";
 
 import extract from "direct-core/Algorithm/extractObject";
 
 import socket from "direct-core/socket";
 
-const loadStore = () => import(/* webpackChunkName: "store" */ 'store');
+const loadStore = () => import(/* webpackChunkName: "store" */ "store");
 
-const loadAppLifeCycle = () => import(/* webpackChunkName: "AppLifeCycle" */ 'Config/AppLifeCycle');
+const loadAppConfig = () => import(/* webpackChunkName: "AppConfig" */ "Config/App");
 
-const loadPersistentState = () => import(/* webpackChunkName: "persistentState" */ 'Config/persistentState');
+const loadPersistentState = () => import(/* webpackChunkName: "persistentState" */ "Config/persistentState");
 
 
 (async function loadConfigComplete(){
-  var AppLifeCycle = loadAppLifeCycle();
+  var AppConfig = loadAppConfig();
   var persistentState = loadPersistentState();
   var store = loadStore();
-  AppLifeCycle = (await AppLifeCycle).default;
+  AppConfig = (await AppConfig).default;
   persistentState = (await persistentState).default;
   store = (await store).default;
   ReactDOM.render(
     <Provider store={store}>
       <App />
     </Provider>,
-    document.getElementById('reactRoot')
+    document.getElementById("reactRoot")
   );
 
 
-  const { onAppWillMount , onAppWillClose } = AppLifeCycle;
+  const { onAppWillMount , onAppWillClose } = AppConfig;
 
   window.addEventListener( "load" , () => {
     onAppWillMount( socket , store.dispatch.bind( store ) );

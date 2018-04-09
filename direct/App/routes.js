@@ -4,6 +4,8 @@ import { Route , Switch , Redirect } from "react-router-dom";
 
 import routesConfig from "Config/routes";
 
+import AppConfig from "Config/App";
+
 import ErrorBoundary from "direct-core/ErrorBoundary";
 
 const paths = Object.keys( routesConfig );
@@ -34,7 +36,10 @@ const theRoutes = paths.map( path => {
 class Routes extends React.PureComponent {
   render() {
     return (
-      <ErrorBoundary showErrorMessage>
+      <ErrorBoundary
+        showErrorMessage={AppConfig.onUIErrorShowErrorMessage}
+        errorHandler={AppConfig.UIErrorHandler}
+      >
         <Switch location={this.props.location}>
           {theRoutes}
         </Switch>

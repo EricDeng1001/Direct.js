@@ -1,17 +1,17 @@
 import React from "react";
 
-class ErrorBoundary extends React.Component {
+class ErrorBoundary extends React.PureComponent {
   static defaultProps = {
-    handler: () => null
+    errorHandler: () => null
   }
   state = { hasError: false }
 
-  componentDidCatch( error, info ){
-    const { handler , showErrorMessage } = this.props;
+  componentDidCatch( error , info ){
+    const { errorHandler , showErrorMessage } = this.props;
     showErrorMessage ?
     this.setState({ hasError: true , error , info })
     :this.setState({ hasError: true });
-    handler( error, info );
+    errorHandler( error , info );
   }
 
   render() {
