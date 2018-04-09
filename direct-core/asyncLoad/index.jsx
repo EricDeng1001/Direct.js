@@ -28,12 +28,12 @@ export default ( importComponent: DynamicImport , errorHandler?: ErrorHandler ) 
     async componentDidMount() {
       try {
         const { default: component } = await importComponent();
+        this.setState({
+          component: component
+        });
       } catch( e ){
         errorHandler( e );
       }
-      this.setState({
-        component: component
-      });
     }
 
     render() {
