@@ -1,1 +1,3 @@
-//export a json or nothing
+export default {
+
+};

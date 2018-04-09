@@ -1,8 +1,18 @@
 export default {
+  socket: {
+
+  },
+  persistentState: {
+
+  },
   onAppWillMount( socket ){
 
   },
-  onAppWillClose( resolved , state , persistentState , socket ){
-    resolved();
-  }
+  onAppWillClose( state , persistentState , socket ){
+
+  },
+  onUIErrorShowErrorMessage: true,
+  UIErrorHandler( error , info ){
+
+  },
 };
