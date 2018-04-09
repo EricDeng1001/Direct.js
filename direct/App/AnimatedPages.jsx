@@ -6,9 +6,9 @@ import { withRouter } from 'react-router-dom';
 
 import { TransitionGroup , Transition } from 'react-transition-group';
 
-import routesAnimationConfig from "Config/routesAnimation";
-
 import timeout from "direct-core/animationTime";
+
+import routesAnimationConfig from "Config/routesAnimation";
 
 import routesConfig from "Config/routes";
 

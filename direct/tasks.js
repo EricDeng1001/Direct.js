@@ -1,13 +1,15 @@
 #!/usr/bin/env node
-const fs = require('fs');
-const path = require('path');
-var program = require('commander');
+const fs = require("fs");
+const path = require("path");
+var program = require("commander");
 const npm = require("npm");
+const package = require("./package.json");
 
 program
-  .version('0.0.1')
+  .version( package.version )
   .arguments("<task>")
   .action( task => {
+    console.log(`direct version ${package.version}`);
     switch( task ){
       case "dev":
       case "build":

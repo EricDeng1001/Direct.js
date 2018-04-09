@@ -1,18 +1,18 @@
-import { createStore , applyMiddleware } from 'redux';
+import { createStore , applyMiddleware , compose } from "redux";
 
-import reduxThunk from 'redux-thunk';
+import initState from "initState";
 
-import initState from 'initState';
-
-import reducer from 'reducer';
+import reducer from "reducer";
 
 import storeConfig from "Config/store";
 
 export default createStore(
   reducer,
   initState,
-  applyMiddleware(
-    reduxThunk,
-    ...storeConfig.middleWare
+  compose(
+    applyMiddleware(
+      ...storeConfig.middleWares
+    ),
+    ...storeConfig.enhancers
   )
 );

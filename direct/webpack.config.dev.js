@@ -8,6 +8,9 @@ const HappyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length + 2 })
 const userpath = path.resolve( "../../" );
 
 const serverConfig = require( path.resolve( userpath , "./src/Server/Config/server" ) );
+
+const frontendConfigPath = path.resolve( userpath , "./src/Frontend/Config" );
+
 var protocol = serverConfig.https ? "https" : "http";
 var port = serverConfig.port;
 
@@ -29,28 +32,47 @@ try {
 }
 
 module.exports = {
-  entry : __dirname + "/App",
+  entry: {
+    index: path.resolve("./App"),
+    routesConfig: [
+      path.resolve( frontendConfigPath , "./routes" ),
+      path.resolve( frontendConfigPath , "./routesAnimation" )
+    ],
+    storeConfig: [
+      path.resolve( frontendConfigPath , "./reducer" ),
+      path.resolve( frontendConfigPath , "./injectedState" ),
+      path.resolve( frontendConfigPath , "./store" )
+    ],
+    AppConfig: [
+      path.resolve( frontendConfigPath , "./App" )
+    ]
+  },
   output: {
     path: path.resolve( userpath , "./public" ),
     filename: "[name]-[hash].js",
     chunkFilename: "./static/js/[name].chunk-[chunkhash].js",
     publicPath: "/"
   },
-  resolve : {
-    modules : [
+  resolve: {
+    modules: [
       "./",
       path.resolve( userpath , "./node_modules" ),
       path.resolve( userpath , "./src/" ),
       path.resolve( userpath , "./src/Frontend/" ),
     ],
-    extensions : [
-      ".js",
+    extensions: [
       ".jsx",
-      ".react",
-      ".less"
+      ".js",
+      ".css",
+      ".less",
+      ".png",
+      ".jpg",
+      ".jpeg",
+      ".gif",
+      ".webp"
     ]
   },
-  devtool : "source-map",
+  devtool: "source-map",
   devServer: {
     contentBase: path.join( userpath , "/public" ),
     proxy: {
@@ -67,17 +89,17 @@ module.exports = {
     historyApiFallback: {
       index: "/index.html"
     },
-    inline : true
+    inline: true
   },
   module: {
     rules: [
       ...compilerConfig.module.rules,
       {
-        test: /.*node_modules.*direct.*\.(jsx|react|js)$/,
+        test: /.*node_modules.*direct.*\.(jsx|js)$/,
         use: "happypack/loader?id=react"
       },
       {
-        test: /\.(jsx|react|js)$/,
+        test: /\.(jsx|js)$/,
         use: "happypack/loader?id=react",
         exclude: [
           /node_modules/
@@ -96,7 +118,6 @@ module.exports = {
   plugins: [
     ...compilerConfig.devPlugins,
     new HtmlWebpackPlugin({
-      //template:path.resolve( userpath , "./public/template.html"),
       ...compilerConfig.HtmlWebpackPluginConfig
     }),
     new HappyPack({
@@ -114,14 +135,14 @@ module.exports = {
       loaders: [
         "style-loader",
         {
-          loader : "css-loader" ,
-          options : {
-            modules : true,
+          loader: "css-loader" ,
+          options: {
+            modules: true,
             minimize: true
           }
         },
         {
-          loader : "less-loader",
+          loader: "less-loader",
           options: {
             paths: [
               path.resolve( userpath , "./src/Frontend/Styles/" )

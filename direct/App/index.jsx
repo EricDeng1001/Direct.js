@@ -4,60 +4,36 @@ import ReactDOM from "react-dom";
 
 import { Provider } from "react-redux";
 
-import App from "App";
-
 import extract from "direct-core/Algorithm/extractObject";
 
 import socket from "direct-core/socket";
 
-const loadStore = () => import(/* webpackChunkName: "store" */ "store");
+import App from "App";
 
-const loadAppConfig = () => import(/* webpackChunkName: "AppConfig" */ "Config/App");
+import store from "store";
 
-const loadPersistentState = () => import(/* webpackChunkName: "persistentState" */ "Config/persistentState");
+import AppConfig from "AppConfig";
 
-
-(async function loadConfigComplete(){
-  var AppConfig = loadAppConfig();
-  var persistentState = loadPersistentState();
-  var store = loadStore();
-  AppConfig = (await AppConfig).default;
-  persistentState = (await persistentState).default;
-  store = (await store).default;
-  ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.getElementById("reactRoot")
-  );
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("reactRoot")
+);
 
 
-  const { onAppWillMount , onAppWillClose } = AppConfig;
+const { onAppWillMount , onAppWillClose , persistentState } = AppConfig;
 
-  window.addEventListener( "load" , () => {
-    onAppWillMount( socket , store.dispatch.bind( store ) );
-  });
+window.addEventListener( "load" , () => {
+  onAppWillMount( socket , store.dispatch.bind( store ) );
+});
 
-  window.addEventListener( "beforeunload" , () => {
-    var resolved = false;
-    try {
-      onAppWillClose( () => resolved = true , store.getState() , persistentState , socket );
-    }
-    catch ( e ){
-      console.log( e );
-    }
-    var a = Date.now();
-    while( true ){
-      if( resolved ){
-        break;
-      }
-      if( Date.now() > a + 6000 ){
-        break;
-      }
-    }
-    const stateToStore = extract( store.getState() ,  persistentState , socket );
+window.addEventListener( "beforeunload" , () => {
 
-    localStorage.lastState = JSON.stringify(  stateToStore );
+  onAppWillClose( store.getState() , persistentState , socket );
 
-  });
-})();
+  const stateToStore = extract( store.getState() , persistentState );
+
+  localStorage.lastState = JSON.stringify( stateToStore );
+
+});

@@ -7,47 +7,47 @@ which looks like
 /src/Server
 /node_modules
 */
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const express = require('express');
-const https = require('https');
+const express = require("express");
+const https = require("https");
 const http = require("http");
-const io = require("socket.io");
+const SocketSever = require("socket.io");
 
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 const session = require("express-session");
 const compression = require("compression");
 
 const mongoose = require("mongoose");
 
-const userServerCodeRequire = ( name ) => require( path.resolve( './src/Server' , name ) );
+const userServerCodeRequire = name => require( path.resolve( "./src/Server" , name ) );
 
-userServerCodeRequire('./Config/models.js');
+userServerCodeRequire("./Config/models.js");
 
-const serverConfig = userServerCodeRequire('./Config/server');
+const serverConfig = userServerCodeRequire("./Config/server");
 
-const jsonToUrlencoded = require('direct-core/Algorithm/jsonToUrlencoded');
+const jsonToUrlencoded = require("direct-core/Algorithm/jsonToUrlencoded");
 
-const publicBase = path.resolve( './public' );
+const publicBase = path.resolve("./public");
 
 const sessionMiddleWare = session( serverConfig.session );
 
 //mongodb connection
 {
-  let { username , password , host , port , database , options } = userServerCodeRequire('./Config/database');
-  let connection = 'mongodb://';
+  let { username , password , host , port , database , options } = userServerCodeRequire("./Config/database");
+  let connection = "mongodb://";
   if( username ){
-    connection += username + ':' + password + '@';
+    connection += username + ":" + password + "@";
   }
   connection += host;
   if( port ){
-    connection += ':'  + port;
+    connection += ":"  + port;
   }
 
-  connection += '/' + database;
+  connection += "/" + database;
   if( options ){
-    connection += '?' + jsonToUrlencoded( options );
+    connection += "?" + jsonToUrlencoded( options );
   }
   mongoose.connect( connection , e => {
     if( e ){
@@ -56,9 +56,6 @@ const sessionMiddleWare = session( serverConfig.session );
     }
   });
 }
-
-//redis connection
-
 
 const app = express();
 
@@ -70,28 +67,32 @@ for( let mw of serverConfig.middleWares ){
 }
 
 //below for client-routing
-app.get( '*' , ( req , res )  => {
+app.get( "*" , ( req , res ) => {
   fs.stat( publicBase + req.path , ( err , stat ) => {
     if( stat && stat.isFile() ){
       return res.sendFile( publicBase + req.path );
     }
-    res.sendFile( publicBase + '/index.html' );
+    res.sendFile( publicBase + "/index.html" );
   })
 });
 
-const routes = userServerCodeRequire('./Config/routes');
+const routes = userServerCodeRequire("./Config/routes");
 
 const urls = Object.keys( routes );
 
 for( let url of urls ){
+  url = "/api" + url;
   if( !url.method ){
-    app.post( '/api' + url , ( req , res , next ) => routes[url].api({ req , res , next }) );
+    app.post( url , ( req , res , next ) => {
+      routes[url].api({ req , res , next });
+    });
   } else {
-    app[routes[ '/api' + url].method]( url , ( req , res , next ) => routes[url].api({ req , res , next }) );
+    app[routes[url].method]( url , ( req , res , next ) => {
+      routes[url].api({ req , res , next });
+    });
   }
 }
 
-var server;
 var ca;
 try {
   ca = fs.readFileSync( path.resolve( serverConfig.caFile ) )
@@ -99,6 +100,7 @@ try {
   console.log( "unable to find your CA file:" , e );
 }
 
+var server;
 if( serverConfig.https ){
   server = https.createServer({
     ca,
@@ -110,7 +112,7 @@ if( serverConfig.https ){
   server = http.createServer( app );
 }
 
-const socketServer = new io( server );
+const socketServer = new SocketSever( server );
 socketServer.use( ( socket , next ) => {
   sessionMiddleWare( socket.request , socket.request.res , next );
 });
@@ -123,11 +125,11 @@ userServerCodeRequire("./socketServer")( socketServer );
 
 server.listen( serverConfig.port );
 
-if( serverConfig.https ){
+if( serverConfig.https && serverConfig.redirectToHttps ){
   http.createServer( ( req , res ) => {
     res.writeHead( 301 , {
       Location: `https://${req.headers.host}${req.url}`
     });
-    res.end()
+    res.end();
   }).listen( 80 );
 }

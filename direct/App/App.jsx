@@ -1,24 +1,24 @@
-import React from 'react';
+import React from "react";
 
-import { bindActionCreators } from 'redux';
+import { bindActionCreators } from "redux";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from "react-router-dom";
 
-import { TransitionGroup } from 'react-transition-group';
+import { TransitionGroup } from "react-transition-group";
 
-import * as windowActions from 'direct-core/WindowManager/actions';
+import * as windowActions from "direct-core/WindowManager/actions";
 
-import Alert from 'direct-core/Alert';
+import Alert from "direct-core/Alert";
 
 import Fade from "direct-core/Animation/Fade";
 
 import asyncLoad from "direct-core/asyncLoad";
 
-const  AnimatedPages = asyncLoad( () => import(/* webpackChunkName: 'AnimatedPages' */  'AnimatedPages') );
+import AnimatedPages from "animatedPages";
 
-import windowSystem from 'windowSystem';
+import windowSystem from "windowSystem";
 
 import "global.less";
 
@@ -41,7 +41,7 @@ class MaskedRoutes extends React.PureComponent {
         onDragOver={this.smoothlyMove}
         onDrop={this.allowDrop}
       >
-        <div className={alertText && windowSystem.alertMask} >
+        <div className={alertText && windowSystem.alertMask}>
         {
           alertText ? <Fade play><Alert /></Fade> : null
         }
@@ -72,10 +72,10 @@ class MaskedRoutes extends React.PureComponent {
   position = ( id ) => {
     if( !this.positioned[id] ){
       this.positioned[id] = {
-        left: 40 + ( id / 20 ) + ( id % 20 ) * 20 + 'px',
-        top: 40 + ( id % 20 ) * 20 +'px',
-        right: 'auto',
-        bottom: 'auto'
+        left: 40 + ( id / 20 ) + ( id % 20 ) * 20 + "px",
+        top: 40 + ( id % 20 ) * 20 +"px",
+        right: "auto",
+        bottom: "auto"
       };
     }
     return this.positioned[id];
