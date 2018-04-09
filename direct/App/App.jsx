@@ -16,7 +16,7 @@ import Fade from "direct-core/Animation/Fade";
 
 import asyncLoad from "direct-core/asyncLoad";
 
-import AnimatedPages from "animatedPages";
+import AnimatedPages from "AnimatedPages";
 
 import windowSystem from "windowSystem";
 

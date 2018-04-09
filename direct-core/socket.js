@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 
-import socketConfig from "Config/socket";
+import { socket as socketConfig } from "Config/App";
 var socket = io( socketConfig );
 
 socket.io.opts.transports = ['polling', 'websocket'];

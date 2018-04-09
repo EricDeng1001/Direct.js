@@ -12,7 +12,7 @@ import App from "App";
 
 import store from "store";
 
-import AppConfig from "AppConfig";
+import AppConfig from "Config/App";
 
 ReactDOM.render(
   <Provider store={store}>
