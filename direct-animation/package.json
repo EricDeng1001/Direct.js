@@ -1,11 +1,14 @@
 {
   "name": "direct-animation",
-  "version": "0.0.2",
+  "version": "1.0.0-beta.1",
   "description": "animation libary of Direct.js",
   "keywords": [
     "animation",
     "Frontend"
   ],
+  "dependencies": {
+    "direct-core": "latest"
+  },
   "author": "Eric Deng",
   "license": "ISC"
 }

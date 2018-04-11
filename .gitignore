@@ -1,6 +1,4 @@
-direct/node_modules
 direct/package-lock.json
-direct-core/node_modules
 direct-core/package-lock.json
 direct-creator/node_modules
 direct-creator/package-lock.json

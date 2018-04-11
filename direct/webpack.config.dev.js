@@ -33,19 +33,7 @@ try {
 
 module.exports = {
   entry: {
-    index: path.resolve("./App"),
-    routesConfig: [
-      path.resolve( frontendConfigPath , "./routes" ),
-      path.resolve( frontendConfigPath , "./routesAnimation" )
-    ],
-    storeConfig: [
-      path.resolve( frontendConfigPath , "./reducer" ),
-      path.resolve( frontendConfigPath , "./injectedState" ),
-      path.resolve( frontendConfigPath , "./store" )
-    ],
-    AppConfig: [
-      path.resolve( frontendConfigPath , "./App" )
-    ]
+    index: path.resolve("./App")
   },
   output: {
     path: path.resolve( userpath , "./public" ),
@@ -56,6 +44,8 @@ module.exports = {
   resolve: {
     modules: [
       "./",
+      path.resolve( __dirname , "./node_modules" ),
+      path.resolve( __dirname , "../direct-core/node_modules" ),
       path.resolve( userpath , "./node_modules" ),
       path.resolve( userpath , "./src/" ),
       path.resolve( userpath , "./src/Frontend/" ),

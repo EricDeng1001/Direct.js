@@ -1,12 +1,15 @@
 {
   "name": "direct-datastructure",
-  "version": "1.1.0",
+  "version": "1.1.1-beta.1",
   "description": "",
   "main": "Graph.js",
   "keywords": [
     "datastructure",
     "Direct.js"
   ],
+  "dependencies": {
+    "direct-core": "latest"
+  },
   "author": "Eric Deng",
   "license": "ISC"
 }
