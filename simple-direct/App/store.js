@@ -11,8 +11,8 @@ export default createStore(
   initState,
   compose(
     applyMiddleware(
-      ...storeConfig.middleWares
+      ...(storeConfig.middleWares || [] )
     ),
-    ...storeConfig.enhancers
+    ...(storeConfig.enhancers || [] )
   )
 );
