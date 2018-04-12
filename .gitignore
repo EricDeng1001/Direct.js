@@ -1,8 +1,1 @@
-direct/package-lock.json
-direct-core/package-lock.json
-direct-creator/node_modules
-direct-creator/package-lock.json
-direct-usersystem/node_modules
-direct-usersystem/pacakge-lock.json
-direct-wrapper/node_modules
-direct-wrapper/pacakge-lock.json
+*/node_modules
