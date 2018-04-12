@@ -4,7 +4,6 @@ import reducerConfig from "Config/reducer";
 
 import injectedState from "Config/injectedState";
 
-
 const keys = Object.keys( reducerConfig );
 
 const initState = {};

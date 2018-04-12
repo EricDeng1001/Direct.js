@@ -111,7 +111,7 @@ class MaskedRoutes extends React.PureComponent {
 };
 
 export default connect(
-  ({ state: { WindowManager } }) => ({
+  ({ WindowManager }) => ({
     Windows: WindowManager.Windows,
     draging: WindowManager.draging,
     masked: WindowManager.masked,
