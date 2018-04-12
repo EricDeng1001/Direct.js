@@ -20,7 +20,7 @@ var compilerConfig = {
     rules: []
   },
   devServerProxy: {},
-  devPlugins: [],
+  plugins: [],
   HtmlWebpackPluginConfig: {
     template: "./template.html"
   }
@@ -44,8 +44,6 @@ module.exports = {
   resolve: {
     modules: [
       "./",
-      path.resolve( __dirname , "./node_modules" ),
-      path.resolve( __dirname , "../direct-core/node_modules" ),
       path.resolve( userpath , "./node_modules" ),
       path.resolve( userpath , "./src/" ),
       path.resolve( userpath , "./src/Frontend/" ),
@@ -106,7 +104,7 @@ module.exports = {
     ]
   },
   plugins: [
-    ...compilerConfig.devPlugins,
+    ...compilerConfig.plugins,
     new HtmlWebpackPlugin({
       ...compilerConfig.HtmlWebpackPluginConfig
     }),
@@ -143,5 +141,37 @@ module.exports = {
       threadPool: HappyThreadPool
     })
   ],
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+      minSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 6,
+      maxInitialRequests: 4,
+      automaticNameDelimiter: '+',
+      name: true,
+      cacheGroups: {
+        vendor: {
+          name: "vendor",
+          test: /node_modules(?!\/simple-direct.*)/
+        },
+        config: {
+          name: "directCoreConfig",
+          test: /Config/
+        },
+        appWithDirect: {
+          name: "appWithDirect",
+          test: /simple-direct/
+        },
+        commons: {
+          minSize: 30 * 1024,
+          minChunks: 2
+        }
+      }
+    }
+  },
+  performance: {
+    hints: false
+  },
   mode: "development"
 };

@@ -8,7 +8,7 @@ const { devServer , devtool , plugins , ...prodConfig } = baseConfig;
 
 
 var compilerConfig = {
-  prodPlugins: []
+  prodOnlyPlugins: []
 };
 
 try {
@@ -21,7 +21,7 @@ prodConfig.mode = "production";
 
 prodConfig.plugins = [
   ...plugins,
-  ...compilerConfig.prodPlugins,
+  ...compilerConfig.prodOnlyPlugins,
   new webpack.optimize.SplitChunksPlugin(),
   new webpack.BannerPlugin( "Antinus Innovation\nAll rights reserved" ),
 ];
