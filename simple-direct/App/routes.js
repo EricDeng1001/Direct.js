@@ -39,6 +39,7 @@ class Routes extends React.PureComponent {
       <ErrorBoundary
         showErrorMessage={AppConfig.onUIErrorShowErrorMessage}
         errorHandler={AppConfig.UIErrorHandler}
+        customMessage={AppConfig.UIErrorMessage}
       >
         <Switch location={this.props.location}>
           {theRoutes}

@@ -7,7 +7,7 @@ class ErrorBoundary extends React.PureComponent {
   state = { hasError: false }
 
   componentDidCatch( error , info ){
-    const { errorHandler , showErrorMessage } = this.props;
+    const { errorHandler , showErrorMessage , customMessage } = this.props;
     showErrorMessage ?
     this.setState({ hasError: true , error , info })
     :this.setState({ hasError: true });
@@ -15,20 +15,25 @@ class ErrorBoundary extends React.PureComponent {
   }
 
   render() {
-    const { children , showErrorMessage } = this.props;
+    const { children , showErrorMessage , customMessage } = this.props;
     const { error , info , hasError } = this.state;
     if ( hasError ){
       return (
         <React.Fragment>
-          <h1>Something went wrong.</h1>
           {
             showErrorMessage ? (
-              <div>
-                <h2>error:</h2>
-                <p>{error}</p>
-                <h2>info:</h2>
-                <p>{info}</p>
-              </div>
+              customMessage ? (
+                <div>{customMessage}</div>
+              ):(
+                <div>
+                  <h1>Something went wrong.</h1>
+                  <h2>error:</h2>
+                  <p>{error.name}:</p>
+                  <p>{error.message}</p>
+                  <h2>info:</h2>
+                  <pre>{info.componentStack}</pre>
+                </div>
+              )
             )
             : null
           }
