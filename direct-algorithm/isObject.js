@@ -1,1 +1,1 @@
-module.exports = v => typeof v ==="object" && v !== null && !Array.isArray( v );
+module.exports = require("direct-core/Algorithm/isObject");

@@ -12,6 +12,7 @@ export default {
 
   },
   onUIErrorShowErrorMessage: true,
+  UIErrorMessage: undefined,
   UIErrorHandler( error , info ){
 
   },

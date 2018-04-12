@@ -1,6 +1,6 @@
 {
   "name": "direct-animation",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0",
   "description": "animation libary of Direct.js",
   "keywords": [
     "animation",
