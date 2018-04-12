@@ -33,7 +33,7 @@ class MaskedRoutes extends React.PureComponent {
   }
 
   render(){
-    const { Windows , masked , alertText , closeAlert } = this.props;
+    const { Windows , masked , alertText , closeAlert , onMaskClick } = this.props;
     return (
       <div
         className="fullSpaceBFC"
@@ -41,20 +41,27 @@ class MaskedRoutes extends React.PureComponent {
         onDragOver={this.smoothlyMove}
         onDrop={this.allowDrop}
       >
-        <div className={alertText && windowSystem.alertMask}>
         {
-          alertText ? <Fade play><Alert /></Fade> : null
+          alertText?
+          <div className={alertText && windowSystem.alertMask}>
+            <Fade play>
+              <Alert />
+            </Fade>
+          </div>
+          :null
         }
-        </div>
-        <div className={masked ? windowSystem.masked : windowSystem.positionSystem} />
+        <div
+          className={masked ? windowSystem.masked : windowSystem.positionSystem}
+          onClick={onMaskClick}
+        />
         <TransitionGroup>
         {
           Windows.map( Window =>
             <Fade key={Window.id}>
               <Window.Component
                 position={this.position( Window.id )}
-                width="200px"
-                height="200px"
+                width="50vw"
+                height="50vh"
                 {...Window.props}
                 windowId={Window.id}
               />
@@ -104,11 +111,12 @@ class MaskedRoutes extends React.PureComponent {
 };
 
 export default connect(
-  state => ({
-    Windows: state.WindowManager.Windows,
-    draging: state.WindowManager.draging,
-    masked: state.WindowManager.masked,
-    alertText: state.WindowManager.alert
+  ({ state: { WindowManager } }) => ({
+    Windows: WindowManager.Windows,
+    draging: WindowManager.draging,
+    masked: WindowManager.masked,
+    alertText: WindowManager.alert,
+    onMaskClick: WindowManager.onMaskClick
   }),
   dispatch => bindActionCreators( windowActions , dispatch )
 )( MaskedRoutes );

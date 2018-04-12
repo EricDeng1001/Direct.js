@@ -56,8 +56,11 @@ export const closeWindow = ( wid ) => ({
   }
 });
 
-export const openMask = () => ({
-  type: __OPEN_MASK
+export const openMask = ( onMaskClick = () => null ) => ({
+  type: __OPEN_MASK,
+  payload: {
+    onMaskClick
+  }
 });
 
 export const closeMask = () => ({

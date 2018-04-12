@@ -82,8 +82,10 @@ export default ( state = {
       };
     }
     case __OPEN_MASK: {
+      const { onMaskClick } = payload;
       return {
         ...state,
+        onMaskClick,
         masked: true
       };
     }
