@@ -14,7 +14,7 @@ import store from "store";
 
 import AppConfig from "Config/App";
 
-const modifyApp = AppConfig.modifyApp || a => a;
+const modifyApp = AppConfig.modifyApp || ( a => a );
 
 ReactDOM.render(
   modifyApp(

@@ -5,8 +5,6 @@
 
 import React from 'react';
 import style from 'style';
-import Info from 'Info';
-
 
 class Loading extends React.PureComponent {
   render(){
