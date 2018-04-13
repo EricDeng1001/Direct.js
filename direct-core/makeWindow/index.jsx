@@ -8,8 +8,6 @@ import { connect } from 'react-redux';
 
 import * as windowActions from '../WindowManager/actions';
 
-import Button from '../UI/Button';
-
 const ableToOperateWindow = connect(
   undefined,
   dispatch => bindActionCreators( windowActions , dispatch )
@@ -22,14 +20,12 @@ export default Comp => ableToOperateWindow( class extends React.Component {
   }
   render(){
     const {
-      position,
-      closeModal,
       windowId,
+      position,
       width,
       height,
-      //above are given by window system
-      //below are given ny user
       cancelable,
+      CancelHandle,
       onCancel,
       headerClass
     } = this.props;
@@ -51,15 +47,11 @@ export default Comp => ableToOperateWindow( class extends React.Component {
           ref={this.getDragHandle}
         >
         </div>
-        <div
-          className={headerClass}
-        >
+        <div className={headerClass}>
           {
             cancelable ?
-            <Button
-              className={style.cancel}
+            <CancelHandle
               onClick={this.closeWindow}
-              text="X"
             />
             :null
           }

@@ -1,7 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Button from '../UI/Button';
-import Info from "../UI/Info";
 
 import { closeAlert } from '../WindowManager/actions';
 
@@ -24,14 +22,17 @@ export default connect(
         <div className={style.content}>
           <div className={style.contentTop}>Warning!</div>
           <div className={style.message}>
-            <Info info={text}/>
+            <div className={style.info}>
+              {text}
+            </div>
           </div>
         </div>
-        <Button
+        <div
           className={style.cancel}
           onClick={closeAlert}
-          text="X"
-        />
+        >
+          X
+        </div>
       </div>
     );
   }

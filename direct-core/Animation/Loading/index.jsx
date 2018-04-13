@@ -5,7 +5,7 @@
 
 import React from 'react';
 import style from 'style';
-import Info from '../../UI/Info';
+import Info from 'Info';
 
 
 class Loading extends React.PureComponent {
@@ -19,7 +19,7 @@ class Loading extends React.PureComponent {
           if( a < 0.3 ){
             return (
               <div className={center && style.makeLoadingCenter} >
-                <div className={style.spinner1} >
+                <div className={style.spinner1}>
                   <div className={style.bounce1}  />
                   <div className={style.bounce2}  />
                   <div className={style.bounce3}  />
@@ -56,15 +56,19 @@ class Loading extends React.PureComponent {
           onClick={reloader}
           className={style.bigNote + ' ' + center && style.makeLoadingCenter}
         >
-          <Info
-            info={
+          <div className={style.info}>
+            {
               wasLoaded?
               "Latest request failed, click here to reload"
               :"Request failed, please check your network state.Click here to reload"
             }
-          />
+          </div>
         </div>
-        :<Info info={info} /> // could be null
+        :(
+          <div className={style.info}>
+            {info}
+          </div>
+         )
       }
       {
       wasLoaded ?
