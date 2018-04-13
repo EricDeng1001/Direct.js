@@ -14,10 +14,14 @@ import store from "store";
 
 import AppConfig from "Config/App";
 
+const modifyApp = AppConfig.modifyApp || a => a;
+
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  modifyApp(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  ),
   document.getElementById("reactRoot")
 );
 
