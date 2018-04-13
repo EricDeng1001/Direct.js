@@ -14,7 +14,7 @@ export default connect(
   dispatch => ({
     closeAlert: () => dispatch( closeAlert() )
   })
-)( class extends React.Component {
+)( class extends React.PureComponent {
   render(){
     const { closeAlert , text } = this.props;
     return (

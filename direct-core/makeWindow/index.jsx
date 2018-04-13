@@ -2,18 +2,20 @@ import React from 'react';
 
 import style from 'style';
 
-import * as windowActions from '../WindowManager/actions';
-
 import { bindActionCreators } from 'redux';
 
 import { connect } from 'react-redux';
 
+import * as windowActions from '../WindowManager/actions';
+
 import Button from '../UI/Button';
 
-export default ( Comp ) => connect(
+const ableToOperateWindow = connect(
   undefined,
   dispatch => bindActionCreators( windowActions , dispatch )
-)( class extends React.Component {
+);
+
+export default Comp => ableToOperateWindow( class extends React.Component {
   static defaultProps = {
     onCancel: () => null,
     headerClass: style.header
@@ -23,10 +25,10 @@ export default ( Comp ) => connect(
       position,
       closeModal,
       windowId,
-      //above are given by window system
-      //below are given ny user
       width,
       height,
+      //above are given by window system
+      //below are given ny user
       cancelable,
       onCancel,
       headerClass

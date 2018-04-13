@@ -29,7 +29,7 @@ export default ( importComponent: DynamicImport , errorHandler?: ErrorHandler ) 
       try {
         const { default: component } = await importComponent();
         this.setState({
-          component: component
+          component
         });
       } catch( e ){
         errorHandler( e );

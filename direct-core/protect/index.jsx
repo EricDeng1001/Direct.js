@@ -60,7 +60,7 @@ export default ( depObj , always = true ) => Comp => {
       if( always ){
         makeProtection.call( this , nextProps )
       }
-      // after this loop, nextProps will be the required shape
+      super.componentWillReceiveProps( nextProps );
     }
 
     render(){

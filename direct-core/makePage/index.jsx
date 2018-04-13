@@ -1,10 +1,10 @@
 import React from 'react';
 
-import * as actions from '../WindowManager/actions';
-
 import { bindActionCreators } from 'redux';
 
 import { connect } from 'react-redux';
+
+import * as actions from '../WindowManager/actions';
 
 import animationTime from "../animationTime.js";
 

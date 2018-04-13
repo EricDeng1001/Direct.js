@@ -6,7 +6,7 @@ import getClassNames from '../Algorithm/getAnimationNames';
 
 export default ( animationCSS , timeout )=> {
   const classNames = getClassNames( animationCSS );
-  return class extends React.Component {
+  return class extends React.PureComponent {
     render(){
       const { children , play , ...other } = this.props;
       return (
