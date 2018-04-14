@@ -81,13 +81,12 @@ const routes = userServerCodeRequire("./Config/routes");
 const urls = Object.keys( routes );
 
 for( let url of urls ){
-  url = "/api" + url;
   if( !url.method ){
-    app.post( url , ( req , res , next ) => {
+    app.post( "/api" + url , ( req , res , next ) => {
       routes[url].api({ req , res , next });
     });
   } else {
-    app[routes[url].method]( url , ( req , res , next ) => {
+    app[routes[url].method]( "/api" + url , ( req , res , next ) => {
       routes[url].api({ req , res , next });
     });
   }
