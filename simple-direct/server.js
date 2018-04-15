@@ -92,15 +92,14 @@ for( let url of urls ){
   }
 }
 
-var ca;
-try {
-  ca = fs.readFileSync( path.resolve( serverConfig.caFile ) )
-} catch( e ){
-  console.log( "unable to find your CA file:" , e );
-}
-
 var server;
 if( serverConfig.https ){
+  var ca;
+  try {
+    ca = fs.readFileSync( path.resolve( serverConfig.caFile ) )
+  } catch( e ){
+    console.log( "unable to find your CA file:" , e );
+  }
   server = https.createServer({
     ca,
     key: fs.readFileSync( path.resolve( serverConfig.keyFile ) ),
