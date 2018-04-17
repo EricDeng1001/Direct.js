@@ -12,7 +12,7 @@ import App from "App";
 
 import store from "store";
 
-import AppConfig from "Config/App";
+import AppConfig from "Core/App";
 
 const modifyApp = AppConfig.modifyApp || ( a => a );
 
