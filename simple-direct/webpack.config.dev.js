@@ -158,7 +158,7 @@ module.exports = {
         },
         config: {
           name: "directCoreConfig",
-          test: /Config/,
+          test: /Core/,
           maxInitialRequests: Infinity
         },
         appWithDirect: {
