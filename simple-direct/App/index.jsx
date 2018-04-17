@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 
 import extract from "direct-core/Algorithm/extractObject";
 
-import socket from "direct-core/socket";
+import socket from "socket";
 
 import App from "App";
 
