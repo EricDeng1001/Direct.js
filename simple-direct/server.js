@@ -82,13 +82,9 @@ const urls = Object.keys( routes );
 
 for( let url of urls ){
   if( !url.method ){
-    app.post( "/api" + url , ( req , res , next ) => {
-      routes[url].api({ req , res , next });
-    });
+    app.post( "/api" + url , routes[url].api );
   } else {
-    app[routes[url].method]( "/api" + url , ( req , res , next ) => {
-      routes[url].api({ req , res , next });
-    });
+    app[routes[url].method]( "/api" + url , routes[url].api );
   }
 }
 
