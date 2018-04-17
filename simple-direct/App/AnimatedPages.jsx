@@ -8,9 +8,9 @@ import { TransitionGroup , Transition } from 'react-transition-group';
 
 import timeout from "direct-core/animationTime";
 
-import routesAnimationConfig from "Config/routesAnimation";
+import routesAnimationConfig from "Core/routesAnimation";
 
-import routesConfig from "Config/routes";
+import routesConfig from "Core/routes";
 
 const fromConfig = routesAnimationConfig['*'].from;
 

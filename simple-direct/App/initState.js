@@ -1,8 +1,8 @@
 import merge from "direct-core/Algorithm/mergeObject";
 
-import reducerConfig from "Config/reducer";
+import reducerConfig from "Core/reducer";
 
-import injectedState from "Config/injectedState";
+import injectedState from "Core/injectedState";
 
 const keys = Object.keys( reducerConfig );
 

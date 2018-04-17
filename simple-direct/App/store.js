@@ -4,7 +4,7 @@ import initState from "initState";
 
 import reducer from "reducer";
 
-import storeConfig from "Config/store";
+import storeConfig from "Core/store";
 
 export default createStore(
   reducer,

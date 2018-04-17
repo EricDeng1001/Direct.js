@@ -4,9 +4,9 @@ import { Route , Switch , Redirect } from "react-router-dom";
 
 import ErrorBoundary from "direct-core/ErrorBoundary";
 
-import routesConfig from "Config/routes";
+import routesConfig from "Core/routes";
 
-import AppConfig from "Config/App";
+import AppConfig from "Core/App";
 
 const paths = Object.keys( routesConfig );
 
