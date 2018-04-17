@@ -11,7 +11,9 @@ export default asyncObj => Comp => {
           }
         }
       }
-      super.componentWillReceiveProps( nextProps );
+      if( super.componentWillReceiveProps ){
+        super.componentWillReceiveProps( nextProps );
+      }
     }
   };
 };

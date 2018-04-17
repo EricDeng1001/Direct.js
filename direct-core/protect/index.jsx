@@ -60,7 +60,9 @@ export default ( depObj , always = true ) => Comp => {
       if( always ){
         makeProtection.call( this , nextProps )
       }
-      super.componentWillReceiveProps( nextProps );
+      if( super.componentWillReceiveProps ){
+        super.componentWillReceiveProps( nextProps );
+      }
     }
 
     render(){
