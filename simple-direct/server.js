@@ -66,25 +66,15 @@ for( let mw of serverConfig.middleWares ){
   app.use( mw );
 }
 
-//below for client-routing
-app.get( "*" , ( req , res ) => {
-  fs.stat( publicBase + req.path , ( err , stat ) => {
-    if( stat && stat.isFile() ){
-      return res.sendFile( publicBase + req.path );
-    }
-    res.sendFile( publicBase + "/index.html" );
-  })
-});
-
 const routes = userServerCodeRequire("./Config/routes");
 
 const urls = Object.keys( routes );
 
 for( let url of urls ){
   if( !url.method ){
-    app.post( "/api" + url , routes[url].api );
+    app.post( path.resolve( "/api" , url ) , routes[url].api );
   } else {
-    app[routes[url].method]( "/api" + url , routes[url].api );
+    app[routes[url].method]( path.resolve( "/api" , url ) , routes[url].api );
   }
 }
 
@@ -116,6 +106,16 @@ for( let mw of serverConfig.socketMiddleWares ){
 }
 
 userServerCodeRequire("./socketServer")( socketServer );
+
+//below for client-routing
+app.get( "*" , ( req , res ) => {
+  fs.stat( publicBase + req.path , ( err , stat ) => {
+    if( stat && stat.isFile() ){
+      return res.sendFile( publicBase + req.path );
+    }
+    res.sendFile( publicBase + "/index.html" );
+  })
+});
 
 server.listen( serverConfig.port );
 
