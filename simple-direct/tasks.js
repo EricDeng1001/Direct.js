@@ -13,7 +13,7 @@ program
     switch( task ){
       case "openDev":
       case "dev":
-      case "build": {
+      case "build":
         process.chdir( __dirname );
         npm.load( () => {
           npm.commands.run( [task] , () => {
@@ -21,8 +21,7 @@ program
           });
         });
         break;
-      }
-      case "cleanCache": {
+      case "cleanCache":
         try {
           cleanFile( __dirname + "/node_modules/.cache" );
           console.log( "clean finised" );
@@ -31,11 +30,9 @@ program
           console.log( e );
         }
         break;
-      }
-      case "server": {
+      case "server":
         require("./server");
         break;
-      }
       default:
         console.log("unknown task");
     }
