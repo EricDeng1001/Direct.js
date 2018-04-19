@@ -3,7 +3,7 @@
   "author": "Eric Deng",
   "description": "quick set up a direct app",
   "license": "ISC",
-  "version": "2.2.4--blueberry",
+  "version": "2.2.6",
   "bin": {
     "direct": "./tasks.js"
   },

@@ -1,8 +1,4 @@
-/*
-**   Antinux Innovation
-**   Author: Eric Deng
-*/
-//@flow
+// @flow
 import React from 'react';
 import style from 'style';
 import ButtonControlPane from 'UI/ButtonControlPane';

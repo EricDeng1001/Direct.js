@@ -20,3 +20,5 @@ react等拆分为一个vendor包,
 vendor,appWithDirect不会发生变化，因此会为后续加载提供大量速度,
 directCoreConfig和其他包也解耦开来，在页面代码不变化的情况下，
 仅改变配置只会触发directCoreConfig的哈希变化，用户不必下载被同步引入的（但是没有更改的）其他代码,因此升级核心更为灵活（比如增加redux中间件）．
+
+配置包改名为Core

@@ -1,6 +1,6 @@
 {
   "name": "direct-start",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "main": "index.js",
   "dependencies": {
     "commander": "^2.12.2",

@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import Button from "direct-core/UI/Button";
 import style from "style";
 
 import makePage from "direct-core/makePage";

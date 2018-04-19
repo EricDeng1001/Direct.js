@@ -1,11 +1,8 @@
 {
   "name": "direct-wrapper",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "wrapper for direct.js",
-  "main": "\"\"",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "",
   "keywords": [
     "Wrapper",
     "Direct"

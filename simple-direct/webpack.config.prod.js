@@ -14,7 +14,7 @@ var compilerConfig = {
 try {
   Object.assign( compilerConfig , require( path.resolve( userpath , "./webpack.config.js") ) );
 } catch( e ){
-
+  console.log("you can specify your webpack config using webpack.config.js in your project root");
 }
 
 prodConfig.mode = "production";
@@ -23,7 +23,7 @@ prodConfig.plugins = [
   ...plugins,
   ...compilerConfig.prodOnlyPlugins,
   new webpack.optimize.SplitChunksPlugin(),
-  new webpack.BannerPlugin( "Antinus Innovation\nAll rights reserved" ),
+  new webpack.BannerPlugin( "Direct.js\nAntinux Innovation\nAuthor: Eric Deng" ),
 ];
 
 module.exports = prodConfig;

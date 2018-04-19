@@ -84,11 +84,11 @@ module.exports = {
       ...compilerConfig.module.rules,
       {
         test: /.*node_modules.*direct.*\.(jsx|js)$/,
-        use: "happypack/loader?id=react"
+        use: "happypack/loader?id=babel"
       },
       {
         test: /\.(jsx|js)$/,
-        use: "happypack/loader?id=react",
+        use: "happypack/loader?id=babel",
         exclude: [
           /node_modules/
         ]
@@ -99,7 +99,7 @@ module.exports = {
       },
       {
         test: /\.(png|svg|webp|jpe?g|gif)/,
-        use: "happypack/loader?id=images"
+        use: "happypack/loader?id=files"
       }
     ]
   },
@@ -153,18 +153,15 @@ module.exports = {
       cacheGroups: {
         vendor: {
           name: "vendor",
-          test: /node_modules(?!\/simple-direct.*)/,
-          maxInitialRequests: Infinity
+          test: /node_modules(?!\/simple-direct.*)/
         },
         config: {
           name: "directCoreConfig",
-          test: /Core/,
-          maxInitialRequests: Infinity
+          test: /Core/
         },
         appWithDirect: {
           name: "appWithDirect",
-          test: /simple-direct/,
-          maxInitialRequests: Infinity
+          test: /simple-direct/
         },
         commons: {
           minSize: 30 * 1024,
