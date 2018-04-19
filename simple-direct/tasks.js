@@ -16,7 +16,9 @@ program
       case "build": {
         process.chdir( __dirname );
         npm.load( () => {
-          npm.commands.run( [task] );
+          npm.commands.run( [task] , () => {
+            process.exit( 0 );
+          });
         });
         break;
       }
@@ -37,7 +39,7 @@ program
       default:
         console.log("unknown task");
     }
-    process.exit( 0 );
+
   })
   .parse( process.argv );
 
