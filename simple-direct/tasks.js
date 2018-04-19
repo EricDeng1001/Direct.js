@@ -37,6 +37,7 @@ program
       default:
         console.log("unknown task");
     }
+    process.exit( 0 );
   })
   .parse( process.argv );
 
