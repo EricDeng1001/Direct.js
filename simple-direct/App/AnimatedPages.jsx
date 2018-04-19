@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Routes from 'routes';
-
 import { withRouter } from 'react-router-dom';
 
 import { TransitionGroup , Transition } from 'react-transition-group';
@@ -11,6 +9,8 @@ import timeout from "direct-core/animationTime";
 import routesAnimationConfig from "Core/routesAnimation";
 
 import routesConfig from "Core/routes";
+
+import Routes from './routes';
 
 const fromConfig = routesAnimationConfig['*'].from;
 

@@ -6,13 +6,13 @@ import { Provider } from "react-redux";
 
 import extract from "direct-core/Algorithm/extractObject";
 
-import socket from "socket";
-
-import App from "App";
-
-import store from "store";
-
 import AppConfig from "Core/App";
+
+import socket from "./socket";
+
+import App from "./App";
+
+import store from "./store";
 
 const modifyApp = AppConfig.modifyApp || ( a => a );
 

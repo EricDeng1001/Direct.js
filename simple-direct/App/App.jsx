@@ -16,13 +16,13 @@ import Fade from "direct-core/Animation/Fade";
 
 import asyncLoad from "direct-core/asyncLoad";
 
-import AnimatedPages from "AnimatedPages";
-
-import windowSystem from "windowSystem";
-
-import "global.less";
-
 import "Styles/global.less";
+
+import AnimatedPages from "./AnimatedPages";
+
+import windowSystem from "./windowSystem";
+
+import "./global.less";
 
 class MaskedRoutes extends React.PureComponent {
   positioned = [];

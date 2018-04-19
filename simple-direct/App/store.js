@@ -1,10 +1,10 @@
 import { createStore , applyMiddleware , compose } from "redux";
 
-import initState from "initState";
-
-import reducer from "reducer";
-
 import storeConfig from "Core/store";
+
+import initState from "./initState";
+
+import reducer from "./reducer";
 
 export default createStore(
   reducer,
