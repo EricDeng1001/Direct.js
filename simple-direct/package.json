@@ -3,13 +3,14 @@
   "author": "Eric Deng",
   "description": "quick set up a direct app",
   "license": "ISC",
-  "version": "2.2.6",
+  "version": "2.2.7",
   "bin": {
     "direct": "./tasks.js"
   },
   "scripts": {
     "build": "webpack --config webpack.config.prod.js",
-    "dev": "webpack-dev-server --config webpack.config.dev.js --hot --open"
+    "dev": "webpack-dev-server --config webpack.config.dev.js --hot",
+    "openDev": "webpack-dev-server --config webpack.config.dev.js --hot --open"
   },
   "main": "tasks.js",
   "dependencies": {
