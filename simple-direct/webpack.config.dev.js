@@ -109,12 +109,12 @@ module.exports = {
       ...compilerConfig.HtmlWebpackPluginConfig
     }),
     new HappyPack({
-      id: "react",
+      id: "babel",
       loaders: ["babel-loader?cacheDirectory"],
       threadPool: HappyThreadPool
     }),
     new HappyPack({
-      id: "images",
+      id: "files",
       loaders: ["file-loader"],
       threadPool: HappyThreadPool
     }),
