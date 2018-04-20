@@ -12,13 +12,16 @@ program
     console.log(`direct version ${package.version}`);
     switch( task ){
       case "openDev":
+        process.chdir( __dirname );
+        npm.load( () => {
+          npm.commands.run( [task] });
+        });
+        break;
       case "dev":
       case "build":
         process.chdir( __dirname );
         npm.load( () => {
-          npm.commands.run( [task] , () => {
-            process.exit( 0 );
-          });
+          npm.commands.run( [task] });
         });
         break;
       case "cleanCache":
