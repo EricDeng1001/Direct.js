@@ -14,14 +14,14 @@ program
       case "openDev":
         process.chdir( __dirname );
         npm.load( () => {
-          npm.commands.run( [task] });
+          npm.commands.run( [task] );
         });
         break;
       case "dev":
       case "build":
         process.chdir( __dirname );
         npm.load( () => {
-          npm.commands.run( [task] });
+          npm.commands.run( [task] );
         });
         break;
       case "cleanCache":
