@@ -4,7 +4,7 @@ const path = require("path");
 
 const userpath = path.resolve("../../");
 const baseConfig = require("./webpack.config.dev.js");
-const { devServer , devtool , plugins , ...prodConfig } = baseConfig;
+const { devServer , devtool , plugins , watchOptions , ...prodConfig } = baseConfig;
 
 
 var compilerConfig = {
@@ -18,6 +18,8 @@ try {
 }
 
 prodConfig.mode = "production";
+
+prodConfig.watch = false;
 
 prodConfig.plugins = [
   ...plugins,

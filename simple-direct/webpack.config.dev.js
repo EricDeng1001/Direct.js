@@ -16,10 +16,14 @@ var port = serverConfig.port;
 
 var compilerConfig = {
   mainApiHost: "127.0.0.1",
+  resolve: {
+    alias: {}
+  },
   module: {
     rules: []
   },
   devServerProxy: {},
+  devtool: "source-map",
   plugins: [],
   HtmlWebpackPluginConfig: {
     template: "./template.html"
@@ -41,7 +45,13 @@ module.exports = {
     chunkFilename: "./static/js/[name].chunk-[chunkhash].js",
     publicPath: "/"
   },
+  watch: true,
+  watchOptions: {
+    ignored: path.resolve( userpath , "./node_modules" ),
+    aggregateTimeout: 1200
+  },
   resolve: {
+    alias: compilerConfig.resolve.alias,
     modules: [
       "./",
       path.resolve( userpath , "./node_modules" ),
@@ -60,7 +70,7 @@ module.exports = {
       ".webp"
     ]
   },
-  devtool: "source-map",
+  devtool: compilerConfig.devtool,
   devServer: {
     contentBase: path.join( userpath , "/public" ),
     proxy: {
