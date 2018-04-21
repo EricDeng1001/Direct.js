@@ -40,34 +40,13 @@ export default ( state = {
         Windows: stack
       };
     }
-    case __MOVE_WINDOW: {
-      let { id , left , top } = payload;
-      let stack = [ ...state.Windows ];
-      stack = stack.map( m => m.id === id ?
-        {
-          ...m,
-          props:{
-            ...m.props,
-            position:{
-              left: `${left}px`,
-              top: `${top}px`
-            }
-          }
-        }
-        :m
-      );
 
-      return {
-        ...state,
-        Windows: stack
-      };
-    }
     case __SET_DRAG: {
-      let { id , left , top } = payload;
+      let { ref , left , top } = payload;
       return {
         ...state,
         draging: {
-          id,
+          ref,
           left,
           top
         }

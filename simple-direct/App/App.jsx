@@ -27,11 +27,6 @@ import "./global.less";
 class MaskedRoutes extends React.PureComponent {
   positioned = [];
 
-  constructor( props ){
-    super( props );
-    this.moveWindow = this.props.moveWindow;
-  }
-
   render(){
     const { Windows , masked , alertText , closeAlert , onMaskClick } = this.props;
     return (
@@ -59,9 +54,9 @@ class MaskedRoutes extends React.PureComponent {
           Windows.map( Window =>
             <Fade key={Window.id}>
               <Window.Component
-                position={this.position( Window.id )}
                 width="50vw"
                 height="50vh"
+                position={this.position( Window.id )}
                 {...Window.props}
                 windowId={Window.id}
               />
@@ -89,18 +84,15 @@ class MaskedRoutes extends React.PureComponent {
   }
 
   getInit = ( ev ) => {
-    const { left , top , id } = this.props.draging;
+    const { left , top , ref } = this.props.draging;
     this.initLeft = left;
     this.initTop = top;
-    this.id = id;
+    this.ref = ref;
   }
 
   smoothlyMove = ( ev ) => {
-    this.moveWindow({
-      left: ev.clientX + this.initLeft,
-      top: ev.clientY + this.initTop,
-      id: this.id
-    });
+    this.ref.style.left = ev.clientX + this.initLeft;
+    this.ref.style.top = ev.clientY + this.initTop;
     return ev.preventDefault();
   }
 

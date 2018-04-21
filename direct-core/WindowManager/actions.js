@@ -31,21 +31,12 @@ export const openWindow = ( Window , props , getId ) => ({
     }
 });
 
-export const moveWindow = ({ id , top , left }) => ({
-  type: __MOVE_WINDOW,
-  payload: {
-    id,
-    top,
-    left
-  }
-})
-
-export const setDrag = ({ left , top , id }) => ({
+export const setDrag = ({ left , top , ref }) => ({
   type: __SET_DRAG,
   payload: {
     left,
     top,
-    id
+    ref
   }
 })
 

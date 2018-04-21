@@ -38,6 +38,7 @@ export default Comp => ableToOperateWindow( class extends React.Component {
           height: height
         }}
         className={style.window}
+        ref={this.getContainer}
       >
         <div
           draggable
@@ -69,6 +70,7 @@ export default Comp => ableToOperateWindow( class extends React.Component {
   }
 
   getDragHandle = ref => this.dragHandle = ref
+  getContainer = ref => this.container = ref
 
   closeWindow = () => {
     const { closeWindow , windowId , onCancel } = this.props;
@@ -77,10 +79,15 @@ export default Comp => ableToOperateWindow( class extends React.Component {
   }
 
   onDragStart = ( ev ) => {
-    const { windowId , setDrag , position:{ left , top } } = this.props;
+    const { windowId , setDrag } = this.props;
+    const styleTable = window.getComputedStyle( this.container , null );
+    const left = styleTable.getComputedStyle("left");
+    const top = styleTable.getComputedStyle("top");
+
     setDrag({
       left: parseInt( left ) - ev.clientX,
       top: parseInt( top ) - ev.clientY,
+      ref: this.container,
       id: windowId
     });
     this.dragHandle.style.opacity = 0;
