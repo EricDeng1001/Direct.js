@@ -3,7 +3,7 @@
   "author": "Eric Deng",
   "description": "direct-core",
   "license": "ISC",
-  "version": "1.3.21",
+  "version": "1.3.2",
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
