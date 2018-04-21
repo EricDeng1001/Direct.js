@@ -91,8 +91,8 @@ class MaskedRoutes extends React.PureComponent {
   }
 
   smoothlyMove = ( ev ) => {
-    this.ref.style.left = ev.clientX + this.initLeft;
-    this.ref.style.top = ev.clientY + this.initTop;
+    this.ref.style.left = ev.clientX + this.initLeft + "px";
+    this.ref.style.top = ev.clientY + this.initTop + "px";
     return ev.preventDefault();
   }
 

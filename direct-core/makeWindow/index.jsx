@@ -79,16 +79,15 @@ export default Comp => ableToOperateWindow( class extends React.Component {
   }
 
   onDragStart = ( ev ) => {
-    const { windowId , setDrag } = this.props;
+    const { setDrag } = this.props;
     const styleTable = window.getComputedStyle( this.container , null );
-    const left = styleTable.getComputedStyle("left");
-    const top = styleTable.getComputedStyle("top");
+    const left = styleTable.getPropertyValue("left");
+    const top = styleTable.getPropertyValue("top");
 
     setDrag({
       left: parseInt( left ) - ev.clientX,
       top: parseInt( top ) - ev.clientY,
-      ref: this.container,
-      id: windowId
+      ref: this.container
     });
     this.dragHandle.style.opacity = 0;
   }
