@@ -29,7 +29,7 @@ ReactDOM.render(
 const { onAppWillMount , onAppWillClose , persistentState } = AppConfig;
 
 window.addEventListener( "load" , () => {
-  onAppWillMount( socket , store.dispatch.bind( store ) );
+  onAppWillMount( store.getState(), store.dispatch.bind( store ), socket );
 });
 
 window.addEventListener( "beforeunload" , () => {
