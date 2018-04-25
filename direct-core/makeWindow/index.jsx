@@ -57,7 +57,7 @@ export default Comp => ableToOperateWindow( class extends React.Component {
             :null
           }
         </div>
-        <div className={style.conentContainer}>
+        <div className={style.getContainerentContainer}>
           <Comp
             {...this.props}
             //give the component the ability to close the window it open
