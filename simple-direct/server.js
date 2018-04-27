@@ -60,7 +60,7 @@ const sessionMiddleWare = session( serverConfig.session );
 const app = express();
 
 app.use( bodyParser.json({ strict: false }) );
-app.use( compression( serverConfig.compressionConfig ) );
+app.use( compression( serverConfig.compression ) );
 app.use( sessionMiddleWare );
 for( let mw of serverConfig.middleWares ){
   app.use( mw );
