@@ -9,12 +9,11 @@ type DynamicImport = () => ContravariantOf<React.Component> | ContravariantOf<Re
 
 type ErrorHandler = ( ContravariantOf<Error> ) => any;
 
-export default ( importComponent: DynamicImport , errorHandler?: ErrorHandler ) => {
+export default ( importComponent: DynamicImport, errorHandler?: ErrorHandler, timeout?: number ) => {
 
   setTimeout(
     importComponent,
-    1000 + 1000 * download++
-    // this will lead the client to download every following pages in every 1 second
+    timeout || 2000 + 2000 * download++
   );
 
   return class extends React.PureComponent {
@@ -32,7 +31,12 @@ export default ( importComponent: DynamicImport , errorHandler?: ErrorHandler ) 
           component
         });
       } catch( e ){
-        errorHandler( e );
+        if( errorHandler ){
+          errorHandler( e );
+        } else {
+          console.log("An error happened during asyncLoad, add an errorHandler as the second param to handle this error:");
+          console.log( e );
+        }
       }
     }
 
