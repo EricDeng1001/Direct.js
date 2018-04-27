@@ -15,7 +15,7 @@ const theRoutes = paths.map( path => {
   if( tmp.redirect ){
     return (
       <Redirect
-        key={tmp.from + tmp.to}
+        key={path + tmp.redirect}
         from={path}
         to={tmp.redirect}
         exact={tmp.exact}
@@ -27,7 +27,7 @@ const theRoutes = paths.map( path => {
         key={path}
         path={path}
         exact={!tmp.nested}
-        component={tmp.page}
+        component={tmp.page || tmp}
       />
     );
   }
