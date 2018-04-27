@@ -21,7 +21,7 @@ const compression = require("compression");
 
 const mongoose = require("mongoose");
 
-const userServerCodeRequire = name => require( path.resolve( "./src/Server" , name ) );
+const userServerCodeRequire = name => require( path.resolve( "./src/Server", name ) );
 
 userServerCodeRequire("./Config/models.js");
 
@@ -35,7 +35,7 @@ const sessionMiddleWare = session( serverConfig.session );
 
 //mongodb connection
 {
-  let { username , password , host , port , database , options } = userServerCodeRequire("./Config/database");
+  let { username, password, host, port, database, options } = userServerCodeRequire("./Config/database");
   let connection = "mongodb://";
   if( username ){
     connection += username + ":" + password + "@";
@@ -49,7 +49,7 @@ const sessionMiddleWare = session( serverConfig.session );
   if( options ){
     connection += "?" + jsonToUrlencoded( options );
   }
-  mongoose.connect( connection , e => {
+  mongoose.connect( connection, e => {
     if( e ){
       console.log( "unable to connect to your mongod" );
       console.log( "running server without database" );
@@ -60,7 +60,7 @@ const sessionMiddleWare = session( serverConfig.session );
 const app = express();
 
 app.use( bodyParser.json({ strict: false }) );
-app.use( compression() );
+app.use( compression( serverConfig.compressionConfig ) );
 app.use( sessionMiddleWare );
 for( let mw of serverConfig.middleWares ){
   app.use( mw );
@@ -72,9 +72,9 @@ const urls = Object.keys( routes );
 
 for( let url of urls ){
   if( !url.method ){
-    app.post( path.resolve( "/api" , url ) , routes[url].api );
+    app.post( path.resolve( "/api", url ), routes[url].api || routes[url] );
   } else {
-    app[routes[url].method]( path.resolve( "/api" , url ) , routes[url].api );
+    app[routes[url].method]( path.resolve( "/api", url ), routes[url].api );
   }
 }
 
@@ -84,21 +84,21 @@ if( serverConfig.https ){
   try {
     ca = fs.readFileSync( path.resolve( serverConfig.caFile ) )
   } catch( e ){
-    console.log( "unable to find your CA file:" , e );
+    console.log( "unable to find your ca file:", e );
   }
   server = https.createServer({
     ca,
     key: fs.readFileSync( path.resolve( serverConfig.keyFile ) ),
     cert: fs.readFileSync( path.resolve( serverConfig.certFile ) ),
     passphrase: serverConfig.passphrase
-  } , app );
+  }, app );
 } else {
   server = http.createServer( app );
 }
 
 const socketServer = new SocketSever( server );
-socketServer.use( ( socket , next ) => {
-  sessionMiddleWare( socket.request , socket.request.res , next );
+socketServer.use( ( socket, next ) => {
+  sessionMiddleWare( socket.request, socket.request.res, next );
 });
 
 for( let mw of serverConfig.socketMiddleWares ){
@@ -108,8 +108,8 @@ for( let mw of serverConfig.socketMiddleWares ){
 userServerCodeRequire("./socketServer")( socketServer );
 
 //below for client-routing
-app.get( "*" , ( req , res ) => {
-  fs.stat( publicBase + req.path , ( err , stat ) => {
+app.get( "*", ( req, res ) => {
+  fs.stat( publicBase + req.path, ( err, stat ) => {
     if( stat && stat.isFile() ){
       return res.sendFile( publicBase + req.path );
     }
@@ -117,13 +117,16 @@ app.get( "*" , ( req , res ) => {
   })
 });
 
+for( let eH of serverConfig.errorHandlers ){
+  app.use( eH );
+}
+
 server.listen( serverConfig.port );
 
 if( serverConfig.https && serverConfig.redirectToHttps ){
-  http.createServer( ( req , res ) => {
-    res.writeHead( 301 , {
+  http.createServer( ( req, res ) => {
+    res.writeHead( 301, {
       Location: `https://${req.headers.host}${req.url}`
-    });
-    res.end();
+    }).end();
   }).listen( 80 );
 }
