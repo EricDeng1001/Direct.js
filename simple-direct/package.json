@@ -3,7 +3,7 @@
   "author": "Eric Deng",
   "description": "quick set up a direct app",
   "license": "ISC",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "bin": {
     "direct": "./tasks.js"
   },
@@ -30,7 +30,7 @@
     "less-loader": "^4.1.0",
     "file-loader": "^1.1.11",
     "flow-bin": "^0.61.0",
-    "npm": "^5.8.0",
+    "npm": "^6.0.0",
     "style-loader": "^0.20.3",
     "uglifyjs-webpack-plugin": "^1.2.4",
     "webpack": "^4.5.0",

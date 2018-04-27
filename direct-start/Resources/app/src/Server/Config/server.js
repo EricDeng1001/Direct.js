@@ -1,19 +1,25 @@
-const path = require("path")
-
 module.exports = {
-    https: false,
-    port: 80,
-    caFile: path.join( __dirname , "./ca-bundle.pem" ),
-    keyFile: path.join( __dirname , "./key.pem" ),
-    certFile: path.join( __dirname , "./cert.pem" ),
-    passphrase: "Antinux",
-    middleWares: [],
-    socketMiddleWares: [],
+    https: true,
+    port: 443,
+    redirectToHttps: true,
+    caFile: undefined,
+    keyFile: undefined,
+    certFile: undefined,
     session: {
-      secret: "Antinux",
-      resave: true,
-      saveUninitialized: true
+      secret: "lalalalala",
+      resave: false,
+      saveUninitialized: false,
+      store: undefined,
+      unset: "destroy",
+      cookie: {
+        maxAge: undefined,
+        //path: "/",
+        sameSite: true,
+        httpOnly: true,
+        secure: true
+      }
     },
-    mainApiHost: "127.0.0.1",
-    devServerProxy: {}
+    middleWares: [],
+    errorHandlers: [],
+    socketMiddleWares: []
 };
