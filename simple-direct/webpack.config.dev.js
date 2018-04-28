@@ -139,6 +139,7 @@ module.exports = {
             minimize: true
           }
         },
+        "postcss-loader",
         {
           loader: "less-loader",
           options: {
