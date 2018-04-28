@@ -127,6 +127,7 @@ if( serverConfig.https && serverConfig.redirectToHttps ){
   http.createServer( ( req, res ) => {
     res.writeHead( 301, {
       Location: `https://${req.headers.host}${req.url}`
-    }).end();
+    })
+    res.end();
   }).listen( 80 );
 }
