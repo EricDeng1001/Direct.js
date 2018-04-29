@@ -83,14 +83,20 @@ class MaskedRoutes extends React.PureComponent {
     return this.positioned[id];
   }
 
-  getInit = ( ev ) => {
+  getInit = () => {
     const { left , top , ref } = this.props.draging;
+    if( !ref ){
+      return;
+    }
     this.initLeft = left;
     this.initTop = top;
     this.ref = ref;
   }
 
   smoothlyMove = ( ev ) => {
+    if( !this.ref ){
+      return;
+    }
     this.ref.style.left = ev.clientX + this.initLeft + "px";
     this.ref.style.top = ev.clientY + this.initTop + "px";
     return ev.preventDefault();
