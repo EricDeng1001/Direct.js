@@ -64,11 +64,5 @@ export default ( depObj , always = true ) => Comp => {
         super.componentWillReceiveProps( nextProps );
       }
     }
-
-    render(){
-      return (
-        <Comp {...this.props} />
-      );
-    }
   };
 }
