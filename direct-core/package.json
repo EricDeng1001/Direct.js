@@ -3,21 +3,20 @@
   "author": "Eric Deng",
   "description": "direct-core",
   "license": "ISC",
-  "version": "1.3.6",
+  "version": "1.3.7",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "express": "^4.16.2",
+    "express": "^4.16.3",
     "express-session": "^1.15.6",
-    "mongoose": "^4.13.7",
+    "mongoose": "^5.0.17",
     "react": "^16.3.1",
-    "react-bootstrap": "^0.32.1",
     "react-dom": "^16.3.1",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-transition-group": "^2.3.0",
-    "redux": "^3.7.2",
-    "socket.io": "^2.0.4",
+    "react-transition-group": "^2.3.1",
+    "redux": "^4.0.0",
+    "socket.io": "^2.1.0",
     "socket.io-client": "^2.1.0"
   }
 }
