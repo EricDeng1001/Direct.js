@@ -17,6 +17,7 @@ export default Comp => ableToOperateWindow( class extends React.Component {
   static defaultProps = {
     onCancel: () => null,
     headerClass: style.header
+    contentClass: ""
   }
   render(){
     const {
@@ -27,7 +28,8 @@ export default Comp => ableToOperateWindow( class extends React.Component {
       cancelable,
       CancelHandle,
       onCancel,
-      headerClass
+      headerClass,
+      contentClass
     } = this.props;
     return (
       <div
