@@ -16,7 +16,7 @@ const ableToOperateWindow = connect(
 export default Comp => ableToOperateWindow( class extends React.Component {
   static defaultProps = {
     onCancel: () => null,
-    headerClass: style.header
+    headerClass: style.header,
     contentClass: ""
   }
   render(){
