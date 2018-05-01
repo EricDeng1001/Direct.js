@@ -25,11 +25,14 @@ export default ( importComponent: DynamicImport, errorHandler?: ErrorHandler, ti
     }
 
     async componentDidMount() {
+      this.mounted = true;
       try {
         const { default: component } = await importComponent();
-        this.setState({
-          component
-        });
+        if( this.mounted ){
+          this.setState({
+            component
+          });
+        }
       } catch( e ){
         if( errorHandler ){
           errorHandler( e );
@@ -38,6 +41,10 @@ export default ( importComponent: DynamicImport, errorHandler?: ErrorHandler, ti
           console.log( e );
         }
       }
+    }
+
+    componentWillUnmount(){
+      this.mounted = false;
     }
 
     render() {
