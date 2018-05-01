@@ -24,11 +24,11 @@ const defaultDirectAccess = directAccess['*'];
 
 const defaultStyle = {};
 
-const none = {};
+const lastAnimation = {};
 
 const animation = ( from, to, state, changed ) =>  {
   if( !changed ){
-    return none;
+    return lastAnimation[state];
   }
 
   if( state === "exited" ){
@@ -74,6 +74,7 @@ const animation = ( from, to, state, changed ) =>  {
   entering -> entered, this is the enter animation
   entered -> exiting, this is the exiting animation
   */
+  lastAnimation = animation;
   return animation[state];
 }
 
