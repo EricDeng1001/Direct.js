@@ -24,7 +24,7 @@ const defaultDirectAccess = directAccess['*'];
 
 const defaultStyle = {};
 
-const lastAnimation = {};
+var lastAnimation = {};
 
 const animation = ( from, to, state, changed ) =>  {
   if( !changed ){
