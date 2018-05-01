@@ -32,7 +32,9 @@ const animation = ( from, to, state, changed ) =>  {
   }
 
   if( state === "exited" ){
-    return lastState;
+    return {
+      display: "none"
+    };
   }
 
   var timingFunction = defaultConfig.timingFunction;
@@ -72,7 +74,7 @@ const animation = ( from, to, state, changed ) =>  {
   entering -> entered, this is the enter animation
   entered -> exiting, this is the exiting animation
   */
-  return animation;
+  return animation[state];
 }
 
 const getConfigedPath = ( path ) => {
@@ -95,7 +97,7 @@ class AnimatedPages extends React.PureComponent {
   from = ''
   to = ''
   render(){
-    var changed;
+    var changed = true;
     const { location } = this.props;
     const configedPath = getConfigedPath( location.pathname );
     this.from = this.to;
@@ -105,7 +107,6 @@ class AnimatedPages extends React.PureComponent {
     } else {
       this.lastPath = configedPath;
     }
-
     return (
       <TransitionGroup className="fullSpaceBFC">
         <Transition
