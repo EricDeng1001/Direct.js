@@ -4,6 +4,7 @@ const HappyPack = require("happypack");
 const os = require("os");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HappyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length + 2 })
+const merge = require("direct-core/Algorithm/mergeObject");
 
 const userpath = path.resolve( "../../" );
 
@@ -35,7 +36,7 @@ var compilerConfig = {
 };
 
 try {
-  Object.assign( compilerConfig , require( path.resolve( userpath , "./webpack.config.js") ) );
+  merge( compilerConfig , require( path.resolve( userpath , "./webpack.config.js") ) );
 } catch( e ){
 
 }
@@ -59,10 +60,10 @@ module.exports = {
     alias: compilerConfig.resolve.alias,
     modules: [
       "./",
-      path.resolve( userpath , "./node_modules" ),
-      path.resolve( userpath , "./src/" ),
       path.resolve( userpath , "./src/Frontend/" ),
-      ...compilerConfig.resolve.modules
+      path.resolve( userpath , "./src/" ),
+      ...compilerConfig.resolve.modules,
+      path.resolve( userpath , "./node_modules" ),
     ],
     extensions: [
       ".jsx",
