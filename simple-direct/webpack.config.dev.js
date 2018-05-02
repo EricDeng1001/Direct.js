@@ -18,7 +18,8 @@ var compilerConfig = {
   mainApiHost: "127.0.0.1",
   resolve: {
     alias: {},
-    modules: []
+    modules: [],
+    extensions: []
   },
   module: {
     rules: []
@@ -28,8 +29,11 @@ var compilerConfig = {
   plugins: [],
   HtmlWebpackPluginConfig: {
     template: "./template.html"
-  }
+  },
+  cssLoaderOptions: {},
+  lessLoaderOptions: {}
 };
+
 try {
   Object.assign( compilerConfig , require( path.resolve( userpath , "./webpack.config.js") ) );
 } catch( e ){
@@ -58,7 +62,7 @@ module.exports = {
       path.resolve( userpath , "./node_modules" ),
       path.resolve( userpath , "./src/" ),
       path.resolve( userpath , "./src/Frontend/" ),
-      ...compilerConfig.modules
+      ...compilerConfig.resolve.modules
     ],
     extensions: [
       ".jsx",
@@ -69,7 +73,8 @@ module.exports = {
       ".jpg",
       ".jpeg",
       ".gif",
-      ".webp"
+      ".webp",
+      ...compilerConfig.resolve.extensions
     ]
   },
   devtool: compilerConfig.devtool,
@@ -135,10 +140,11 @@ module.exports = {
       loaders: [
         "style-loader",
         {
-          loader: "css-loader" ,
+          loader: "css-loader",
           options: {
             modules: true,
-            minimize: true
+            minimize: true,
+            ...compilerConfig.cssLoaderOptions
           }
         },
         "postcss-loader",
@@ -147,7 +153,8 @@ module.exports = {
           options: {
             paths: [
               path.resolve( userpath , "./src/Frontend/Styles/" )
-            ]
+            ],
+            ...compilerConfig.lessLoaderOptions
           }
         }
       ],
