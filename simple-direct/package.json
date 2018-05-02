@@ -3,7 +3,7 @@
   "author": "Eric Deng",
   "description": "quick set up a direct app",
   "license": "ISC",
-  "version": "2.6.1",
+  "version": "2.6.11",
   "bin": {
     "direct": "./tasks.js"
   },

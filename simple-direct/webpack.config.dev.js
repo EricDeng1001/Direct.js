@@ -60,12 +60,13 @@ module.exports = {
     alias: compilerConfig.resolve.alias,
     modules: [
       "./",
+      ...compilerConfig.resolve.modules,
       path.resolve( userpath , "./src/Frontend/" ),
       path.resolve( userpath , "./src/" ),
-      ...compilerConfig.resolve.modules,
       path.resolve( userpath , "./node_modules" ),
     ],
     extensions: [
+      ...compilerConfig.resolve.extensions
       ".jsx",
       ".js",
       ".css",
@@ -74,8 +75,7 @@ module.exports = {
       ".jpg",
       ".jpeg",
       ".gif",
-      ".webp",
-      ...compilerConfig.resolve.extensions
+      ".webp"
     ]
   },
   devtool: compilerConfig.devtool,
