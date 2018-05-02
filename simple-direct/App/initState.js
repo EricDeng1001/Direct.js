@@ -9,7 +9,7 @@ const keys = Object.keys( reducerConfig );
 const initState = {};
 
 for( let key of keys ){
-  initState[key] = reducerConfig[key]( undefined , {
+  initState[key] = reducerConfig[key]( undefined, {
     type: Symbol("@@DirectJS/RestoreLastStateShapeTheTree")
   });
 }
@@ -22,10 +22,10 @@ try {
   lastState = {};
 }
 
-Object.assign( initState , lastState );
+merge( initState, lastState, true );
 
 if( injectedState ){
-  merge( initState , injectedState , true );
+  merge( initState, injectedState, true );
 }
 
 export default initState;
