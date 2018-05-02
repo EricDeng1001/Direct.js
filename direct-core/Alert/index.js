@@ -1,9 +1,9 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import { closeAlert } from '../WindowManager/actions';
+import { closeAlert } from "../WindowManager/actions";
 
-import style from 'style';
+import style from "./style";
 
 export default connect(
   state => ({

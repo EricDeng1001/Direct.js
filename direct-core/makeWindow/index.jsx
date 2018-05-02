@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import style from 'style';
+import { bindActionCreators } from "redux";
 
-import { bindActionCreators } from 'redux';
+import { connect } from "react-redux";
 
-import { connect } from 'react-redux';
+import * as windowActions from "../WindowManager/actions";
 
-import * as windowActions from '../WindowManager/actions';
+import style from "./style";
 
 const ableToOperateWindow = connect(
   undefined,

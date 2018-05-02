@@ -1,5 +1,5 @@
-import makeAnimation from '../../makeAnimation';
-import fade from 'style';
+import makeAnimation from "../../makeAnimation";
+import fade from "./style";
 
 const timeout = {
   enter: 300,

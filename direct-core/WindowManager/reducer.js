@@ -7,7 +7,7 @@ import {
   __CLOSE_MASK,
   __MOVE_WINDOW,
   __SET_DRAG
-} from 'actionTypes';
+} from "./actionTypes";
 
 export default ( state = {
   Windows: [],

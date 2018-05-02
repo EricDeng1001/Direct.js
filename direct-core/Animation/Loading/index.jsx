@@ -3,8 +3,8 @@
 **   Author: Eric Deng
 */
 
-import React from 'react';
-import style from 'style';
+import React from "react";
+import style from "./style";
 
 class Loading extends React.PureComponent {
   render(){
@@ -52,7 +52,7 @@ class Loading extends React.PureComponent {
         :lastFailed ?
         <div
           onClick={reloader}
-          className={style.bigNote + ' ' + center && style.makeLoadingCenter}
+          className={style.bigNote + " " + center && style.makeLoadingCenter}
         >
           <div className={style.info}>
             {
