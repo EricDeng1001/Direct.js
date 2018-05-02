@@ -66,7 +66,7 @@ module.exports = {
       path.resolve( userpath , "./node_modules" ),
     ],
     extensions: [
-      ...compilerConfig.resolve.extensions
+      ...compilerConfig.resolve.extensions,
       ".jsx",
       ".js",
       ".css",
