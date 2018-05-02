@@ -17,7 +17,8 @@ var port = serverConfig.port;
 var compilerConfig = {
   mainApiHost: "127.0.0.1",
   resolve: {
-    alias: {}
+    alias: {},
+    modules: []
   },
   module: {
     rules: []
@@ -57,6 +58,7 @@ module.exports = {
       path.resolve( userpath , "./node_modules" ),
       path.resolve( userpath , "./src/" ),
       path.resolve( userpath , "./src/Frontend/" ),
+      ...compilerConfig.modules
     ],
     extensions: [
       ".jsx",
