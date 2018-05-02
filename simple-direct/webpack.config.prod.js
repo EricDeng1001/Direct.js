@@ -1,4 +1,4 @@
-const webpack = require("webpack")
+const webpack = require("webpack");
 
 const path = require("path");
 
@@ -24,7 +24,6 @@ prodConfig.watch = false;
 prodConfig.plugins = [
   ...plugins,
   ...compilerConfig.prodOnlyPlugins,
-  new webpack.optimize.SplitChunksPlugin(),
   new webpack.BannerPlugin( "Direct.js\nAntinux Innovation\nAuthor: Eric Deng" ),
 ];
 
