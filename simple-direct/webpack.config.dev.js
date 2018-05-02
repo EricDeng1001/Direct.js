@@ -59,11 +59,10 @@ module.exports = {
   resolve: {
     alias: compilerConfig.resolve.alias,
     modules: [
-      "./",
       ...compilerConfig.resolve.modules,
+      "./node_modules",
       path.resolve( userpath , "./src/Frontend/" ),
-      path.resolve( userpath , "./src/" ),
-      path.resolve( userpath , "./node_modules" ),
+      path.resolve( userpath , "./src/" )
     ],
     extensions: [
       ...compilerConfig.resolve.extensions,
