@@ -16,20 +16,18 @@ import store from "./store";
 
 const modifyApp = AppConfig.modifyApp || ( a => a );
 
-ReactDOM.render(
-  modifyApp(
-    <Provider store={store}>
-      <App />
-    </Provider>
-  ),
-  document.getElementById("reactRoot")
-);
-
-
 const { onAppWillMount , onAppWillClose , persistentState } = AppConfig;
 
 window.addEventListener( "load" , () => {
   onAppWillMount( store.getState(), store.dispatch.bind( store ), socket );
+  ReactDOM.render(
+    modifyApp(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    ),
+    document.getElementById("reactRoot")
+  );
 });
 
 window.addEventListener( "beforeunload" , () => {
