@@ -8,9 +8,11 @@ import routesConfig from "Core/routes";
 
 import AppConfig from "Core/App";
 
+const modifyApp = AppConfig.modifyApp || ( a => a );
+
 const paths = Object.keys( routesConfig );
 
-const theRoutes = paths.map( path => {
+var theRoutes = paths.map( path => {
   let tmp = routesConfig[path];
   if( tmp.redirect ){
     return (
@@ -32,6 +34,8 @@ const theRoutes = paths.map( path => {
     );
   }
 });
+
+theRoutes = modifyApp( theRoutes );
 
 class Routes extends React.PureComponent {
   render() {
