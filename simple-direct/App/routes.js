@@ -12,7 +12,7 @@ const modifyApp = AppConfig.modifyApp || ( a => a );
 
 const paths = Object.keys( routesConfig );
 
-var theRoutes = paths.map( path => {
+const theRoutes = paths.map( path => {
   let tmp = routesConfig[path];
   if( tmp.redirect ){
     return (
@@ -35,8 +35,6 @@ var theRoutes = paths.map( path => {
   }
 });
 
-theRoutes = modifyApp( theRoutes );
-
 class Routes extends React.PureComponent {
   render() {
     return (
@@ -45,9 +43,13 @@ class Routes extends React.PureComponent {
         errorHandler={AppConfig.UIErrorHandler}
         customMessage={AppConfig.UIErrorMessage}
       >
-        <Switch location={this.props.location}>
-          {theRoutes}
-        </Switch>
+      {
+        modifyApp(
+          <Switch location={this.props.location}>
+            {theRoutes}
+          </Switch>
+        )
+      }
       </ErrorBoundary>
     );
   }
