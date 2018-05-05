@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-const fs = require("fs");
-const path = require("path");
+var fs = require("fs");
+var path = require("path");
 var program = require("commander");
-const npm = require("npm");
-const package = require("./package.json");
+var npm = require("npm");
+var package = require("./package.json");
 
 program
   .version( package.version )
@@ -34,7 +34,15 @@ program
         }
         break;
       case "server":
-        require("./server");
+        require("./Server/server");
+        console.log("bootstrap succeed, booster exiting..");
+        fs = null;
+        path = null;
+        program = null;
+        npm = null;
+        package = null;
+        cleanFile = null;
+        console.log("booster exited, server is running...");
         break;
       default:
         console.log("unknown task");

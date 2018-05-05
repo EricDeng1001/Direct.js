@@ -1,28 +1,31 @@
-import React from 'react';
+import React from "react";
 
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
-import { TransitionGroup, Transition } from 'react-transition-group';
+import { TransitionGroup, Transition } from "react-transition-group";
 
-import timeout from "direct-core/animationTime";
+import timeout from "./animationTime";
 
 import routesAnimationConfig from "Core/routesAnimation";
 
 import routesConfig from "Core/routes";
 
-import Routes from './routes';
+import Routes from "./routes";
 
-const fromConfig = routesAnimationConfig['*'].from;
+const fromConfig = routesAnimationConfig["*"].from;
 
-const toConfig = routesAnimationConfig['*'].to;
+const toConfig = routesAnimationConfig["*"].to;
 
-const defaultConfig = routesAnimationConfig['*']['*'];
+const defaultConfig = routesAnimationConfig["*"]["*"];
 
 const directAccess = routesAnimationConfig["direct"];
 
-const defaultDirectAccess = directAccess['*'];
+const defaultDirectAccess = directAccess["*"];
 
-const defaultStyle = {};
+const defaultStyle = {
+  minHeight: "100%",
+  minWidth: "100%"
+};
 
 var lastAnimation = {};
 
@@ -62,14 +65,7 @@ const animation = ( from, to, state, changed ) =>  {
   } else {
     timeout.setTime( defaultConfig.time );
   }
-  if( typeof animation.timingFunction === "string" ){
-    timingFunction = animation.timingFunction;
-  }
-  if( typeof animation.toAnimate === "string" ){
-    toAnimate = animation.toAnimate;
-  }
 
-  defaultStyle.transition = `${toAnimate} ${timeout.value}ms ${timingFunction}`;
   /*
   entering -> entered, this is the enter animation
   entered -> exiting, this is the exiting animation
@@ -91,12 +87,38 @@ const getConfigedPath = ( path ) => {
       }
     }
   }
-  return '*';
+  return "*";
 }
 
-class AnimatedPages extends React.PureComponent {
-  from = ''
-  to = ''
+class AnimatedPages extends React.Component {
+  from = ""
+  to = ""
+  state = {
+    entered: false
+  }
+
+  shouldComponentUpdate( nextProps, nextState ){
+    if( nextProps.location.pathname !== this.props.location.pathname ){
+      return true;
+    }
+    if( nextState.entered !== this.state.entered ){
+      return true;
+    }
+    return false;
+  }
+
+  onEntered = () => {
+    this.setState({
+      entered: true
+    });
+  }
+
+  onExit = () => {
+    this.setState({
+      entered: false
+    });
+  }
+
   render(){
     var changed = true;
     const { location } = this.props;
@@ -109,7 +131,7 @@ class AnimatedPages extends React.PureComponent {
       this.lastPath = configedPath;
     }
     return (
-      <TransitionGroup className="fullSpaceBFC">
+      <TransitionGroup>
         <Transition
           key={configedPath}
           timeout={{
@@ -117,17 +139,19 @@ class AnimatedPages extends React.PureComponent {
             exit: timeout.value
           }}
           appear
+          onEntered={this.onEntered}
+          onExit={this.onExit}
         >
           {
             state =>
               <section
-                className="page"
-                style={{
-                  ...defaultStyle,
-                  ...animation( this.from, this.to, state, changed )
-                }}
+                style={defaultStyle}
+                className={animation( this.from, this.to, state, changed )}
               >
-                <Routes location={location} />
+                <Routes
+                  location={location}
+                  entered={this.state.entered}
+                />
               </section>
           }
         </Transition>

@@ -1,4 +1,4 @@
-import merge from "direct-core/Algorithm/mergeObject";
+import _ from "lodash";
 
 import reducerConfig from "Core/reducer";
 
@@ -22,10 +22,10 @@ try {
   lastState = {};
 }
 
-merge( initState, lastState, true );
+_.merge( initState, lastState );
 
 if( injectedState ){
-  merge( initState, injectedState, true );
+  _.merge( initState, injectedState );
 }
 
 export default initState;

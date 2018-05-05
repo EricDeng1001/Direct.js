@@ -3,21 +3,7 @@
   "author": "Eric Deng",
   "description": "direct-core",
   "license": "ISC",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "dependencies": {
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1",
-    "react-redux": "^5.0.7",
-    "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2",
-    "react-transition-group": "^2.3.1",
-    "redux": "^4.0.0",
-    "express": "^4.16.3",
-    "express-session": "^1.15.6",
-    "body-parser": "^1.18.2",
-    "compression": "^1.7.2",
-    "mongoose": "5.0.17",
-    "socket.io": "^2.1.0",
-    "socket.io-client": "^2.1.0"
   }
 }

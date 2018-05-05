@@ -1,19 +1,12 @@
-
 import React from "react";
-
-import Loading from "../Animation/Loading";
 
 var download = 0;
 
-type DynamicImport = () => ContravariantOf<React.Component> | ContravariantOf<React.PureComponent>;
-
-type ErrorHandler = ( ContravariantOf<Error> ) => any;
-
-export default ( importComponent: DynamicImport, errorHandler?: ErrorHandler, timeout?: number ) => {
+export default ( importComponent, errorHandler, timeout, Loading = null ) => {
 
   setTimeout(
     importComponent,
-    timeout || 2000 + 2000 * download++
+    timeout || 2000 + 1000 * download++
   );
 
   return class extends React.PureComponent {
@@ -51,10 +44,7 @@ export default ( importComponent: DynamicImport, errorHandler?: ErrorHandler, ti
       const C = this.state.component;
       return ( C ?
         <C {...this.props} />
-        :<Loading
-          center
-          loading
-        />
+        : Loading
       );
     }
   };

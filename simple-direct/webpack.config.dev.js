@@ -1,16 +1,13 @@
-const webpack = require("webpack");
 const path = require("path");
 const HappyPack = require("happypack");
 const os = require("os");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HappyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length + 2 })
-const merge = require("direct-core/Algorithm/mergeObject");
+const _ = require("lodash");
 
 const userpath = path.resolve( "../../" );
 
-const serverConfig = require( path.resolve( userpath , "./src/Server/Config/server" ) );
-
-const frontendConfigPath = path.resolve( userpath , "./src/Frontend/Config" );
+const serverConfig = require( path.resolve( userpath, "./src/Server/Config/server" ) );
 
 var protocol = serverConfig.https ? "https" : "http";
 var port = serverConfig.port;
@@ -36,7 +33,7 @@ var compilerConfig = {
 };
 
 try {
-  merge( compilerConfig , require( path.resolve( userpath , "./webpack.config.js") ) );
+  _.merge( compilerConfig , require( path.resolve( userpath , "./webpack.config.js") ) );
 } catch( e ){
 
 }
@@ -57,12 +54,15 @@ module.exports = {
     aggregateTimeout: 1200
   },
   resolve: {
-    alias: compilerConfig.resolve.alias,
+    alias: {
+      lib: path.resolve( __dirname, "./HOC/" ),
+      ...compilerConfig.resolve.alias
+    },
     modules: [
       ...compilerConfig.resolve.modules,
       "./node_modules",
-      path.resolve( userpath , "./src/Frontend/" ),
-      path.resolve( userpath , "./src/" )
+      path.resolve( userpath, "./src/Frontend/" ),
+      path.resolve( userpath, "./src/" )
     ],
     extensions: [
       ...compilerConfig.resolve.extensions,
@@ -167,14 +167,22 @@ module.exports = {
       minSize: 0,
       minChunks: 1,
       maxAsyncRequests: 6,
-      maxInitialRequests: 4,
+      maxInitialRequests: 6,
       automaticNameDelimiter: '+',
       name: true,
       cacheGroups: {
         vendor: {
           name: "vendor",
-          test: /node_modules(?!\/simple-direct.*)/
+          test: /node_modules(?!(|react|react-dom|redux|material-ui|react-router|react-router-dom|react-redux|socketIO).*)/
         },
+        reactStack1: {
+          name: "reactStack1",
+          test: /(react-router|react-router-dom|react-redux|socketIO)/
+        },
+        reactStack2: {
+          name: "reactStack2",
+          test: /(react|react-dom|redux|material-ui)/
+        }
         config: {
           name: "directCoreConfig",
           test: /Core/

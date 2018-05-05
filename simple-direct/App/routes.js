@@ -2,7 +2,7 @@ import React from "react";
 
 import { Route , Switch , Redirect } from "react-router-dom";
 
-import ErrorBoundary from "direct-core/ErrorBoundary";
+import ErrorBoundary from "../ErrorBoundary";
 
 import routesConfig from "Core/routes";
 
@@ -35,23 +35,15 @@ const theRoutes = paths.map( path => {
   }
 });
 
+const ModifiedApp = modifyApp( ( props ) => (
+  <Switch location={props.location}>
+    {theRoutes}
+  </Switch>
+));
+
 class Routes extends React.PureComponent {
   render() {
-    return (
-      <ErrorBoundary
-        showErrorMessage={AppConfig.onUIErrorShowErrorMessage}
-        errorHandler={AppConfig.UIErrorHandler}
-        customMessage={AppConfig.UIErrorMessage}
-      >
-      {
-        modifyApp(
-          <Switch location={this.props.location}>
-            {theRoutes}
-          </Switch>
-        )
-      }
-      </ErrorBoundary>
-    );
+    return <ModifiedApp location={this.props.location} />;
   }
 };
 
