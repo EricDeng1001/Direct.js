@@ -131,13 +131,10 @@ class AnimatedPages extends React.Component {
     } else {
       this.lastPath = configedPath;
     }
-    if( configedPath.redirect ){
-      let tmp = routesConfig[configedPath];
+    if( routesConfig[configedPath].redirect ){
       return (
         <Redirect
-          from={path}
-          to={tmp.redirect}
-          exact={tmp.exact}
+          to={routesConfig[configedPath].redirect}
         />
       );
     }
