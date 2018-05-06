@@ -1,6 +1,6 @@
 import React from "react";
 
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 
 import { TransitionGroup, Transition } from "react-transition-group";
 
@@ -131,14 +131,21 @@ class AnimatedPages extends React.Component {
     } else {
       this.lastPath = configedPath;
     }
+    if( configedPath.redirect ){
+      let tmp = routesConfig[configedPath];
+      return (
+        <Redirect
+          from={path}
+          to={tmp.redirect}
+          exact={tmp.exact}
+        />
+      );
+    }
     return (
       <TransitionGroup>
         <Transition
           key={configedPath}
-          timeout={{
-            enter: 0,
-            exit: timeout.value
-          }}
+          timeout={timeout.value}
           appear
         >
           {
@@ -147,9 +154,7 @@ class AnimatedPages extends React.Component {
                 style={defaultStyle}
                 className={animation( this.from, this.to, state, changed )}
               >
-                <Routes
-                  location={location}
-                />
+                <Routes location={location} />
               </section>
           }
         </Transition>

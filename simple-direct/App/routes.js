@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Route , Switch , Redirect } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import routesConfig from "Core/routes";
 
@@ -9,14 +9,7 @@ const paths = Object.keys( routesConfig );
 const theRoutes = paths.map( path => {
   let tmp = routesConfig[path];
   if( tmp.redirect ){
-    return (
-      <Redirect
-        key={path + tmp.redirect}
-        from={path}
-        to={tmp.redirect}
-        exact={tmp.exact}
-      />
-    );
+    return undefined;
   } else {
     return (
       <Route
@@ -27,7 +20,7 @@ const theRoutes = paths.map( path => {
       />
     );
   }
-});
+}).filter( x => x );
 
 class Routes extends React.Component {
   render() {

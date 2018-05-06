@@ -1,5 +1,8 @@
 var time = {
-  value: 1000,
+  value: {
+    enter: 1000,
+    exit: 1000
+  },
   setTime: t => time.value = t
 };
 
