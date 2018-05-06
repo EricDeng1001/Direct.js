@@ -4,8 +4,6 @@ import { Route , Switch , Redirect } from "react-router-dom";
 
 import routesConfig from "Core/routes";
 
-import AppConfig from "Core/App";
-
 const paths = Object.keys( routesConfig );
 
 const theRoutes = paths.map( path => {

@@ -46,7 +46,6 @@ const animation = ( from, to, state, changed ) =>  {
 
   var animation = defaultConfig;
 
-
   if( from === "" ){
     if( from in directAccess ){
       animation = directAccess[from];
