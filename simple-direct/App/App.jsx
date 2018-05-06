@@ -10,14 +10,19 @@ import {
 import AnimatedPages from "./AnimatedPages";
 import "Styles/global.less";
 
+
+const ModifiedApp = modifyApp( ( props ) => (
+  <AnimatedPages {..props} />
+));
+
 class App extends React.Component {
   state = { hasError: false }
 
   componentDidCatch( error, info ){
-    showErrorMessage ?
+    onUIErrorShowErrorMessage ?
     this.setState({ hasError: true, error, info })
     :this.setState({ hasError: true });
-    errorHandler( error, info );
+    UIErrorHandler( error, info );
   }
 
   render(){
@@ -26,9 +31,9 @@ class App extends React.Component {
       return (
         <React.Fragment>
           {
-            showErrorMessage ? (
-              customMessage ? (
-                customMessage
+            onUIErrorShowErrorMessage ? (
+              UIErrorMessage ? (
+                UIErrorMessage
               ):(
                 <div>
                   <h1>Something went wrong.</h1>
@@ -47,7 +52,7 @@ class App extends React.Component {
     }
     return (
       <BrowserRouter>
-        <AnimatedPages />
+        <ModifiedApp />
       </BrowserRouter>
     );
   }

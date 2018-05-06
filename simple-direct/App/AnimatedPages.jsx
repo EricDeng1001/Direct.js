@@ -12,17 +12,20 @@ import routesConfig from "Core/routes";
 
 import Routes from "./routes";
 
+const basicTransition = routesAnimationConfig.basicTransition;
+
 const fromConfig = routesAnimationConfig["*"].from;
 
 const toConfig = routesAnimationConfig["*"].to;
 
 const defaultConfig = routesAnimationConfig["*"]["*"];
 
-const directAccess = routesAnimationConfig["direct"];
+const directAccess = routesAnimationConfig.direct;
 
 const defaultDirectAccess = directAccess["*"];
 
 const defaultStyle = {
+  ...basicTransition,
   minHeight: "100%",
   minWidth: "100%"
 };
@@ -35,15 +38,14 @@ const animation = ( from, to, state, changed ) =>  {
   }
 
   if( state === "exited" ){
-    return {
-      display: "none"
-    };
+    return "";
   }
 
   var timingFunction = defaultConfig.timingFunction;
   var toAnimate = defaultConfig.toAnimate;
 
   var animation = defaultConfig;
+
 
   if( from === "" ){
     if( from in directAccess ){
@@ -139,8 +141,6 @@ class AnimatedPages extends React.Component {
             exit: timeout.value
           }}
           appear
-          onEntered={this.onEntered}
-          onExit={this.onExit}
         >
           {
             state =>
@@ -150,7 +150,7 @@ class AnimatedPages extends React.Component {
               >
                 <Routes
                   location={location}
-                  entered={this.state.entered}
+                  entered={state === "entered"}
                 />
               </section>
           }

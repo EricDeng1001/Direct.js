@@ -6,8 +6,6 @@ import routesConfig from "Core/routes";
 
 import AppConfig from "Core/App";
 
-const modifyApp = AppConfig.modifyApp || ( a => a );
-
 const paths = Object.keys( routesConfig );
 
 const theRoutes = paths.map( path => {
@@ -33,15 +31,13 @@ const theRoutes = paths.map( path => {
   }
 });
 
-const ModifiedApp = modifyApp( ( props ) => (
-  <Switch location={props.location}>
-    {theRoutes}
-  </Switch>
-));
-
-class Routes extends React.PureComponent {
+class Routes extends React.Component {
   render() {
-    return <ModifiedApp location={this.props.location} />;
+    return (
+      <Switch location={this.props.location}>
+        {theRoutes}
+      </Switch>
+    );
   }
 };
 
