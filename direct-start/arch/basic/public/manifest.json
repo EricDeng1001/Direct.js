@@ -1,0 +1,8 @@
+{
+  "name": "direct",
+  "short_name": "direct",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "direct"
+}

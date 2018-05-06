@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "open": "direct openDev",
+    "dev": "direct dev",
+    "build": "direct build",
+    "server": "direct server",
+    "cleanCache": "direct cleanCache",
+    "cleanJs": "rm -rf public/static/js/",
+    "flow": "flow"
+  }
+}

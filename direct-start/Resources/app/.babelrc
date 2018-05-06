@@ -1,9 +1,0 @@
-{
-  "presets" : [ "stage-0" , "react" , "env" , "flow" ],
-  "plugins" : [
-    "babel-plugin-transform-runtime",
-    "babel-plugin-transform-object-rest-spread",
-    "babel-plugin-transform-regenerator",
-    "babel-plugin-transform-class-properties"
-  ]
-}
