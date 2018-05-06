@@ -12,7 +12,7 @@ import "Styles/global.less";
 
 
 const ModifiedApp = modifyApp( ( props ) => (
-  <AnimatedPages {..props} />
+  <AnimatedPages {...props} />
 ));
 
 class App extends React.Component {
