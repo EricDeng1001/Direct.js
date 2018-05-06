@@ -149,7 +149,6 @@ class AnimatedPages extends React.Component {
               >
                 <Routes
                   location={location}
-                  entered={state === "entered"}
                 />
               </section>
           }
