@@ -29,7 +29,8 @@ var compilerConfig = {
     template: "./template.html"
   },
   cssLoaderOptions: {},
-  lessLoaderOptions: {}
+  lessLoaderOptions: {},
+  cacheGroups: {}
 };
 
 try {
@@ -45,7 +46,7 @@ module.exports = {
   output: {
     path: path.resolve( userpath , "./public" ),
     filename: "[name]-[hash].js",
-    chunkFilename: "./static/js/[name].chunk-[chunkhash].js",
+    chunkFilename: "./static/js/[name]-[chunkhash].js",
     publicPath: "/"
   },
   watch: true,
@@ -56,6 +57,7 @@ module.exports = {
   resolve: {
     alias: {
       lib: path.resolve( __dirname, "./HOC/" ),
+      socket: path.resolve( __dirname, "/App/socket" ),
       ...compilerConfig.resolve.alias
     },
     modules: [
@@ -167,33 +169,31 @@ module.exports = {
       minSize: 0,
       minChunks: 1,
       maxAsyncRequests: 6,
-      maxInitialRequests: 6,
+      maxInitialRequests: 5,
       automaticNameDelimiter: '+',
       name: true,
       cacheGroups: {
+        ...compilerConfig.cacheGroups,
         vendor: {
           name: "vendor",
-          test: /node_modules(?!(|react|react-dom|redux|material-ui|react-router|react-router-dom|react-redux|socketIO).*)/
+          test: /node_modules[\\/](?!(react[\\/]|react-dom[\\/]|redux[\\/]|simple-direct[\\/]|react-router[\\/]|react-router-dom[\\/]|react-redux[\\/]|socket\.io-(client|parser)[\\/]|engine\.io-(client|parser)[\\/]|history[\\/]|lodash[\\/]|react-transition-group[\\/]|babel-runtime[\\/]|core-js[\\/]|style-loader[\\/]|css-loader[\\/]|process[\\/]|fbjs[\\/]|component-emitter[\\/]|ms[\\/]|dom-helpers[\\/]|webpack[\\/]|lodash-es[\\/]|prop-types[\\/]|object-assign[\\/]|blob[\\/]|parseuri[\\/])([\\/]node_modules)?.*)/
         },
-        reactStack1: {
-          name: "reactStack1",
-          test: /(react-router|react-router-dom|react-redux|socketIO)/
+        directStackMain: {
+          name: "directStack",
+          test: /(react[\\/]|react-dom[\\/]|redux[\\/]|simple-direct[\\/]|react-router[\\/]|react-router-dom[\\/]|react-redux[\\/]|socket\.io-(client|parser)[\\/]|lodash[\\/]|react-transition-group[\\/]|style-loader[\\/]|css-loader[\\/]|babel-runtime[\\/])([\\/]node_modules)?/
         },
-        reactStack2: {
-          name: "reactStack2",
-          test: /(react|react-dom|redux|material-ui)/
-        }
+        directStackOthers: {
+          name: "directStack-others",
+          test: /(engine\.io-(client|parser)[\\/]|history[\\/]|core-js[\\/]|process[\\/]|fbjs[\\/]|component-emitter[\\/]|ms[\\/]|dom-helpers[\\/]|webpack[\\/]|lodash-es[\\/]|prop-types[\\/]|object-assign[\\/]|blob[\\/]|parseuri[\\/])([\\/]node_modules)?/
+        },
         config: {
           name: "directCoreConfig",
           test: /Core/
         },
-        appWithDirect: {
-          name: "appWithDirect",
-          test: /simple-direct/
-        },
         commons: {
           minSize: 30 * 1024,
-          minChunks: 2
+          minChunks: 2,
+          reuseExistingChunk: true
         }
       }
     }

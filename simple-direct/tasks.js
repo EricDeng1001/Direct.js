@@ -35,14 +35,15 @@ program
         break;
       case "server":
         require("./Server/server");
-        console.log("bootstrap succeed, booster exiting..");
-        fs = null;
-        path = null;
-        program = null;
-        npm = null;
-        package = null;
-        cleanFile = null;
-        console.log("booster exited, server is running...");
+        setTimeout( () => {
+          fs = null;
+          path = null;
+          program = null;
+          npm = null;
+          package = null;
+          cleanFile = null;
+          console.log("whole server bootstrap succeed, booster exiting...exited");
+        }, 2000 );
         break;
       default:
         console.log("unknown task");

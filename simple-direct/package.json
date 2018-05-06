@@ -3,7 +3,7 @@
   "author": "Eric Deng",
   "description": "quick set up a direct app",
   "license": "ISC",
-  "version": "2.6.51",
+  "version": "2.7.0",
   "bin": {
     "direct": "./tasks.js"
   },
@@ -28,7 +28,7 @@
     "mongoose": "5.0.17",
     "socket.io": "^2.1.0",
     "socket.io-client": "^2.1.0",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.5",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-class-properties": "^6.24.1",

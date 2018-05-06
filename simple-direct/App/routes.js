@@ -2,8 +2,6 @@ import React from "react";
 
 import { Route , Switch , Redirect } from "react-router-dom";
 
-import ErrorBoundary from "../ErrorBoundary";
-
 import routesConfig from "Core/routes";
 
 import AppConfig from "Core/App";
