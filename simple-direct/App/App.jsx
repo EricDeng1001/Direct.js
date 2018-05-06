@@ -1,17 +1,19 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 
-import {
+import AppConfig from "Core/App";
+
+const {
   onUIErrorShowErrorMessage,
   UIErrorHandler,
-  UIErrorMessage,
-  modifyApp as _modifyApp
-} from "Core/App";
+  UIErrorMessage
+} = AppConfig;
+
 
 import AnimatedPages from "./AnimatedPages";
 import "Styles/global.less";
 
-const modifyApp = _modifyApp || ( a => a );
+const modifyApp = AppConfig.modifyApp || ( a => a );
 
 const ModifiedApp = modifyApp( ( props ) => (
   <AnimatedPages {...props} />
