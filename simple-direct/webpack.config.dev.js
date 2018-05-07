@@ -175,7 +175,8 @@ module.exports = {
         ...compilerConfig.cacheGroups,
         vendor: {
           name: "vendor",
-          test: /node_modules[\\/](?!(react[\\/]|react-dom[\\/]|redux[\\/]|simple-direct[\\/]|react-router[\\/]|react-router-dom[\\/]|react-redux[\\/]|socket\.io-(client|parser)[\\/]|engine\.io-(client|parser)[\\/]|history[\\/]|lodash[\\/]|react-transition-group[\\/]|babel-runtime[\\/]|core-js[\\/]|style-loader[\\/]|css-loader[\\/]|process[\\/]|fbjs[\\/]|component-emitter[\\/]|ms[\\/]|dom-helpers[\\/]|webpack[\\/]|lodash-es[\\/]|prop-types[\\/]|object-assign[\\/]|blob[\\/]|parseuri[\\/])([\\/]node_modules)?.*)/
+          test: /node_modules[\\/](?!(react[\\/]|react-dom[\\/]|redux[\\/]|simple-direct[\\/]|react-router[\\/]|react-router-dom[\\/]|react-redux[\\/]|socket\.io-(client|parser)[\\/]|engine\.io-(client|parser)[\\/]|history[\\/]|lodash[\\/]|react-transition-group[\\/]|babel-runtime[\\/]|core-js[\\/]|style-loader[\\/]|css-loader[\\/]|process[\\/]|fbjs[\\/]|component-emitter[\\/]|ms[\\/]|dom-helpers[\\/]|webpack[\\/]|lodash-es[\\/]|prop-types[\\/]|object-assign[\\/]|blob[\\/]|parseuri[\\/])([\\/]node_modules)?.*)/,
+          reuseExistingChunk: true
         },
         directStackMain: {
           name: "directStack",
