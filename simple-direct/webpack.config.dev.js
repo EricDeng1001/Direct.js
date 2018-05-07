@@ -34,7 +34,7 @@ var compilerConfig = {
 };
 
 try {
-  _.merge( compilerConfig , require( path.resolve( userpath , "./webpack.config.js") ) );
+  _.merge( compilerConfig, require( path.resolve( userpath, "./webpack.config.js") ) );
 } catch( e ){
   console.log("An error happened when loading webpack config:", e.message );
 }
@@ -44,14 +44,14 @@ module.exports = {
     index: path.resolve("./App")
   },
   output: {
-    path: path.resolve( userpath , "./public" ),
+    path: path.resolve( userpath, "./public" ),
     filename: "[name]-[hash].js",
     chunkFilename: "./static/js/[name]-[chunkhash].js",
     publicPath: "/"
   },
   watch: true,
   watchOptions: {
-    ignored: path.resolve( userpath , "./node_modules" ),
+    ignored: path.resolve( userpath, "./node_modules" ),
     aggregateTimeout: 1200
   },
   resolve: {
@@ -80,7 +80,7 @@ module.exports = {
   },
   devtool: compilerConfig.devtool,
   devServer: {
-    contentBase: path.join( userpath , "/public" ),
+    contentBase: path.join( userpath, "/public" ),
     proxy: {
       "/api": {
         target: `${protocol}://${compilerConfig.mainApiHost}:${port}`,
@@ -153,7 +153,7 @@ module.exports = {
           loader: "less-loader",
           options: {
             paths: [
-              path.resolve( userpath , "./src/Frontend/Styles/" )
+              path.resolve( userpath, "./src/Frontend/Styles/" )
             ],
             ...compilerConfig.lessLoaderOptions
           }
