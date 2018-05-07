@@ -56,9 +56,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      lib: path.resolve( __dirname, "./HOC/" ),
-      socket: path.resolve( __dirname, "./App/socket" ),
-      ...compilerConfig.resolve.alias
+      ...compilerConfig.resolve.alias,
+      socket: path.resolve( __dirname, "./App/socket" )
     },
     modules: [
       ...compilerConfig.resolve.modules,
