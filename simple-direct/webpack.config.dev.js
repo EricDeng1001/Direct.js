@@ -56,8 +56,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      lib: path.resolve( __dirname, "./HOC/" ),
-      socket: path.resolve( __dirname, "/App/socket" ),
+      socket$: path.resolve( __dirname, "/App/socket.js" ),
       ...compilerConfig.resolve.alias
     },
     modules: [
@@ -175,16 +174,16 @@ module.exports = {
       cacheGroups: {
         ...compilerConfig.cacheGroups,
         vendors: {
-          name: "vendor",
+          name: "vendors",
           test: /node_modules[\\/]/,
           priority: -8
         },
-        directStackMain: {
+        "directStack-part1": {
           name: "directStack-part1",
           test: /(redux[\\/]|react-router[\\/]|react-router-dom[\\/]|history[\\/]|react-redux[\\/]|lodash[\\/]|react-transition-group[\\/]|babel-runtime[\\/]|core-js[\\/])([\\/]node_modules)?/,
           priority: Infinity
         },
-        directStackOthers: {
+        "directStack-part2": {
           name: "directStack-part2",
           test: /(react[\\/]|simple-direct[\\/]|style-loader[\\/]|css-loader[\\/]|engine\.io-(client|parser)[\\/]|react-dom[\\/]|socket\.io-(client|parser)[\\/]|process[\\/]|fbjs[\\/]|component-emitter[\\/]|ms[\\/]|dom-helpers[\\/]|webpack[\\/]|lodash-es[\\/]|prop-types[\\/]|object-assign[\\/]|blob[\\/]|parseuri[\\/])([\\/]node_modules)?/,
           priority: Infinity
