@@ -36,7 +36,7 @@ var compilerConfig = {
 try {
   _.merge( compilerConfig , require( path.resolve( userpath , "./webpack.config.js") ) );
 } catch( e ){
-
+  console.log( "An error happend when loading webpack config:", e.message );
 }
 
 module.exports = {
