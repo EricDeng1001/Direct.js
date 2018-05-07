@@ -20,12 +20,12 @@ you define
     block(){
       this.whatIShouldDoWhenRealPropFailsToSatisfyMe()
       //this refers to the constructed component
-      // you can acess this.props , this.selfDefinedFunction , etc.
+      // you can acess this.props, this.selfDefinedFunction, etc.
     }
 }
 }
 */
-export default ( depObj , always = true ) => Comp => {
+export default ( depObj, always = true ) => Comp => {
   //always means always protect
   // this indicate that if once the props was satisfied
   //but changed to unstaisfied
@@ -53,12 +53,12 @@ export default ( depObj , always = true ) => Comp => {
     constructor( props ){
       super( props );
       //this loop fix all props required to be true to be true
-      makeProtection.call( this , this.props )
+      makeProtection.call( this, this.props )
     }
 
     componentWillReceiveProps( nextProps ){
       if( always ){
-        makeProtection.call( this , nextProps )
+        makeProtection.call( this, nextProps )
       }
       if( super.componentWillReceiveProps ){
         super.componentWillReceiveProps( nextProps );

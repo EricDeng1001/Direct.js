@@ -1,4 +1,4 @@
-export default ( HOCarray , Comp ) => {
+export default ( HOCarray, Comp ) => {
   if( !Array.isArray( HOCarray ) ){
     throw "first argument must be an array";
   }

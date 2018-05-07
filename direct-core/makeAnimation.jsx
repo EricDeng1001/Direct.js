@@ -28,7 +28,7 @@ export default ( animationCSS, timeout )=> {
           >
             {children}
         </CSSTransition>
-        );
+      );
     }
   };
-}
+};
