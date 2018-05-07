@@ -198,8 +198,5 @@ module.exports = {
       }
     }
   },
-  performance: {
-    hints: false
-  },
   mode: "development"
 };
