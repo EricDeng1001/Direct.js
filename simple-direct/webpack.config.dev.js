@@ -36,7 +36,7 @@ var compilerConfig = {
 try {
   _.merge( compilerConfig , require( path.resolve( userpath , "./webpack.config.js") ) );
 } catch( e ){
-  console.log( "An error happend when loading webpack config:", e.message );
+  console.log("An error happened when loading webpack config:", e.message );
 }
 
 module.exports = {
@@ -56,8 +56,9 @@ module.exports = {
   },
   resolve: {
     alias: {
-      ...compilerConfig.resolve.alias,
-      socket: path.resolve( __dirname, "./App/socket" )
+      lib: path.resolve( __dirname, "./HOC/" ),
+      socket: path.resolve( __dirname, "/App/socket" ),
+      ...compilerConfig.resolve.alias
     },
     modules: [
       ...compilerConfig.resolve.modules,
@@ -173,28 +174,28 @@ module.exports = {
       name: true,
       cacheGroups: {
         ...compilerConfig.cacheGroups,
-        vendor: {
+        vendors: {
           name: "vendor",
-          test: /node_modules[\\/](?!(react[\\/]|react-dom[\\/]|redux[\\/]|simple-direct[\\/]|react-router[\\/]|react-router-dom[\\/]|react-redux[\\/]|socket\.io-(client|parser)[\\/]|engine\.io-(client|parser)[\\/]|history[\\/]|lodash[\\/]|react-transition-group[\\/]|babel-runtime[\\/]|core-js[\\/]|style-loader[\\/]|css-loader[\\/]|process[\\/]|fbjs[\\/]|component-emitter[\\/]|ms[\\/]|dom-helpers[\\/]|webpack[\\/]|lodash-es[\\/]|prop-types[\\/]|object-assign[\\/]|blob[\\/]|parseuri[\\/])([\\/]node_modules)?.*)/,
-          reuseExistingChunk: true
+          test: /node_modules[\\/]/,
+          priority: -8
         },
         directStackMain: {
-          name: "directStack",
-          test: /(react[\\/]|react-dom[\\/]|redux[\\/]|simple-direct[\\/]|react-router[\\/]|react-router-dom[\\/]|react-redux[\\/]|socket\.io-(client|parser)[\\/]|lodash[\\/]|react-transition-group[\\/]|style-loader[\\/]|css-loader[\\/]|babel-runtime[\\/])([\\/]node_modules)?/
+          name: "directStack-part1",
+          test: /(redux[\\/]|react-router[\\/]|react-router-dom[\\/]|history[\\/]|react-redux[\\/]|lodash[\\/]|react-transition-group[\\/]|babel-runtime[\\/]|core-js[\\/])([\\/]node_modules)?/,
+          priority: Infinity
         },
         directStackOthers: {
-          name: "directStack-others",
-          test: /(engine\.io-(client|parser)[\\/]|history[\\/]|core-js[\\/]|process[\\/]|fbjs[\\/]|component-emitter[\\/]|ms[\\/]|dom-helpers[\\/]|webpack[\\/]|lodash-es[\\/]|prop-types[\\/]|object-assign[\\/]|blob[\\/]|parseuri[\\/])([\\/]node_modules)?/
-        },
-        config: {
-          name: "directCoreConfig",
-          test: /Core/
+          name: "directStack-part2",
+          test: /(react[\\/]|simple-direct[\\/]|style-loader[\\/]|css-loader[\\/]|engine\.io-(client|parser)[\\/]|react-dom[\\/]|socket\.io-(client|parser)[\\/]|process[\\/]|fbjs[\\/]|component-emitter[\\/]|ms[\\/]|dom-helpers[\\/]|webpack[\\/]|lodash-es[\\/]|prop-types[\\/]|object-assign[\\/]|blob[\\/]|parseuri[\\/])([\\/]node_modules)?/,
+          priority: Infinity
         },
         commons: {
           minSize: 30 * 1024,
           minChunks: 2,
-          reuseExistingChunk: true
-        }
+          reuseExistingChunk: true,
+          priority: -9
+        },
+        default: false
       }
     }
   },
