@@ -10,6 +10,6 @@
     "direct-basic": "./basic.js"
   },
   "author": "Eric Deng",
-  "license": "ISC",
+  "license": "MIT",
   "description": "quick set up a renext app"
 }

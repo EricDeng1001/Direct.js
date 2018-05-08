@@ -2,8 +2,8 @@
   "name": "simple-direct",
   "author": "Eric Deng",
   "description": "quick set up a direct app",
-  "license": "ISC",
-  "version": "2.9.1",
+  "license": "MIT",
+  "version": "2.9.2",
   "bin": {
     "direct": "./tasks.js"
   },

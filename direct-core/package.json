@@ -2,7 +2,7 @@
   "name": "direct-core",
   "author": "Eric Deng",
   "description": "direct-core",
-  "license": "ISC",
+  "license": "MIT",
   "version": "1.4.6",
   "dependencies": {
     "react": "^16.3.1"
