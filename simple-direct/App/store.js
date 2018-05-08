@@ -12,11 +12,9 @@ import AppConfig from "Core/App";
 
 const persistentState = AppConfig.persistentState;
 
-const keys = Object.keys( reducerConfig );
-
 const initState = {};
 
-for( let key of keys ){
+for( let key in reducerConfig ){
   initState[key] = reducerConfig[key]( undefined, {
     type: Symbol("@@DirectJS/RestoreLastState")
   });

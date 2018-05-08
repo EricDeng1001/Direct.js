@@ -32,7 +32,7 @@ _window.addEventListener( "beforeunload", () => {
   onAppWillClose( state, persistentState, socket );
 
   const topLevelState = {};
-  for( let key of persistentState ){
+  for( let key in persistentState ){
     let serializer = persistentState[key].serializer || JSON.stringify;
     topLevelState[key] = serializer( state[key] );
   }
