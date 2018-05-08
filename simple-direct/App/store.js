@@ -8,7 +8,9 @@ import _ from "lodash";
 
 import injectedState from "Core/injectedState";
 
-import persistentState from "Core/persistentState";
+import AppConfig from "Core/App";
+
+const persistentState = AppConfig.persistentState;
 
 const keys = Object.keys( reducerConfig );
 
