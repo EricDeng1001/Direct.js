@@ -20,8 +20,8 @@ for( let key of keys ){
   initState[key] = reducerConfig[key]( undefined, {
     type: Symbol("@@DirectJS/RestoreLastState")
   });
-  let rebuilder = persistentState.rebuilder || JSON.parse;
-  let merger = persistentState.merger || _.merge;
+  let rebuilder = persistentState[key].rebuilder || JSON.parse;
+  let merger = persistentState[key].merger || _.merge;
   merger( initState[key], rebuilder( localStorage.lastState[key] ) );
   if( injectedState ){
     if( injectedState[key] ){
