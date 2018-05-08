@@ -34,6 +34,6 @@ _window.addEventListener( "beforeunload", () => {
   localStorage.lastState = {};
   for( let key of persistentState ){
     let serializer = persistentState[key].serializer || JSON.stringify;
-    localStorage.lastState[key] = serializer( stateToStore );
+    localStorage.lastState[key] = serializer( state[key] );
   }
 });
