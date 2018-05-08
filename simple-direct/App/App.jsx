@@ -9,7 +9,6 @@ const {
   UIErrorMessage
 } = AppConfig;
 
-
 import AnimatedPages from "./AnimatedPages";
 import "Styles/global.less";
 
