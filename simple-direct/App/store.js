@@ -4,8 +4,6 @@ import reducerConfig from "Core/reducer";
 
 import storeConfig from "Core/store";
 
-import initState from "./initState";
-
 import _ from "lodash";
 
 import injectedState from "Core/injectedState";
@@ -16,20 +14,18 @@ const keys = Object.keys( reducerConfig );
 
 const initState = {};
 
-var lastState = {};
-
 for( let key of keys ){
   initState[key] = reducerConfig[key]( undefined, {
-    type: Symbol("@@DirectJS/RestoreLastStateShapeTheTree")
+    type: Symbol("@@DirectJS/RestoreLastState")
   });
   let rebuilder = persistentState.rebuilder || JSON.parse;
-  lastState[key] = rebuilder( localStorage.lastState[key] );
-}
-
-_.merge( initState, lastState );
-
-if( injectedState ){
-  _.merge( initState, injectedState );
+  let merger = persistentState.merger || _.merge;
+  merger( initState[key], rebuilder( localStorage.lastState[key] ) );
+  if( injectedState ){
+    if( injectedState[key] ){
+      merger( initState[key], injectedState[key] );
+    }
+  }
 }
 
 export default createStore(
