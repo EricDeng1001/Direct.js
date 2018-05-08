@@ -31,9 +31,10 @@ _window.addEventListener( "beforeunload", () => {
 
   onAppWillClose( state, persistentState, socket );
 
-  localStorage.lastState = {};
+  const topLevelState = {};
   for( let key of persistentState ){
     let serializer = persistentState[key].serializer || JSON.stringify;
-    localStorage.lastState[key] = serializer( state[key] );
+    topLevelState[key] = serializer( state[key] );
   }
+  localStorage.lastState = JSON.stringify( topLevelState );
 });
