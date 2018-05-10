@@ -14,7 +14,13 @@ const persistentState = AppConfig.persistentState;
 
 const initState = {};
 
-const topLevelStore = JSON.parse( localStorage.lastState );
+const topLevelStore;
+
+try{
+ topLevelStore = JSON.parse( localStorage.lastState );
+} catch ( e ){
+  topLevelStore = {};
+}
 
 for( let key in reducerConfig ){
   initState[key] = reducerConfig[key]( undefined, {
