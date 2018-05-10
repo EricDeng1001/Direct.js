@@ -14,7 +14,7 @@ const persistentState = AppConfig.persistentState;
 
 const initState = {};
 
-const topLevelStore;
+var topLevelStore;
 
 try{
  topLevelStore = JSON.parse( localStorage.lastState );
