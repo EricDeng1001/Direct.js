@@ -15,7 +15,6 @@ const persistentState = AppConfig.persistentState;
 const initState = {};
 
 var topLevelStore;
-
 try{
  topLevelStore = JSON.parse( localStorage.lastState );
 } catch ( e ){
@@ -26,14 +25,20 @@ for( let key in reducerConfig ){
   initState[key] = reducerConfig[key]( undefined, {
     type: Symbol("@@DirectJS/RestoreLastState")
   });
-  if( !persistentState[key] ){
-    continue;
+  if( persistentState[key] ){
+    let rebuilder = persistentState[key].rebuilder
+      || persistentState.rebuilder
+      || JSON.parse;
+    let merger = persistentState[key].merger
+      || persistentState.merger
+      || _.merge;
+    merger( initState[key], rebuilder( topLevelStore[key] ) );
   }
-  let rebuilder = persistentState[key].rebuilder || JSON.parse;
-  let merger = persistentState[key].merger || _.merge;
-  merger( initState[key], rebuilder( topLevelStore[key] ) );
   if( injectedState ){
     if( injectedState[key] ){
+      let merger = injectedState[key].merger
+        || injectedState.merger
+        || _.merge;
       merger( initState[key], injectedState[key] );
     }
   }
