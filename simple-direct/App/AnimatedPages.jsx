@@ -4,11 +4,11 @@ import { withRouter, Redirect } from "react-router-dom";
 
 import { TransitionGroup, Transition } from "react-transition-group";
 
-import timeout from "./animationTime";
-
 import routesAnimationConfig from "Core/routesAnimation";
 
 import routesConfig from "Core/routes";
+
+import _ from "lodash";
 
 import Routes from "./routes";
 
@@ -30,15 +30,13 @@ const defaultStyle = {
   minWidth: "100%"
 };
 
-var lastAnimation = {};
+const choosedAnimation = {
 
-const animation = ( from, to, state, changed ) =>  {
+};
+
+const chooseAnimation = ( from, to, changed ) => {
   if( !changed ){
-    return lastAnimation[state];
-  }
-
-  if( state === "exited" ){
-    return "";
+    return animation;
   }
 
   var timingFunction = defaultConfig.timingFunction;
@@ -61,18 +59,16 @@ const animation = ( from, to, state, changed ) =>  {
   } else if ( to in toConfig ){
     animation = toConfig[to];
   }
-  if( Number.isInteger( animation.time ) ){
-    timeout.setTime( animation.time );
-  } else {
-    timeout.setTime( defaultConfig.time );
+
+  if( animation.timeout === undefined ){
+    animation.timeout = defaultConfig.timeout;
   }
 
-  /*
-  entering -> entered, this is the enter animation
-  entered -> exiting, this is the exiting animation
-  */
-  lastAnimation = animation;
-  return animation[state];
+  if( animation.sameTime === undefined ){
+    animation.sameTime = defaultConfig.sameTime;
+  }
+
+  _.merge( choosedAnimation, animation );
 }
 
 const getConfigedPath = ( path ) => {
@@ -108,18 +104,6 @@ class AnimatedPages extends React.Component {
     return false;
   }
 
-  onEntered = () => {
-    this.setState({
-      entered: true
-    });
-  }
-
-  onExit = () => {
-    this.setState({
-      entered: false
-    });
-  }
-
   render(){
     var changed = true;
     const { location } = this.props;
@@ -138,27 +122,40 @@ class AnimatedPages extends React.Component {
         />
       );
     }
+    const key = location.pathname;
+    chooseAnimation( this.from, this.to, changed );
     return (
       <TransitionGroup>
         <Transition
           key={configedPath}
-          timeout={timeout.value}
+          timeout={choosedAnimation.timeout}
           appear
         >
           {
-            state =>
-              <section
-                style={defaultStyle}
-                className={animation( this.from, this.to, state, changed )}
-              >
-                <Routes location={location} />
-              </section>
+            state => {
+              if( state === "exited" ){
+                if( choosedAnimation.sameTime ){
+                  return null;
+                } else {
+                  return <div />; // do not use section
+                }
+              } else {
+                return (
+                  <section
+                    style={defaultStyle}
+                    className={choosedAnimation[state]}
+                  >
+                    <Routes location={location} />
+                  </section>
+                );
+              }
+
+            }
           }
         </Transition>
       </TransitionGroup>
     );
   }
-
 };
 
 export default withRouter( AnimatedPages );
