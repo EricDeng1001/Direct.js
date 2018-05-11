@@ -2,7 +2,7 @@ const path = require("path");
 const HappyPack = require("happypack");
 const os = require("os");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const HappyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length + 2 })
+const HappyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const _ = require("lodash");
 
 const userpath = path.resolve( "../../" );
@@ -70,12 +70,7 @@ module.exports = {
       ".jsx",
       ".js",
       ".css",
-      ".less",
-      ".png",
-      ".jpg",
-      ".jpeg",
-      ".gif",
-      ".webp"
+      ".less"
     ]
   },
   devtool: compilerConfig.devtool,
@@ -129,11 +124,6 @@ module.exports = {
     new HappyPack({
       id: "babel",
       loaders: ["babel-loader?cacheDirectory"],
-      threadPool: HappyThreadPool
-    }),
-    new HappyPack({
-      id: "files",
-      loaders: ["file-loader"],
       threadPool: HappyThreadPool
     }),
     new HappyPack({

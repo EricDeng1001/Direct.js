@@ -2,9 +2,17 @@ const webpack = require("webpack");
 
 const path = require("path");
 
-const userpath = path.resolve("../../");
 const baseConfig = require("./webpack.config.dev.js");
-const { devServer , devtool , plugins , watchOptions , ...prodConfig } = baseConfig;
+
+const userpath = path.resolve("../../");
+
+const {
+  devServer,
+  devtool,
+  plugins,
+  watchOptions,
+  ...prodConfig
+} = baseConfig;
 
 
 var compilerConfig = {
@@ -12,7 +20,10 @@ var compilerConfig = {
 };
 
 try {
-  Object.assign( compilerConfig , require( path.resolve( userpath , "./webpack.config.js") ) );
+  Object.assign(
+    compilerConfig,
+    require( path.resolve( userpath, "./webpack.config.js") )
+  );
 } catch( e ){
   console.log("you can specify your webpack config using webpack.config.js in your project root");
 }
