@@ -4,15 +4,13 @@ import { withRouter, Redirect } from "react-router-dom";
 
 import { TransitionGroup, Transition } from "react-transition-group";
 
+import _ from "lodash";
+
 import routesAnimationConfig from "Core/routesAnimation";
 
 import routesConfig from "Core/routes";
 
-import _ from "lodash";
-
 import Routes from "./routes";
-
-const basicTransition = routesAnimationConfig.basicTransition;
 
 const fromConfig = routesAnimationConfig["*"].from;
 
@@ -24,23 +22,20 @@ const directAccess = routesAnimationConfig.direct;
 
 const defaultDirectAccess = directAccess["*"];
 
-const defaultStyle = {
-  ...basicTransition,
-  minHeight: "100%",
-  minWidth: "100%"
-};
+const choosedAnimation = {};
 
-const choosedAnimation = {
-
+const noAnimation = {
+  entering: "",
+  entered: "",
+  exiting: "",
+  timeout: 0,
+  sameTime: false
 };
 
 const chooseAnimation = ( from, to, changed ) => {
   if( !changed ){
-    return animation;
+    return;
   }
-
-  var timingFunction = defaultConfig.timingFunction;
-  var toAnimate = defaultConfig.toAnimate;
 
   var animation = defaultConfig;
 
@@ -60,15 +55,18 @@ const chooseAnimation = ( from, to, changed ) => {
     animation = toConfig[to];
   }
 
-  if( animation.timeout === undefined ){
-    animation.timeout = defaultConfig.timeout;
+  if( animation.timeout === 0 ){
+    animation = noAnimation;
   }
 
-  if( animation.sameTime === undefined ){
-    animation.sameTime = defaultConfig.sameTime;
+  for( let key in choosedAnimation ){
+    choosedAnimation[key] = undefined;
   }
 
   _.merge( choosedAnimation, animation );
+
+  _.defaults( choosedAnimation, defaultConfig );
+
 }
 
 const getConfigedPath = ( path ) => {
@@ -105,16 +103,10 @@ class AnimatedPages extends React.Component {
   }
 
   render(){
-    var changed = true;
     const { location } = this.props;
+
     const configedPath = getConfigedPath( location.pathname );
-    this.from = this.to;
-    this.to = location.pathname;
-    if( configedPath === this.lastPath ){
-      changed = false;
-    } else {
-      this.lastPath = configedPath;
-    }
+
     if( routesConfig[configedPath].redirect ){
       return (
         <Redirect
@@ -122,13 +114,31 @@ class AnimatedPages extends React.Component {
         />
       );
     }
-    const key = location.pathname;
+
+    this.from = this.to;
+    this.to = configedPath;
+
+    var changed = true;
+    if( configedPath === this.lastPath ){
+      changed = false;
+    } else {
+      this.lastPath = configedPath;
+    }
+
     chooseAnimation( this.from, this.to, changed );
+
     return (
       <TransitionGroup>
         <Transition
           key={configedPath}
-          timeout={choosedAnimation.timeout}
+          timeout={{
+            get enter(){
+              return choosedAnimation.timeout;
+            },
+            get exit(){
+              return choosedAnimation.timeout;
+            }
+          }}
           appear
         >
           {
@@ -142,7 +152,6 @@ class AnimatedPages extends React.Component {
               } else {
                 return (
                   <section
-                    style={defaultStyle}
                     className={choosedAnimation[state]}
                   >
                     <Routes location={location} />
