@@ -40,7 +40,7 @@ for( let key in reducerConfig ){
         || injectedState.merger
         || _.merge;
       delete injectedState[key].merger;
-      initState[key] = merger( initState[key], props );
+      initState[key] = merger( initState[key], injectedState[key] );
     }
   }
 }
