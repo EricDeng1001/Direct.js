@@ -32,14 +32,15 @@ for( let key in reducerConfig ){
     let merger = persistentState[key].merger
       || persistentState.merger
       || _.merge;
-    merger( initState[key], rebuilder( topLevelStore[key] ) );
+    initState[key] = merger( initState[key], rebuilder( topLevelStore[key] ) );
   }
   if( injectedState ){
     if( injectedState[key] ){
       let merger = injectedState[key].merger
         || injectedState.merger
         || _.merge;
-      merger( initState[key], injectedState[key] );
+      const { merger, ...props } = injectedState[key];
+      initState[key] = merger( initState[key], props );
     }
   }
 }
