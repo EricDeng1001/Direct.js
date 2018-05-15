@@ -14,7 +14,7 @@ program
     fs.stat( projectName, ( err, result ) => {
       if( err ){
         fs.mkdirSync( path.resolve( "./", projectName ) );
-        copyDir( __dirname + "/arc/basic", path.resolve( "./", projectName ), "" );
+        copyDir( __dirname + "/arch/basic", path.resolve( "./", projectName ), "" );
         process.chdir( projectName );
         npm.load( () => {
           npm.commands.init( () => {
