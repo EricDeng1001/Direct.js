@@ -1,0 +1,9 @@
+query authorize( $certification: String!, $password: String! ){
+  authorize( certification: $certification, password: $password ){
+    permission {
+      allowed
+      banned
+    },
+    token
+  }
+}

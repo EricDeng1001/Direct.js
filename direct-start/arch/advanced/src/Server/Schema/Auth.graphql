@@ -1,0 +1,19 @@
+type Auth {
+  certification: String!,
+  password: String!,
+  salt: String!,
+  permission: Permission!,
+  createAt: Int!,
+  updateAt: Int!,
+  id: ID!
+}
+
+type Permission {
+  allowed: [String]!,
+  banned: [String]
+}
+
+type AuthResponse {
+  permission: Permission!,
+  token: String!
+}

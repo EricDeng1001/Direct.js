@@ -1,0 +1,14 @@
+[ignore]
+.*/test/.*
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+module.system.node.resolve_dirname=node_modules
+module.system.node.resolve_dirname=src/Frontend
+module.file_ext=.js
+module.file_ext=.jsx
+module.file_ext=.less

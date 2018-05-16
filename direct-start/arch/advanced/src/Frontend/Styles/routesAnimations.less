@@ -1,0 +1,53 @@
+:global {
+
+  .entering {
+
+  }
+
+  .entered {
+    opacity: 1;
+    transition: all ease 800ms;
+  }
+
+  .exiting {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    transition: all ease 800ms;
+  }
+
+  .fade {
+    opacity: 0;
+  }
+
+  .rightFade {
+    .fade;
+    transform: translateX( 50vw );
+  }
+
+  .leftFade {
+    .fade;
+    transform: translateX( -50vw );
+  }
+
+  .topFade {
+    .fade;
+    transform: translateY( -50vh );
+  }
+
+  .bottomFade {
+    .fade;
+    transform: translateY( 50vh );
+  }
+
+  .rot720 {
+    transform: "rotate( 720deg )";
+  }
+
+  .noDisplay {
+    display: none;
+  }
+
+}

@@ -1,0 +1,9 @@
+mutation createAuth( $certification: String!, $password: String! ){
+  createAuth( certification: $certification, password: $password ){
+    permission {
+      allowed
+      banned
+    },
+    token
+  }
+}

@@ -1,0 +1,78 @@
+@import "colors";
+
+@inputHeight: 3em;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  
+  .inputContainer {
+    height: @inputHeight;
+    text-align: center;
+
+    .input {
+      width: 100%;
+      input {
+        text-indent: 0;
+        color: rgba( 0, 0, 0, 0 );
+        width: 30%;
+
+        & + label {
+          position: absolute;
+          top: 0;
+          left: 35%;
+          color: white;
+          width: 78px;
+        }
+
+        &:focus,
+        &:hover,
+        &:active {
+          color: black;
+          width: 100%;
+          & + label {
+            left: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .messages {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex-grow: 1;
+    overflow: scroll;
+    word-wrap: break-word;
+
+    .oneMessage {
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 5px;
+
+      .userid {
+        height: 30px;
+        border-radius: 5px;
+        padding-left: 5px;
+        padding-right: 10px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        font-weight: bold;
+        font-style: italic;
+        margin-right: 5px;
+        background-color: @blue;
+        color: white;
+      }
+
+      .message {
+        text-indent: 1em;
+        padding-left: 1em;
+        color: @grey600;
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+.container {
+  @media( min-width: 500px ){
+    width: 500px;
+  }
+  @media( max-width: 500px ){
+    width: 400px;
+  }
+  height: 380px;
+  padding-top: 19px;
+  padding-bottom: 15px;
+  overflow: hidden;
+  text-align: center;
+
+  & > h2 {
+    margin-bottom: 0;
+    margin-top: 10px;
+    height: 15%;
+  }
+
+  .form {
+    position: relative; // important for transition
+    height: 220px;
+    
+  }
+
+  .button {
+    width: 120px;
+    margin-top: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .throttlingWarn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: red;
+  }
+}

@@ -1,0 +1,17 @@
+@time: 650ms;
+.appear,
+.enter {
+  transform: translateX( 100% );
+}
+
+.appearActive,
+.enterActive,
+.exit {
+  transition: all @time ease;
+  transform: none;
+}
+
+.exitActive {
+  transition: all @time ease;
+  transform: translatex( -100% );
+}
