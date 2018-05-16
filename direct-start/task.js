@@ -89,10 +89,7 @@ program
             "webpack-bundle-analyzer@^2.11.1"
           ];
         }
-
-        console.log( arch, dependencies );
         copyDir( `${__dirname}/arch/${arch}`, path.resolve( "./", projectName ), "" );
-        return;
         process.chdir( projectName );
         npm.load( () => {
           npm.commands.init( () => {

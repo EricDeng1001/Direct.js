@@ -1,0 +1,101 @@
+@import "colors";
+
+@time: 300ms;
+@timingFunction: ease;
+
+.container {
+  display: inline-block;
+  position: relative;
+  width: 225px;
+  height: 47px;
+  margin-bottom: 4px;
+  margin-top: 4px;
+
+  .tooltip {
+    position: absolute;
+    text-align: center;
+    right: 8px;
+    top: ( 47 - 34.06 ) / 2px;
+    min-width: 70px;
+    z-index: 5;
+    padding: .5rem;
+    font-size: 15.5px;
+    line-height: 1;
+    color: #fff;
+    border-radius: .2rem;
+  }
+
+  .validTooltip {
+    .tooltip;
+    background-color: fade( @green200, 50% );
+  }
+
+  .invalidTooltip {
+    .tooltip;
+    background-color: fade( @red400, 50% );
+  }
+
+
+  input.input {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    font-weight: 400;
+    font-size: 17px;
+    text-indent: 0;
+    color: black;
+    background: @grey200;
+    box-sizing: border-box;
+    border: 1px solid @grey300;
+    border-radius: 3px;
+
+    transition: all @time @timingFunction;
+
+    &::placeholder {
+      color: @grey200; // invisible
+      text-indent: 1em;
+      font-weight: 300;
+    }
+
+    & + label {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 70px;
+      height: 100%;
+      position: absolute;
+      box-sizing: border-box;
+      left: 0; // to the left
+      top: 0;
+      text-align: center;
+      text-shadow: 0 1px 0 rgba(19,74,70,.4); // make text 3d
+      background: @green200;
+      transition: all @time @timingFunction;
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+    }
+
+    &.disabled + label {
+      width: 100%;
+    }
+
+    &.enabled {
+      &:focus,
+      &:hover,
+      &:active {
+        background: white; // acts like being actived
+        text-indent: 1em;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-bottom: 2px @blue300 solid;
+        outline: none;
+        &::placeholder {
+          color: @grey400;
+        }
+        & + label {
+          transform: translateX( -100% );
+        }
+      }
+    }
+  }
+}
