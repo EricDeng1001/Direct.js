@@ -1,13 +1,13 @@
 {
   "name": "direct-start",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "main": "index.js",
   "dependencies": {
     "commander": "^2.15.1",
     "npm": "^5.10.0"
   },
   "bin": {
-    "direct-start": "./basic.js"
+    "direct-start": "./task.js"
   },
   "author": "Eric Deng",
   "license": "MIT",
