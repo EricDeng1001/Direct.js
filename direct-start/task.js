@@ -20,8 +20,9 @@ program
         fs.writeFile( projectName + "/.gitignore", "node_modules" );
         var arch = "recommend";
         var dependencies = [
+          "simple-direct@latest",
           "connect-redis@^3.3.3",
-          "direct-core@^1.4.6",
+          "direct-core@latest",
           "file-loader@^1.1.11",
           "helmet@^3.12.0",
           "material-ui@^0.20.0",
@@ -30,7 +31,6 @@ program
           "raw-loader@^0.5.1",
           "redis@^2.8.0",
           "redux-thunk@^2.2.0",
-          "simple-direct@^3.9.5",
           "url-loader@^1.0.1",
           "webpack-bundle-analyzer@^2.11.1"
         ]
@@ -41,6 +41,7 @@ program
         if( program.advanced ){
           arch = "advanced";
           dependencies = [
+            "simple-direct@latest",
             "@fortawesome/fontawesome@^1.1.5",
             "@fortawesome/fontawesome-free-brands@^5.0.11",
             "@fortawesome/fontawesome-free-regular@^5.0.11",
@@ -48,7 +49,7 @@ program
             "@fortawesome/react-fontawesome@0.0.18",
             "autoprefixer@^8.4.1",
             "connect-redis@^3.3.3",
-            "direct-core@^1.4.6",
+            "direct-core@latest",
             "express-graphql@^0.6.12",
             "file-loader@^1.1.11",
             "graphql@^0.13.2",
@@ -65,7 +66,6 @@ program
             "redux-thunk@^2.2.0",
             "redux-fetch-thunk@1.0.1",
             "reselect@^3.0.1",
-            "simple-direct@^3.9.5",
             "url-loader@^1.0.1",
             "webpack-bundle-analyzer@^2.11.1"
           ];
