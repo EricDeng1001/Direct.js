@@ -55,7 +55,7 @@ const sessionMiddleWare = session( serverConfig.session );
   if( _.isObject( options ) ){
     connection += "?" + options
       .entries()
-      .reduce( ( acc, [ key, value ] ) => acc += `${key}=${value}&`, "" );
+      .reduce( ( acc, [key, value] ) => acc += `${key}=${value}&`, "" );
   } else {
     if( _.isString( options ) ){
       connection += "?" + options;
@@ -89,14 +89,32 @@ for( let mw of serverConfig.middleWares ){
 console.log("middleWares loaded");
 
 const routes = userServerCodeRequire("./Config/routes");
-const urls = Object.keys( routes );
-for( let url of urls ){
-  if( !url.method ){
-    app.post( path.resolve( "/api", url ), routes[url].api || routes[url] );
+
+function __generateRoutes( root ){
+  const router = new express.Router();
+  for( let [url, route] of Object.entries( root ) ){
+    if( _.isObject( route ) && !_.isFunction( route ) ){
+      router.use( path.resolve( "/", url ), __generateRoutes( route ) );
+    } else if( !route.method ){
+      router.post( path.resolve( "/", url ), route.api || route );
+    } else {
+      router[route.method]( path.resolve( "/", url ), route.api );
+    }
+  }
+  return router;
+}
+
+for( let [url, route] of Object.entries( routes ) ){
+  if( _.isObject( route ) && !_.isFunction( route ) ){
+    app.use( path.resolve( "/api", url ), __generateRoutes( route ) );
+  } else if( !route.method ){
+    console.log( url, path.resolve( "/api", url ) );
+    app.post( path.resolve( "/api", url ), route.api || route );
   } else {
-    app[routes[url].method]( path.resolve( "/api", url ), routes[url].api );
+    app[route.method]( path.resolve( "/api", url ), route.api );
   }
 }
+
 console.log("All api loaded and router bootstrap succeed");
 
 var server;
