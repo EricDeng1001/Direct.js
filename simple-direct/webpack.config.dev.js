@@ -109,10 +109,6 @@ module.exports = {
       {
         test: /\.less$/,
         use: "happypack/loader?id=styles"
-      },
-      {
-        test: /\.(png|svg|webp|jpe?g|gif)/,
-        use: "happypack/loader?id=files"
       }
     ]
   },
