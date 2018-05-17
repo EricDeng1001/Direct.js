@@ -7,7 +7,7 @@ function __load( path ){
     res = {};
     let files = fs.readdirSync( path );
     for( let file of files ){
-      res[path + "/" + file.split(".")[0]] = __load( path + "/" + file );
+      res[(path + "/" + file.split(".")[0]).toLowerCase()] = __load( path + "/" + file );
     }
   } else if( stat.isFile() ){
     res = require( path );
