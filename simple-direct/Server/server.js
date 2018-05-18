@@ -105,7 +105,7 @@ function __generateRoutes( root ){
 }
 
 for( let [url, route] of Object.entries( routes ) ){
-  if( _.isObject( route ) && !_.isFunction( route ) ){
+  if( _.isObject( route ) && !_.isFunction( route ) && !_.isArray( route ) ){
     app.use( path.resolve( "/api", url ), __generateRoutes( route ) );
   } else if( !route.method ){
     app.post( path.resolve( "/api", url ), route.api || route );
