@@ -22,7 +22,7 @@ const theRoutes = paths.map( path => {
   }
 }).filter( x => x );
 
-class Routes extends React.Component {
+class Routes extends React.PureComponent {
   render() {
     return (
       <Switch location={this.props.location}>
