@@ -93,7 +93,7 @@ const routes = userServerCodeRequire("./Config/routes");
 function __generateRoutes( root ){
   const router = new express.Router();
   for( let [url, route] of Object.entries( root ) ){
-    if( _.isObject( route ) && !_.isFunction( route ) ){
+    if( _.isObject( route ) && !_.isFunction( route ) && !_.isArray( route ) ){
       router.use( path.resolve( "/", url ), __generateRoutes( route ) );
     } else if( !route.method ){
       router.post( path.resolve( "/", url ), route.api || route );

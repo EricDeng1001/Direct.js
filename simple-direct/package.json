@@ -3,7 +3,7 @@
   "author": "Eric Deng",
   "description": "quick set up a direct app",
   "license": "MIT",
-  "version": "3.9.74",
+  "version": "3.9.75",
   "bin": {
     "direct": "./tasks.js"
   },
