@@ -30,7 +30,7 @@ module.exports = ( req, res, next ) => {
   }
 
   if( authorized ){
-    res.end();
+    next();
   } else {
     res.send({
       status: __permissionDenied__
