@@ -1,9 +1,11 @@
 const path = require("path");
 const webpack = require("webpack");
+const os = require("os");
 const HappyPack = require("happypack");
 const baseConfig = require("./webpack.config.dev.js");
 const userpath = path.resolve("../../");
 const HappyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const {
@@ -18,6 +20,9 @@ const {
 var compilerConfig = {
   plugins: [],
   prodOnlyPlugins: [],
+  module: {
+    rules: []
+  },
   HtmlWebpackPluginConfig: {},
   cssLoaderOptions: {},
   lessLoaderOptions: {},
@@ -37,27 +42,48 @@ try {
 prodConfig.mode = "production";
 
 prodConfig.watch = false;
+prodConfig.module = {
+  rules: [
+    ...compilerConfig.module.rules,
+    {
+      test: /.*node_modules.*direct.*\.jsx?$/,
+      use: "happypack/loader?id=babel"
+    },
+    {
+      test: /\.jsx?$/,
+      use: "happypack/loader?id=babel",
+      exclude: [
+        /node_modules/
+      ]
+    },
+    {
+      test: /\.less$/,
+      loaders: [
+        MiniCssExtractPlugin.loader,
+        "happypack/loader?id=styles"
+      ]
+    },
+    {
+      test: /\.(jpe?g|png|gig|webp)$/,
+      loaders: [
+        {
+          loader: "file-loader",
+          options: compilerConfig.fileLoaderOptions
+        }
+      ]
+    }
+  ]
+};
 
 prodConfig.plugins = [
   ...compilerConfig.plugins,
   ...compilerConfig.prodOnlyPlugins,
   new MiniCssExtractPlugin({
-    filename: "[name]-[hash].css",
-    chunkFilename: "[name]-[chunkhash].css"
+    filename: "./static/css/[name]-[hash].css",
   }),
   new HtmlWebpackPlugin({
     template: path.resolve( userpath, "./src/Frontend/Core/index.html" ),
     ...compilerConfig.HtmlWebpackPluginConfig
-  }),
-  new HappyPack({
-    id: "files",
-    loaders: [
-      {
-        loader: "file-loader",
-        options: compilerConfig.fileLoaderOptions
-      }
-    ],
-    threadPool: HappyThreadPool
   }),
   new HappyPack({
     id: "babel",
@@ -67,7 +93,6 @@ prodConfig.plugins = [
   new HappyPack({
     id: "styles",
     loaders: [
-      MiniCssExtractPlugin.loader,
       {
         loader: "css-loader",
         options: {
@@ -89,7 +114,7 @@ prodConfig.plugins = [
     ],
     threadPool: HappyThreadPool
   }),
-  new webpack.BannerPlugin("Direct.js\nAntinux Innovation\nAuthor: Eric Deng"),
+  new webpack.BannerPlugin("Direct.js\nAntinux Innovation\nAuthor: Eric Deng")
 ];
 
 module.exports = prodConfig;

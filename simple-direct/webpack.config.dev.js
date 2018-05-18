@@ -96,7 +96,7 @@ module.exports = {
     rules: [
       ...compilerConfig.module.rules,
       {
-        test: /.*node_modules.*direct.*\.jsx?)$/,
+        test: /.*node_modules.*direct.*\.jsx?$/,
         use: "happypack/loader?id=babel"
       },
       {
@@ -112,7 +112,12 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gig|webp)$/,
-        use: "happypack/loader?id=files"
+        loaders: [
+          {
+            loader: "file-loader",
+            options: compilerConfig.fileLoaderOptions
+          }
+        ]
       }
     ]
   },
@@ -122,16 +127,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve( userpath, "./src/Frontend/Core/index.html" ),
       ...compilerConfig.HtmlWebpackPluginConfig
-    }),
-    new HappyPack({
-      id: "files",
-      loaders: [
-        {
-          loader: "file-loader",
-          options: compilerConfig.fileLoaderOptions
-        }
-      ],
-      threadPool: HappyThreadPool
     }),
     new HappyPack({
       id: "babel",
