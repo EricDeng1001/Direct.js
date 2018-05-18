@@ -108,7 +108,6 @@ for( let [url, route] of Object.entries( routes ) ){
   if( _.isObject( route ) && !_.isFunction( route ) ){
     app.use( path.resolve( "/api", url ), __generateRoutes( route ) );
   } else if( !route.method ){
-    console.log( url, path.resolve( "/api", url ) );
     app.post( path.resolve( "/api", url ), route.api || route );
   } else {
     app[route.method]( path.resolve( "/api", url ), route.api );
