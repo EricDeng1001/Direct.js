@@ -25,11 +25,11 @@ var compilerConfig = {
   devServerProxy: {},
   devtool: "source-map",
   plugins: [],
-  HtmlWebpackPluginConfig: {
-    template: "./template.html"
-  },
+  devOnlyPlugins: [],
+  HtmlWebpackPluginConfig: {},
   cssLoaderOptions: {},
   lessLoaderOptions: {},
+  fileLoaderOptions: {},
   cacheGroups: {}
 };
 
@@ -96,11 +96,11 @@ module.exports = {
     rules: [
       ...compilerConfig.module.rules,
       {
-        test: /.*node_modules.*direct.*\.(jsx|js)$/,
+        test: /.*node_modules.*direct.*\.jsx?)$/,
         use: "happypack/loader?id=babel"
       },
       {
-        test: /\.(jsx|js)$/,
+        test: /\.jsx?$/,
         use: "happypack/loader?id=babel",
         exclude: [
           /node_modules/
@@ -109,13 +109,29 @@ module.exports = {
       {
         test: /\.less$/,
         use: "happypack/loader?id=styles"
+      },
+      {
+        test: /\.(jpe?g|png|gig|webp)$/,
+        use: "happypack/loader?id=files"
       }
     ]
   },
   plugins: [
     ...compilerConfig.plugins,
+    ...compilerConfig.devOnlyPlugins,
     new HtmlWebpackPlugin({
+      template: path.resolve( userpath, "./src/Frontend/Core/index.html" ),
       ...compilerConfig.HtmlWebpackPluginConfig
+    }),
+    new HappyPack({
+      id: "files",
+      loaders: [
+        {
+          loader: "file-loader",
+          options: compilerConfig.fileLoaderOptions
+        }
+      ],
+      threadPool: HappyThreadPool
     }),
     new HappyPack({
       id: "babel",
