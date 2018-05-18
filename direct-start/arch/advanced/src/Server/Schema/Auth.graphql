@@ -12,8 +12,3 @@ type Permission {
   allowed: [String]!,
   banned: [String]
 }
-
-type AuthResponse {
-  permission: Permission!,
-  token: String!
-}

@@ -1,4 +1,0 @@
-type Query {
-  authorize( certification: String!, password: String! ): AuthResponse,
-  updateAuth( certification: String!, originPassword: String!, changeTo: String! ): Boolean
-}

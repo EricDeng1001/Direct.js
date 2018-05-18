@@ -13,9 +13,5 @@ module.exports = {
   __userNotExist__: 224,
   __passwordWrong__: 225,
   __permissionDenied__: 1226,
-  __graphqlServiceDenied__: 403,
-  __maxAge__: 1 * month,
-  __readPublic__: "readPublic",
-  __readMore__: "readMore",
-  __all__: "all"
+  __maxAge__: 1 * month
 };
