@@ -1,0 +1,9 @@
+type Auth {
+  certification: String!,
+  password: String!,
+  salt: String!,
+  roles: [String]!,
+  createAt: Int!,
+  updateAt: Int!,
+  _id: ID!
+}

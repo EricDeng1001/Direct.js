@@ -3,7 +3,7 @@
   "author": "Eric Deng",
   "description": "direct-core",
   "license": "MIT",
-  "version": "1.4.8",
+  "version": "1.4.9",
   "dependencies": {
     "react": "^16.3.1"
   }

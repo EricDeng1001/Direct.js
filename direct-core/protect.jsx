@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 /*
 protect( depObj ) gives you a HOC with particular rules,
@@ -38,9 +38,12 @@ export default ( depObj, always = true ) => Comp => {
   const makeProtection = function( props ){
     var allResolved = true;
     for( let key of keys ){
-      if( !depObj[key].satisfy( props[key] ) ){
+      if( !depObj[key].satisfy.call( this, props[key] ) ){
         allResolved = false;
         depObj[key].block.call( this );
+        if( depObj[key].endOnNotSatisfy ){
+          break;
+        }
         // above operation might cause a state change
         // so if in a componentWillReceiveProps
         // next componentWillReceiveProps will not be triggered till this loop finish

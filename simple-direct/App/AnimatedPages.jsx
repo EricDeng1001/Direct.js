@@ -69,16 +69,38 @@ const chooseAnimation = ( from, to, changed ) => {
 
 }
 
+function sliceParams( path ){
+  var number = 0;
+  while( 1 ){
+    let index = path.indexOf(":");
+    if( index === -1 ){
+      break;
+    } else {
+      path = path.slice( 0, index - 1 );
+      number++;
+    }
+  }
+  return [path, number];
+}
+
 const getConfigedPath = ( path ) => {
   for( let p in routesConfig ){
-    if( p === path ){
-      return p;
+
+    let [slicedP, number] = sliceParams( p );
+
+    let slicedPath = path;
+    for( let i = 0; i < number; i++ ){
+      slicedPath = slicedPath.slice( 0, slicedPath.lastIndexOf( "/" ) );
     }
+
     if( routesConfig[p].nested ){
-      if( path.length > p.length ){
-        if( path.slice( 0, p.length ) === p ){
-          return p;
-        }
+      console.log( slicedPath.slice( 0, slicedP.length ) );
+      if( slicedPath.slice( 0, slicedP.length ) === slicedP ){
+        return p;
+      }
+    } else {
+      if( slicedP === slicedPath ){
+        return p;
       }
     }
   }

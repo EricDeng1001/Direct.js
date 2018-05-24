@@ -1,0 +1,86 @@
+@import "colors";
+
+@labelWidth: 130px;
+
+.wrongForm {
+  svg {
+    margin-right: 5px;
+  }
+
+  span {
+    display: inline-block;
+  }
+
+  &:hover,
+  &:active {
+    padding-top: 5px;
+    background-color: rgba( 88 , 88 , 88 , 0.1 );
+    border-radius: 7px;
+    span {
+      margin-bottom: 5px;
+    }
+    div {
+      display: block;
+    }
+  }
+
+  div {
+    font-weight: 500;
+    z-index: 10;
+    display: none;
+    ul {
+      padding-left: 10px;
+      padding-bottom: 10px;
+      margin: 10px;
+      li {
+        text-align: left;
+      }
+    }
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+
+
+  .certInput {
+    margin-bottom: 40px;
+    width: 100%;
+
+    input {
+      text-indent: 50%;
+      @media( max-width: 500px ){
+        text-indent: @labelWidth + 5px;
+      }
+      & + label {
+        width: @labelWidth;
+        color: @grey800;
+        background-color: @yellow500;
+      }
+    }
+
+  }
+
+  .passwordInput {
+    margin-bottom: 40px;
+    width: 100%;
+
+    input {
+      text-indent: -100%;
+
+      & + label {
+        width: @labelWidth;
+        background-color: @grey800;
+        color: @yellow500;
+      }
+    }
+  }
+
+  .confirmButton {
+    height: 47px;
+  }
+
+}
