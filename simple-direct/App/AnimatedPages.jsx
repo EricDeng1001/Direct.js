@@ -72,7 +72,7 @@ const chooseAnimation = ( from, to, changed ) => {
 function sliceParams( path ){
   var number = 0;
   while( 1 ){
-    let index = path.indexOf(":");
+    let index = path.lastIndexOf(":");
     if( index === -1 ){
       break;
     } else {
