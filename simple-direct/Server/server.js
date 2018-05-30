@@ -22,7 +22,8 @@ const compression = require("compression");
 
 const mongoose = require("mongoose");
 
-const userServerCodeRequire = name => require( path.resolve( "./src/Server", name ) );
+const userServerCodeRequire =
+  name => require( path.resolve( "./src/Server", name ) );
 
 userServerCodeRequire("./Config/models.js");
 
@@ -73,7 +74,7 @@ const sessionMiddleWare = session( serverConfig.session );
 const app = express();
 
 app.use( bodyParser.json({
-  strict: false // directly pass to JSON.parse, no check
+  strict: false // directly pass to JSON.parse, no check, to improve perf
 }));
 console.log("application/json enabled");
 

@@ -16,7 +16,7 @@ const initState = {};
 
 var topLevelStore;
 try{
- topLevelStore = JSON.parse( localStorage.lastState );
+ topLevelStore = JSON.parse( window.localStorage.lastState );
 } catch ( e ){
   topLevelStore = {};
 }

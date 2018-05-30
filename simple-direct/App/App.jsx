@@ -14,9 +14,7 @@ import "Styles/global.less";
 
 const modifyApp = AppConfig.modifyApp || ( a => a );
 
-const ModifiedApp = modifyApp( ( props ) => (
-  <AnimatedPages {...props} />
-));
+const ModifiedApp = modifyApp( AnimatedPages );
 
 class App extends React.Component {
   state = { hasError: false }

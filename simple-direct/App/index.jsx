@@ -13,7 +13,7 @@ const { onAppWillMount, onAppWillClose, persistentState } = AppConfig;
 const _window = window;
 const _document = document;
 
-_window.addEventListener( "load", () => {
+_window.addEventListener( "load", $ => {
 
   onAppWillMount( store.getState(), store.dispatch.bind( store ), socket );
 
@@ -25,7 +25,7 @@ _window.addEventListener( "load", () => {
   );
 });
 
-_window.addEventListener( "beforeunload", () => {
+_window.addEventListener( "beforeunload", $ => {
 
   const state = store.getState();
 
@@ -36,5 +36,5 @@ _window.addEventListener( "beforeunload", () => {
     let serializer = persistentState[key].serializer || JSON.stringify;
     topLevelState[key] = serializer( state[key] );
   }
-  localStorage.lastState = JSON.stringify( topLevelState );
+  _window.localStorage.lastState = JSON.stringify( topLevelState );
 });

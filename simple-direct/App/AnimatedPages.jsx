@@ -24,6 +24,15 @@ const defaultDirectAccess = directAccess["*"];
 
 const choosedAnimation = {};
 
+const timeoutGetter = {
+  get enter(){
+    return choosedAnimation.timeout;
+  },
+  get exit(){
+    return choosedAnimation.timeout;
+  }
+};
+
 const noAnimation = {
   entering: "",
   entered: "",
@@ -83,7 +92,7 @@ function sliceParams( path ){
   return [path, number];
 }
 
-const getConfigedPath = ( path ) => {
+const getConfigedPath = path => {
   for( let p in routesConfig ){
 
     let [slicedP, number] = sliceParams( p );
@@ -105,6 +114,24 @@ const getConfigedPath = ( path ) => {
     }
   }
   return "*";
+}
+
+const getContentWithAnimation = ( state, location ) => {
+  if( state === "exited" ){
+    if( choosedAnimation.sameTime ){
+      return null;
+    } else {
+      return <div />; // !do not use section!
+    }
+  } else {
+    return (
+      <section
+        className={choosedAnimation[state]}
+      >
+        <Routes location={location} />
+      </section>
+    );
+  }
 }
 
 class AnimatedPages extends React.Component {
@@ -153,35 +180,11 @@ class AnimatedPages extends React.Component {
       <TransitionGroup>
         <Transition
           key={configedPath}
-          timeout={{
-            get enter(){
-              return choosedAnimation.timeout;
-            },
-            get exit(){
-              return choosedAnimation.timeout;
-            }
-          }}
+          timeout={timeoutGetter}
           appear
         >
           {
-            state => {
-              if( state === "exited" ){
-                if( choosedAnimation.sameTime ){
-                  return null;
-                } else {
-                  return <div />; // do not use section
-                }
-              } else {
-                return (
-                  <section
-                    className={choosedAnimation[state]}
-                  >
-                    <Routes location={location} />
-                  </section>
-                );
-              }
-
-            }
+            getContentWithAnimation( state, location )
           }
         </Transition>
       </TransitionGroup>

@@ -13,14 +13,14 @@ program
     switch( task ){
       case "openDev":
         process.chdir( __dirname );
-        npm.load( () => {
+        npm.load( $ => {
           npm.commands.run( [task] );
         });
         break;
       case "dev":
       case "build":
         process.chdir( __dirname );
-        npm.load( () => {
+        npm.load( $ => {
           npm.commands.run( [task] );
         });
         fs.copyFile( "../../src/Frontend/Core/manifest.json", "../../public/manifest.json", $ => $ );
@@ -52,7 +52,6 @@ program
 
   })
   .parse( process.argv );
-
 
 function cleanFile( path ){
   const files = fs.readdirSync( path );
