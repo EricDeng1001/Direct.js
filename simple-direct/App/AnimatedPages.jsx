@@ -114,25 +114,7 @@ const getConfigedPath = path => {
     }
   }
   return "*";
-}
-
-const getContentWithAnimation = ( state, location ) => {
-  if( state === "exited" ){
-    if( choosedAnimation.sameTime ){
-      return null;
-    } else {
-      return <div />; // !do not use section!
-    }
-  } else {
-    return (
-      <section
-        className={choosedAnimation[state]}
-      >
-        <Routes location={location} />
-      </section>
-    );
-  }
-}
+};
 
 class AnimatedPages extends React.Component {
   from = ""
@@ -184,7 +166,23 @@ class AnimatedPages extends React.Component {
           appear
         >
           {
-            getContentWithAnimation( state, location )
+            state => {
+              if( state === "exited" ){
+                if( choosedAnimation.sameTime ){
+                  return null;
+                } else {
+                  return <div />; // !do not use section!
+                }
+              } else {
+                return (
+                  <section
+                    className={choosedAnimation[state]}
+                  >
+                    <Routes location={location} />
+                  </section>
+                );
+              }
+            }
           }
         </Transition>
       </TransitionGroup>
