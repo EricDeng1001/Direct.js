@@ -2,15 +2,27 @@ export default asyncObj => Comp => {
   const keys = Object.keys( asyncObj );
   return class extends Comp {
     componentWillReceiveProps( nextProps ){
-      for( const asyncProps of keys ){
-        if( nextProps[asyncProps].resolved !== this.props[asyncProps].resolved ){
-          asyncObj[asyncProps].onResolved.call( this, nextProps );
-        } else if( nextProps[asyncProps].rejected !== this.props[asyncProps].rejected ){
-          if( asyncObj[asyncProps].onRejected ){
-            asyncObj[asyncProps].onRejected.call( this, nextProps );
+      for( const asyncProp of keys ){
+        let nextProp = nextProps[asyncProp];
+        if( nextProp !== this.props[asyncProps] ){
+          if( nextProp === asyncObj[asyncProp].resolved ){
+            if( asyncObj[asyncProp].onResolved ){
+              setTimeout(
+                $ => asyncObj[asyncProp].onResolved.call( this ),
+                0
+              );
+            }
+          } else if( nextProp === asyncObj[asyncObj].rejected ){
+            if( asyncObj[asyncProp].onRejected ){
+              setTimeout(
+                $ => asyncObj[asyncProp].onRejected.call( this ),
+                0
+              );
+            }
           }
         }
       }
+
       if( super.componentWillReceiveProps ){
         super.componentWillReceiveProps( nextProps );
       }
