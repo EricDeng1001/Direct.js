@@ -4,7 +4,7 @@ export default asyncObj => Comp => {
     componentWillReceiveProps( nextProps ){
       for( const asyncProp of keys ){
         let nextProp = nextProps[asyncProp];
-        if( nextProp !== this.props[asyncProps] ){
+        if( nextProp !== this.props[asyncProp] ){
           if( nextProp === asyncObj[asyncProp].resolved ){
             if( asyncObj[asyncProp].onResolved ){
               setTimeout(
