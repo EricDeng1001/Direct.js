@@ -23,7 +23,11 @@ program
         npm.load( $ => {
           npm.commands.run( [task] );
         });
-        fs.copyFile( "../../src/Frontend/Core/manifest.json", "../../public/manifest.json", $ => $ );
+        fs.copyFile(
+          "../../src/Frontend/Core/manifest.json",
+          "../../public/manifest.json",
+          $ => $
+        );
         break;
       case "cleanCache":
         try {
