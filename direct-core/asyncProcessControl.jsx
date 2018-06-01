@@ -12,7 +12,7 @@ export default asyncObj => Comp => {
                 0
               );
             }
-          } else if( nextProp === asyncObj[asyncObj].rejected ){
+          } else if( nextProp === asyncObj[asyncProp].rejected ){
             if( asyncObj[asyncProp].onRejected ){
               setTimeout(
                 $ => asyncObj[asyncProp].onRejected.call( this ),
