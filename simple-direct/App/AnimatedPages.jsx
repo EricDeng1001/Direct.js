@@ -103,7 +103,7 @@ const getConfigedPath = path => {
     }
 
     if( routesConfig[p].nested ){
-      console.log( slicedPath.slice( 0, slicedP.length ) );
+      
       if( slicedPath.slice( 0, slicedP.length ) === slicedP ){
         return p;
       }
