@@ -26,7 +26,7 @@ var directConfig;
 
 try {
   directConfig = require("./direct.config.js");
-} catch {
+} catch( $ ) {
   directConfig = {
     frontendCore: path.resolve( userpath, "./src/Frontend/" ),
     serverConfig: path.resolve( "./src/Server/Config/" )

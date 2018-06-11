@@ -10,7 +10,7 @@ const userpath = path.resolve( "../../" );
 var directConfig;
 try {
   directConfig = require( path.resolve( userpath, "./direct.config.js") );
-} catch {
+} catch( $ ) {
   directConfig = {
     frontendCore: path.resolve( userpath, "./src/Frontend/" ),
     serverConfig: path.resolve( userpath, "./src/Server/Config/" )
