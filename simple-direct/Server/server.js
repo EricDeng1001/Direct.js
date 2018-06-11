@@ -22,12 +22,23 @@ const compression = require("compression");
 
 const mongoose = require("mongoose");
 
-const userServerCodeRequire =
-  name => require( path.resolve( "./src/Server", name ) );
+var directConfig;
 
-userServerCodeRequire("./Config/models.js");
+try {
+  directConfig = require("./direct.config.js");
+} catch {
+  directConfig = {
+    frontendCore: path.resolve( userpath, "./src/Frontend/" ),
+    serverConfig: path.resolve( "./src/Server/Config/" )
+  };
+}
 
-const serverConfig = userServerCodeRequire("./Config/server");
+const loadConfig =
+  name => require( path.resolve( directConfig.serverConfig, name ) );
+
+loadConfig("./models.js");
+
+const serverConfig = loadConfig("./server");
 
 const publicBase = path.resolve("./public");
 
@@ -42,7 +53,7 @@ const sessionMiddleWare = session( serverConfig.session );
     port,
     database,
     options
-  } = userServerCodeRequire("./Config/database");
+  } = loadConfig("./database");
   let connection = "mongodb://";
   if( username ){
     connection += username + ":" + password + "@";
@@ -64,7 +75,7 @@ const sessionMiddleWare = session( serverConfig.session );
   }
   mongoose
     .connect( connection )
-    .then( () => console.log(`connect to ${connection} succeed`) )
+    .then( $ => console.log(`connect to ${connection} succeed`) )
     .catch( e => {
       console.log( "unable to connect to your mongodL", e.message );
       console.log("running server without database");
@@ -89,7 +100,7 @@ for( let mw of serverConfig.middleWares ){
 }
 console.log("middleWares loaded");
 
-const routes = userServerCodeRequire("./Config/routes");
+const routes = loadConfig("./routes");
 
 function __generateRoutes( root ){
   const router = new express.Router();
@@ -152,7 +163,7 @@ for( let mw of serverConfig.socketMiddleWares ){
 }
 console.log("socket server middleWares loaded");
 
-userServerCodeRequire("./socketServer")( socketServer );
+loadConfig("./socketServer")( socketServer );
 console.log("socket server bootstrap succeed");
 
 //client routing

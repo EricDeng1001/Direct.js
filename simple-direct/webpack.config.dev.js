@@ -7,7 +7,19 @@ const _ = require("lodash");
 
 const userpath = path.resolve( "../../" );
 
-const serverConfig = require( path.resolve( userpath, "./src/Server/Config/server" ) );
+var directConfig;
+try {
+  directConfig = require( path.resolve( userpath, "./direct.config.js") );
+} catch {
+  directConfig = {
+    frontendCore: path.resolve( userpath, "./src/Frontend/" ),
+    serverConfig: path.resolve( userpath, "./src/Server/Config/" )
+  }
+}
+
+const serverConfig = require(
+  path.resolve( directConfig.serverConfig, "./server" )
+);
 
 var protocol = serverConfig.https ? "https" : "http";
 var port = serverConfig.port;
@@ -60,12 +72,12 @@ module.exports = {
   resolve: {
     alias: {
       socket$: path.resolve( __dirname, "./App/socket.js" ),
+      Core: directConfig.frontendCore,
       ...compilerConfig.resolve.alias
     },
     modules: [
       ...compilerConfig.resolve.modules,
       "./node_modules",
-      path.resolve( userpath, "./src/Frontend/" ),
       path.resolve( userpath, "./src/" )
     ],
     extensions: [
